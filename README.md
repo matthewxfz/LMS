@@ -1,2 +1,2 @@
 # LMS
-a project to manage the books in school library
+This is a project to manage the books in high school library
