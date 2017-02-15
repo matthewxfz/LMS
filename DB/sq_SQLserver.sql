@@ -1,66 +1,66 @@
 CREATE TABLE Admin
 (
-  AdminID NUMERIC(18 0) NOT NULL,
+  AdminID INT IDENTITY(1,1),
   UserID VARCHAR(255) NOT NULL,
   LastName VARCHAR(255) NOT NULL,
-  Moblie VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
+  Moblie VARCHAR(255) ,
+  Address VARCHAR(255) ,
   Email VARCHAR(255) NOT NULL,
-  Power Enum{0,3} NOT NULL,
+  Power VARCHAR(10) NOT NULL CHECK (Power IN('0', '3'))
   FirstName VARCHAR(255) NOT NULL,
-  MiddleName VARCHAR(255) NOT NULL,
-  PAS VARCHAR(255) NOT NULL,
+  MiddleName VARCHAR(255) ,
+  PAS VARCHAR(255) DEFAULT 'It&looks(like)N0thing2me!',
   PRIMARY KEY (AdminID),
   UNIQUE (UserID)
 );
 
 CREATE TABLE Student
 (
-  StudentID NUMERIC(18 0) NOT NULL,
-  Moblie VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
-  Power Enum{0,1,2} NOT NULL,
+  StudentID INT IDENTITY(1,1),
+  Moblie VARCHAR(255) ,
+  Address VARCHAR(255) ,
+  Power VARCHAR(10) NOT NULL CHECK (Power IN('0', '1','2')),
   LastName VARCHAR(255) NOT NULL,
-  MiddleName VARCHAR(255) NOT NULL,
+  MiddleName VARCHAR(255) ,
   FirstName VARCHAR(255) NOT NULL,
-  Birthday DATE NOT NULL,
-  Gender Enum{'male','female','other'} NOT NULL,
-  Age INT NOT NULL,
+  Birthday DATE ,
+  Gender VARCHAR(10) CHECK (Gender IN('male','female','other')),
+  Age INT,
   Email VARCHAR(255) NOT NULL,
   UserID VARCHAR(255) NOT NULL,
-  PAS VARCHAR(255) NOT NULL,
+  PAS VARCHAR(255) DEFAULT 'It&looks(like)N0thing2me!',
   PRIMARY KEY (StudentID)
 );
 
 CREATE TABLE Parents
 (
+  StudentID INT NOT NUll,
   LastName VARCHAR(255) NOT NULL,
   FirstName VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
-  Moblie VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) ,
+  Moblie VARCHAR(255) ,
   Email VARCHAR(255) NOT NULL,
-  MiddleName VARCHAR(255) NOT NULL,
-  Relationship Enum{'Father','Mother'} NOT NULL,
-  Power Enum{0} NOT NULL,
-  StudentID NUMERIC(18 0) NOT NULL,
+  MiddleName VARCHAR(255) ,
+  Relationship VARCHAR(10) NOT NULL CHECK (Relationship IN('Father','Mother')),
+  Power VARCHAR(10) NOT NULL CHECK (Power IN('0')),
   PRIMARY KEY (LastName, FirstName, MiddleName, StudentID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
 CREATE TABLE Teacher
 (
-  TeacherID NUMERIC(18 0) NOT NULL,
+  TeacherID INT IDENTITY(1,1),
   LastName VARCHAR(255) NOT NULL,
-  Moblie VARCHAR(255) NOT NULL,
+  Moblie VARCHAR(255) ,
   Email VARCHAR(255) NOT NULL,
-  Address VARCHAR(255) NOT NULL,
+  Address VARCHAR(255),
   UserID VARCHAR(255) NOT NULL,
   FirstName VARCHAR(255) NOT NULL,
-  MiddleName VARCHAR(255) NOT NULL,
-  Power Enum{0,2,3} NOT NULL,
+  MiddleName VARCHAR(255) ,
+  Power VARCHAR(10) NOT NULL CHECK (Power IN('0','2','3')),
   UserID VARCHAR(255) NOT NULL,
-  PAS VARCHAR(255) NOT NULL,
-  StudentID NUMERIC(18 0) NOT NULL,
+  PAS VARCHAR(255) DEFAULT 'It&looks(like)N0thing2me!',
+  StudentID INT NOT NULL,
   PRIMARY KEY (TeacherID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
   UNIQUE (UserID)
@@ -94,7 +94,7 @@ CREATE TABLE Book
   PublicationDate DATE NOT NULL,
   Studio VARCHAR(255) NOT NULL,
   Manufactor VARCHAR(255) NOT NULL,
-  Status Enum{'Available','NotAvailable'}
+  Status VARCHAR(255) NOT NULL,
   GeneratedID VARCHAR(255) NOT NULL,
   PRIMARY KEY (BookID),
   UNIQUE (GeneratedID)
