@@ -1,0 +1,126 @@
+CREATE TABLE Staff/Admin
+(
+  AdminID NUMERIC(18 0) NOT NULL,
+  UserID VARCHAR(18) NOT NULL,
+  LastName VARCHAR(30) NOT NULL,
+  Moblie VARCHAR(10) NOT NULL,
+  Address VARCHAR(30) NOT NULL,
+  Email VARCHAR(30) NOT NULL,
+  Power Enum{0,3} NOT NULL,
+  FirstName VARCHAR(30) NOT NULL,
+  MiddleName VARCHAR(30) NOT NULL,
+  PAS VARCHAR(40) NOT NULL,
+  PRIMARY KEY (AdminID),
+  UNIQUE (UserID)
+);
+
+CREATE TABLE Student
+(
+  StudentID NUMERIC(18 0) NOT NULL,
+  Moblie VARCHAR(10) NOT NULL,
+  Address VARCHAR(30) NOT NULL,
+  Power Enum{0,1,2} NOT NULL,
+  LastName VARCHAR(20) NOT NULL,
+  MiddleName VARCHAR(20) NOT NULL,
+  FirstName VARCHAR(20) NOT NULL,
+  Birthday DATE NOT NULL,
+  Gender Enum{'male','female','other'} NOT NULL,
+  Age INT NOT NULL,
+  Email VARCHAR(20) NOT NULL,
+  UserID VARCHAR(20) NOT NULL,
+  PAS VARCHAR(40) NOT NULL,
+  PRIMARY KEY (StudentID)
+);
+
+CREATE TABLE Parents
+(
+  LastName VARCHAR(20) NOT NULL,
+  FirstName VARCHAR(20) NOT NULL,
+  Address VARCHAR(30) NOT NULL,
+  Moblie VARCHAR(10) NOT NULL,
+  Email VARCHAR(30) NOT NULL,
+  MiddleName VARCHAR(20) NOT NULL,
+  Relationship Enum{'Father','Mother'} NOT NULL,
+  Power Enum{0} NOT NULL,
+  StudentID NUMERIC(18 0) NOT NULL,
+  PRIMARY KEY (LastName, FirstName, MiddleName, StudentID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+
+CREATE TABLE Teacher
+(
+  TeacherID NUMERIC(18 0) NOT NULL,
+  LastName VARCHAR(20) NOT NULL,
+  Moblie VARCHAR(10) NOT NULL,
+  Email VARCHAR(30) NOT NULL,
+  Address VARCHAR(30) NOT NULL,
+  UserID VARCHAR(30) NOT NULL,
+  FirstName VARCHAR(20) NOT NULL,
+  MiddleName VARCHAR(20) NOT NULL,
+  Power Enum{0,2,3} NOT NULL,
+  UserID VARCHAR(20) NOT NULL,
+  PAS VARCHAR(40) NOT NULL,
+  StudentID NUMERIC(18 0) NOT NULL,
+  PRIMARY KEY (TeacherID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  UNIQUE (UserID)
+);
+
+CREATE TABLE Class
+(
+  ClassID NUMERIC(18 0) NOT NULL,
+  Section INT NOT NULL,
+  Title VARCHAR(30) NOT NULL,
+  PRIMARY KEY (ClassID)
+);
+
+CREATE TABLE TeachBy
+(
+  ClassID NUMERIC(18 0) NOT NULL,
+  TeacherID NUMERIC(18 0) NOT NULL,
+  FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
+  FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID)
+);
+
+CREATE TABLE Book
+(
+  BookID NUMERIC(18 0) NOT NULL,
+  ISBN VARCHAR(20) NOT NULL,
+  Title VARCHAR(50) NOT NULL,
+  Author VARCHAR(50) NOT NULL,
+  Publisher VARCHAR(50) NOT NULL,
+  NumberOfPages INT NOT NULL,
+  Cover VARCHAR(50) NOT NULL,
+  PublicationDate DATE NOT NULL,
+  Studio VARCHAR(50) NOT NULL,
+  Manufactor VARCHAR(50) NOT NULL,
+  Status VARCHAR(10) NOT NULL,
+  GeneratedID VARCHAR(30) NOT NULL,
+  PRIMARY KEY (BookID),
+  UNIQUE (GeneratedID)
+);
+
+CREATE TABLE Recommend
+(
+  BookID NUMERIC(18 0) NOT NULL,
+  ClassID NUMERIC(18 0) NOT NULL,
+  FOREIGN KEY (BookID) REFERENCES Book(BookID),
+  FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
+);
+
+CREATE TABLE Oder
+(
+  OderID NUMERIC(18 0) NOT NULL,
+  CheckinDate DATE NOT NULL,
+  CheckoutDate DATE NOT NULL,
+  DueDate DATE NOT NULL,
+  Type Enum{'Rent', 'Purchase',''} NOT NULL,
+  Statues Enum{'open','close'} NOT NULL,
+  StudentID NUMERIC(18 0) NOT NULL,
+  BookID NUMERIC(18 0) NOT NULL,
+  AdminID NUMERIC(18 0) NOT NULL,
+  PRIMARY KEY (OderID),
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (BookID) REFERENCES Book(BookID),
+  FOREIGN KEY (AdminID) REFERENCES Staff/Admin(AdminID)
+);
