@@ -1,6 +1,6 @@
 CREATE TABLE Admin
 (
-  AdminID INT IDENTITY(1,1),
+  AdminID INT IDENTITY(1,1) NOT NULL,
   UserID VARCHAR(255) NOT NULL,
   LastName VARCHAR(255) NOT NULL,
   Moblie VARCHAR(255) ,
@@ -16,7 +16,7 @@ CREATE TABLE Admin
 
 CREATE TABLE Student
 (
-  StudentID INT IDENTITY(1,1),
+  StudentID INT IDENTITY(1,1) NOT NULL,
   Moblie VARCHAR(255) ,
   Address VARCHAR(255) ,
   Power VARCHAR(10) NOT NULL CHECK (Power IN('0', '1','2')),
@@ -49,7 +49,7 @@ CREATE TABLE Parents
 
 CREATE TABLE Teacher
 (
-  TeacherID INT IDENTITY(1,1),
+  TeacherID INT IDENTITY(1,1) NOT NULL,
   LastName VARCHAR(255) NOT NULL,
   Moblie VARCHAR(255) ,
   Email VARCHAR(255) NOT NULL,
@@ -58,7 +58,6 @@ CREATE TABLE Teacher
   FirstName VARCHAR(255) NOT NULL,
   MiddleName VARCHAR(255) ,
   Power VARCHAR(10) NOT NULL CHECK (Power IN('0','2','3')),
-  UserID VARCHAR(255) NOT NULL,
   PAS VARCHAR(255) DEFAULT 'It&looks(like)N0thing2me!',
   StudentID INT NOT NULL,
   PRIMARY KEY (TeacherID),
@@ -68,7 +67,7 @@ CREATE TABLE Teacher
 
 CREATE TABLE Class
 (
-  ClassID NUMERIC(18 0) NOT NULL,
+  ClassID INT IDENTITY(1,1) NOT NULl,
   Section INT NOT NULL,
   Title VARCHAR(255) NOT NULL,
   PRIMARY KEY (ClassID)
@@ -76,15 +75,15 @@ CREATE TABLE Class
 
 CREATE TABLE TeachBy
 (
-  ClassID NUMERIC(18 0) NOT NULL,
-  TeacherID NUMERIC(18 0) NOT NULL,
+  ClassID INT NOT NULL,
+  TeacherID INT NOT NULL,
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
   FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID)
 );
 
 CREATE TABLE Book
 (
-  BookID NUMERIC(18 0) NOT NULL,
+  BookID INT IDENTITY(1,1) NOT NULL,
   ISBN VARCHAR(255) NOT NULL,
   Title VARCHAR(255) NOT NULL,
   Author VARCHAR(255) NOT NULL,
@@ -94,7 +93,7 @@ CREATE TABLE Book
   PublicationDate DATE NOT NULL,
   Studio VARCHAR(255) NOT NULL,
   Manufactor VARCHAR(255) NOT NULL,
-  Status VARCHAR(255) NOT NULL,
+  Status VARCHAR(20) NOT NULL CHECK (Status IN('Available','NotAvailable')),
   GeneratedID VARCHAR(255) NOT NULL,
   PRIMARY KEY (BookID),
   UNIQUE (GeneratedID)
@@ -102,19 +101,19 @@ CREATE TABLE Book
 
 CREATE TABLE Recommend
 (
-  BookID NUMERIC(18 0) NOT NULL,
-  ClassID NUMERIC(18 0) NOT NULL,
+  BookID INT NOT NULL,
+  ClassID INT NOT NULL,
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
 );
 
 CREATE TABLE Oder
 (
-  OderID NUMERIC(18 0) NOT NULL,
+  OderID INT IDENTITY(1,1) NOT NULL,
   CheckinDate DATE NOT NULL,
-  CheckoutDate DATE NOT NULL,
+  CheckoutDate DATE ,
   DueDate DATE NOT NULL,
-  Type Enum{'Rent', 'Purchase',''} NOT NULL,
+  Type VARCHAR(10) NOT NULL CHECK (Type IN('Rent', 'Purchase')) NOT NULL,
   Statues Enum{'open','close'} NOT NULL,
   StudentID NUMERIC(18 0) NOT NULL,
   BookID NUMERIC(18 0) NOT NULL,
