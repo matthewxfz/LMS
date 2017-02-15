@@ -1,15 +1,16 @@
 CREATE TABLE Staff/Admin
 (
-  StaffID NUMERIC(18 0) NOT NULL,
+  AdminID NUMERIC(18 0) NOT NULL,
   UserID VARCHAR(18) NOT NULL,
   LastName VARCHAR(30) NOT NULL,
   Moblie VARCHAR(10) NOT NULL,
   Address VARCHAR(30) NOT NULL,
   Email VARCHAR(30) NOT NULL,
-  Power INT NOT NULL,
+  Power Enum{0,3} NOT NULL,
   FirstName VARCHAR(30) NOT NULL,
   MiddleName VARCHAR(30) NOT NULL,
-  PRIMARY KEY (StaffID),
+  PAS VARCHAR(40) NOT NULL,
+  PRIMARY KEY (AdminID),
   UNIQUE (UserID)
 );
 
@@ -18,10 +19,16 @@ CREATE TABLE Student
   StudentID NUMERIC(18 0) NOT NULL,
   Moblie VARCHAR(10) NOT NULL,
   Address VARCHAR(30) NOT NULL,
-  Power INT NOT NULL,
+  Power Enum{0,1,2} NOT NULL,
   LastName VARCHAR(20) NOT NULL,
   MiddleName VARCHAR(20) NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
+  Birthday DATE NOT NULL,
+  Gender Enum{'male','female','other'} NOT NULL,
+  Age INT NOT NULL,
+  Email VARCHAR(20) NOT NULL,
+  UserID VARCHAR(20) NOT NULL,
+  PAS VARCHAR(40) NOT NULL,
   PRIMARY KEY (StudentID)
 );
 
@@ -29,12 +36,14 @@ CREATE TABLE Parents
 (
   LastName VARCHAR(20) NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
-  MiddleName VARCHAR(20) NOT NULL,
   Address VARCHAR(30) NOT NULL,
   Moblie VARCHAR(10) NOT NULL,
   Email VARCHAR(30) NOT NULL,
+  MiddleName VARCHAR(20) NOT NULL,
+  Relationship Enum{'Father','Mother'} NOT NULL,
+  Power Enum{0} NOT NULL,
   StudentID NUMERIC(18 0) NOT NULL,
-  PRIMARY KEY (LastName, FirstName, StudentID),
+  PRIMARY KEY (LastName, FirstName, MiddleName, StudentID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
@@ -48,6 +57,9 @@ CREATE TABLE Teacher
   UserID VARCHAR(30) NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
   MiddleName VARCHAR(20) NOT NULL,
+  Power Enum{0,2,3} NOT NULL,
+  UserID VARCHAR(20) NOT NULL,
+  PAS VARCHAR(40) NOT NULL,
   StudentID NUMERIC(18 0) NOT NULL,
   PRIMARY KEY (TeacherID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
@@ -96,18 +108,19 @@ CREATE TABLE Recommend
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
 );
 
-CREATE TABLE Transcation
+CREATE TABLE Oder
 (
-  TID NUMERIC(18 0) NOT NULL,
+  OderID NUMERIC(18 0) NOT NULL,
   CheckinDate DATE NOT NULL,
   CheckoutDate DATE NOT NULL,
   DueDate DATE NOT NULL,
-  Type VARCHAR(30) NOT NULL,
-  StaffID NUMERIC(18 0) NOT NULL,
+  Type Enum{'Rent', 'Purchase',''} NOT NULL,
+  Statues Enum{'open','close'} NOT NULL,
   StudentID NUMERIC(18 0) NOT NULL,
   BookID NUMERIC(18 0) NOT NULL,
-  PRIMARY KEY (TID),
-  FOREIGN KEY (StaffID) REFERENCES Staff/Admin(StaffID),
+  AdminID NUMERIC(18 0) NOT NULL,
+  PRIMARY KEY (OderID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-  FOREIGN KEY (BookID) REFERENCES Book(BookID)
+  FOREIGN KEY (BookID) REFERENCES Book(BookID),
+  FOREIGN KEY (AdminID) REFERENCES Staff/Admin(AdminID)
 );
