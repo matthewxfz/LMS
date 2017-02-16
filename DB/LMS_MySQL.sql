@@ -1,7 +1,7 @@
 -- AUTO_INCREMENT in MySQL is replaced by IDENTITY(<start Number>,<step length>) in SQL_server;
 -- In Oracle,it needs to create a "sequence" database object that can be assigned as primary key;
 -- ENUM in MySQL is replaced by check command in SQL_server
--- In Oracle,there is no ENUM,it uses constraint and check to mimic Enum function.
+-- In Oracle,there is no ENUM,it uses constraint and check to mimic Enum function. 
 
 drop database if exists lms;
 
