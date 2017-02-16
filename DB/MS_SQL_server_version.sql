@@ -1,3 +1,7 @@
+--MS SQL Server 2016 SP1 test
+--Auto incresing implemented by IDENTITY(<start Number>,<step length>)
+--Enum implemented by Check command
+
 CREATE TABLE Admin
 (
   AdminID INT IDENTITY(1,1) NOT NULL,
