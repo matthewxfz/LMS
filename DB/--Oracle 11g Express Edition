@@ -1,8 +1,7 @@
---Oracle 11g Express Edition 
---Difference between Oracle and Mysql
---No such thing as "auto_increment" or "identity" columns in Oracle which it must be  modeled  with a sequence and a trigger:
---This is also no Enum ,  use constraint and check to mimic Enum function.
---use dbca to create the database
+--Oracle 11g Express Edition
+--please drop objects you've created at the end of the script 
+--or check for their existance before creating
+--'\\' is a delimiter
 
 
 
@@ -20,7 +19,7 @@ CREATE TABLE Admin
   FirstName VARCHAR(30) NOT NULL,
   MiddleName VARCHAR(30),
   PAS VARCHAR(40) DEFAULT '123456'
-);
+)\\
 
 CREATE TABLE Student
 (
@@ -36,7 +35,7 @@ CREATE TABLE Student
   Email VARCHAR(20) NOT NULL,
   UserID VARCHAR(20) NOT NULL,
   PAS VARCHAR(40) DEFAULT '123456'
-);
+)\\
 
 CREATE TABLE Parents
 (
@@ -51,7 +50,7 @@ CREATE TABLE Parents
   CONSTRAINT pk_ParentsID PRIMARY KEY (LastName,FirstName,MiddleName),
   StudentID INT NOT NULL,
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-);
+)\\
 
 CREATE TABLE Teacher
 (
@@ -67,14 +66,14 @@ CREATE TABLE Teacher
   PAS VARCHAR(40) DEFAULT '123456',
   StudentID INT NOT NULL,
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
- );
+ )\\
 
  CREATE TABLE Class
 (
   ClassID INT NOT NULL PRIMARY KEY,
   Section INT NOT NULL,
   Title VARCHAR(30) NOT NULL
-);
+)\\
 
 CREATE TABLE TeachBy
 (
@@ -82,7 +81,7 @@ CREATE TABLE TeachBy
   TeacherID INT NOT NULL,
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
   FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID)
- );
+ )\\
 
 CREATE TABLE Book
 (
@@ -98,7 +97,7 @@ CREATE TABLE Book
   Manufactor VARCHAR(50) NOT NULL,
   Status VARCHAR(50)  NOT NULL check (Status='available' or Status='not available'),
   GeneratedID VARCHAR(30) NOT NULL
-  );
+  )\\
 
 CREATE TABLE Recommend
 (
@@ -106,7 +105,7 @@ CREATE TABLE Recommend
   ClassID INT NOT NULL,
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
-);
+)\\
   
 CREATE TABLE Orders
 (
@@ -122,6 +121,6 @@ CREATE TABLE Orders
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
   FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
- );
+ )\\
 
 
