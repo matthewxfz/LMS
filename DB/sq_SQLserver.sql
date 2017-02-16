@@ -107,17 +107,17 @@ CREATE TABLE Recommend
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
 );
 
-CREATE TABLE Oder
+CREATE TABLE Oders
 (
   OderID INT IDENTITY(1,1) NOT NULL,
   CheckinDate DATE NOT NULL,
   CheckoutDate DATE ,
   DueDate DATE NOT NULL,
-  Type VARCHAR(10) NOT NULL CHECK (Type IN('Rent', 'Purchase')) NOT NULL,
-  Statues Enum{'open','close'} NOT NULL,
-  StudentID NUMERIC(18 0) NOT NULL,
-  BookID NUMERIC(18 0) NOT NULL,
-  AdminID NUMERIC(18 0) NOT NULL,
+  Type VARCHAR(10) NOT NULL CHECK (Type IN('Rent', 'Purchase')),
+  Statues VARCHAR(10) NOT NULL CHECK (Statues IN('open','close')),
+  StudentID INT NOT NULL,
+  BookID INT NOT NULL,
+  AdminID INT NOT NULL,
   PRIMARY KEY (OderID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
