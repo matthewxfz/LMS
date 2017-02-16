@@ -14,6 +14,7 @@ CREATE TABLE Admin
   UNIQUE (UserID)
 );
 
+
 CREATE TABLE Student
 (
   StudentID NUMERIC(18 0) NOT NULL,
