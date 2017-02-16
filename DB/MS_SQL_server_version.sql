@@ -2,6 +2,11 @@
 --Auto incresing implemented by IDENTITY(<start Number>,<step length>)
 --Enum implemented by Check command
 
+CREATE DATABASE LMS;
+Go
+Use LMS;
+Go
+
 CREATE TABLE Admin
 (
   AdminID INT IDENTITY(1,1) NOT NULL,
