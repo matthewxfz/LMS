@@ -1,3 +1,7 @@
+--MS SQL Server 2016 SP1 test
+--Auto incresing implemented by IDENTITY(<start Number>,<step length>)
+--Enum implemented by Check command
+
 CREATE TABLE Admin
 (
   AdminID INT IDENTITY(1,1) NOT NULL,
@@ -107,9 +111,9 @@ CREATE TABLE Recommend
   FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
 );
 
-CREATE TABLE Oders
+CREATE TABLE Orders
 (
-  OderID INT IDENTITY(1,1) NOT NULL,
+  OrderID INT IDENTITY(1,1) NOT NULL,
   CheckinDate datetime NOT NULL,
   CheckoutDate datetime ,
   DueDate datetime NOT NULL,
@@ -118,7 +122,7 @@ CREATE TABLE Oders
   StudentID INT NOT NULL,
   BookID INT NOT NULL,
   AdminID INT NOT NULL,
-  PRIMARY KEY (OderID),
+  PRIMARY KEY (OrderID),
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
   FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
