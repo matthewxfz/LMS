@@ -1,0 +1,8 @@
+Requirements for the databse programmer:
+1.ER  Diagram
+    Manage main relationships appear in the opeation of repository, which guarenteee the database running efficiently.
+2.Schema
+	Show the attributes of each entity, which support the function of updating, deletion, selection.
+3.DDL
+	Write three DDl in Mysql, Oracle, SQLServer, which can be compliered and operated.
+	
