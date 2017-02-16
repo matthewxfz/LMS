@@ -1,8 +1,13 @@
 Requirements for the databse programmer:
 1.ER  Diagram
     Manage main relationships appear in the opeation of repository, which guarenteee the database running efficiently.
+    When logining, testify the identity of each member to give the power to visit the database
+    How to trace the number of book change using transaction table?
+    How to limit the number of book which students can borrow according to the class selected?
 2.Schema
 	Show the attributes of each entity, which support the function of updating, deletion, selection.
+	Famaily name and last name and middle name are joined as composite attribute
+
 3.DDL
 	Write three DDl in Mysql, Oracle, SQLServer, which can be compliered and operated.
 	
