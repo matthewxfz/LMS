@@ -14,6 +14,7 @@ ___________________________________________
 3, SQL syntax, three RDMS have slightly difference in SQL language systax, for example the Enum type, MySQL use Enum, SQL server use check, oracle use check or object to implement that. Another example is auto increase attribute, mySQL use AUTO_INCREMENT, SQL server use identity, oracle has to define sequence object separately.
 4, tools, Oracle and SQL server offer many tools for user like code generating, er diagram generating, but mysql offer the least tools.
 5, weight, Oracle required much more cost in time and space than the other two RDMS, and SQL server required more than MySQL.
+6. Objects, Oracle Can support defining Objects, but the other two cannot.
 
 ##Layout of the file intern:
 .
