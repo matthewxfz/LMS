@@ -8,7 +8,7 @@ create database lms;
 use lms;
 
 
-CREATE TABLE Admin
+CREATE TABLE Admins
 (
   AdminID INT AUTO_INCREMENT NOT NULL,
   UserID VARCHAR(18) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Admin
   PAS VARCHAR(40) DEFAULT '123456',
   PRIMARY KEY (AdminID));
 
-CREATE TABLE Student
+CREATE TABLE Students
 (
   StudentID INT AUTO_INCREMENT NOT NULL,
   Moblie VARCHAR(10),
@@ -51,9 +51,9 @@ CREATE TABLE Parents
   Power Enum('0') NOT NULL,
   StudentID INT NOT NULL,
   PRIMARY KEY (LastName, FirstName,StudentID),
-  FOREIGN KEY (StudentID) REFERENCES Student(StudentID));
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID));
 
-CREATE TABLE Teacher
+CREATE TABLE Teachers
 (
   TeacherID INT AUTO_INCREMENT NOT NULL,
   LastName VARCHAR(20) NOT NULL,
@@ -67,9 +67,9 @@ CREATE TABLE Teacher
   PAS VARCHAR(40) DEFAULT '123456',
   StudentID INT NOT NULL,
   PRIMARY KEY (TeacherID),
-  FOREIGN KEY (StudentID) REFERENCES Student(StudentID));
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID));
 
-CREATE TABLE Class
+CREATE TABLE Classes
 (
   ClassID INT AUTO_INCREMENT NOT NULL,
   Section INT NOT NULL,
@@ -80,10 +80,10 @@ CREATE TABLE TeachBy
 (
   ClassID INT NOT NULL,
   TeacherID INT NOT NULL,
-  FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
-  FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID));
+  FOREIGN KEY (ClassID) REFERENCES Classes(ClassID),
+  FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID));
 
-CREATE TABLE Book
+CREATE TABLE Books
 (
   BookID INT AUTO_INCREMENT NOT NULL,
   ISBN VARCHAR(20) NOT NULL,
@@ -103,8 +103,8 @@ CREATE TABLE Recommend
 (
   BookID INT NOT NULL,
   ClassID INT NOT NULL,
-  FOREIGN KEY (BookID) REFERENCES Book(BookID),
-  FOREIGN KEY (ClassID) REFERENCES Class(ClassID));
+  FOREIGN KEY (BookID) REFERENCES Books(BookID),
+  FOREIGN KEY (ClassID) REFERENCES Classes(ClassID));
 
 CREATE TABLE Orders
 (
@@ -118,6 +118,6 @@ CREATE TABLE Orders
   BookID INT NOT NULL,
   AdminID INT NOT NULL,
   PRIMARY KEY (OrderID),
-  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-  FOREIGN KEY (BookID) REFERENCES Book(BookID),
-  FOREIGN KEY (AdminID) REFERENCES Admin(AdminID));
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+  FOREIGN KEY (BookID) REFERENCES Books(BookID),
+  FOREIGN KEY (AdminID) REFERENCES Admins(AdminID));
