@@ -1,0 +1,103 @@
+Coin_changing(n)
+	count = 0;
+	While n >= 0
+		if n >= 5
+			n = n -25 // quarters
+		else if n >= 10
+			n = n - 10 //Dime
+		else if n >= 5 
+			n = n - 5  //Nickels
+		else 
+			n = n -1 // Penny
+
+		count++
+	return count
+
+
+Coin_changing(n){
+	if(n<0)
+		return 0
+	else if(record[n] exist)
+		return record[n];
+	else
+		min = -1
+		for i = 0 to k-1
+			if(used[i] == True)
+				used[i] = False
+				if(min > Coin_changing(n - denomination[i]))
+					min = Coin_changing(n - denomination[i])
+				used[i] = True
+	return min
+}
+
+Coin_changing(n){
+	s = int[n]
+	for i = 1 to n
+		min = positive infinity
+		for each denomination in denomination array
+			if(i == denomination)
+				min = 1
+			if(i > denomination and min > s[i-denomination])
+				min = s[i-denomination]
+		s[i] = min
+}
+
+//list<coordinate>
+Trave_In_Board(x, y){
+	if x > n or y > m
+		return 0
+	else 
+		if Trave_In_Board(x+1,y) > Trave_In_Board(x,y+1)
+			max = Trave_In_Board(x+1,y);
+			coordinate = {x+1,y};
+		else 
+			max = Trave_In_Board(x,y+1);
+			coordinate = {x,y+1};
+	return max+c[x][y];
+}
+
+Trave_In_Board(x, y){
+	init max[][]
+	for i = n to 0
+		for j = m to 0
+			if i == n and j == m
+				max[i][j] = c[i][j]
+			else if i == n and j!= m
+				max[i][j] = max[i][j-1] + c[i][j]
+			else if i != n and j== m
+				max[i][j] = max[i-1][j] + c[i][j]
+			else
+				max[i][j] = max(max[i-1][j],max[j][i-1])+c[i][j]
+
+			coordinate = {i,j}
+
+	inverse coordinate
+	return max[0][0]
+}
+
+
+Activity_Selector(s,f){
+	w[];
+	max[];
+	n = s.length;
+	init A[] with all {a1}
+
+	max[1] = w[1];
+	for m = 2 to n
+		i = m
+		while i >= 1 
+			if s[m] >= f[i] and max[m] < w[m] + max[i]
+				max[m] = w[m] + max[i] 
+				k=i;
+			i = i - 1 
+		
+		if(i < 1)
+			max[m] = w[m]
+			A[m] = {a[m]}
+
+		A[m] = A[k] ∪ {a[m]}
+
+	maxS = index of the max value in max[]
+
+	return A[maxS]
+}
