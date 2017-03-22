@@ -9,21 +9,21 @@ import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.lms.bean.Book;
+import edu.lms.bean.Books;
 
 /**
- * A data access object (DAO) providing persistence and search support for Book
+ * A data access object (DAO) providing persistence and search support for Books
  * entities. Transaction control of the save(), update() and delete() operations
  * can directly support Spring container-managed transactions or they can be
  * augmented to handle user-managed Spring transactions. Each of these methods
  * provides additional information for how to configure it for the desired type
  * of transaction control.
  * 
- * @see edu.lms.bean.Book
+ * @see edu.lms.bean.Books
  * @author MyEclipse Persistence Tools
  */
-public class BookDAO extends TempletDAO {
-	private static final Logger log = LoggerFactory.getLogger(BookDAO.class);
+public class BooksDAO extends BaseHibernateDAO {
+	private static final Logger log = LoggerFactory.getLogger(BooksDAO.class);
 	// property constants
 	public static final String ISBN = "isbn";
 	public static final String TITLE = "title";
@@ -36,8 +36,8 @@ public class BookDAO extends TempletDAO {
 	public static final String STATUS = "status";
 	public static final String GENERATED_ID = "generatedId";
 
-	public void save(Book transientInstance) {
-		log.debug("saving Book instance");
+	public void save(Books transientInstance) {
+		log.debug("saving Books instance");
 		try {
 			getSession().save(transientInstance);
 			log.debug("save successful");
@@ -47,8 +47,8 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public void delete(Book persistentInstance) {
-		log.debug("deleting Book instance");
+	public void delete(Books persistentInstance) {
+		log.debug("deleting Books instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -58,10 +58,10 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public Book findById(java.lang.Integer id) {
-		log.debug("getting Book instance with id: " + id);
+	public Books findById(java.lang.Integer id) {
+		log.debug("getting Books instance with id: " + id);
 		try {
-			Book instance = (Book) getSession().get("edu.lms.bean.Book", id);
+			Books instance = (Books) getSession().get("edu.lms.bean.Books", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -69,10 +69,10 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public List<Book> findByExample(Book instance) {
-		log.debug("finding Book instance by example");
+	public List<Books> findByExample(Books instance) {
+		log.debug("finding Books instance by example");
 		try {
-			List<Book> results = (List<Book>) getSession().createCriteria("edu.lms.bean.Book").add(create(instance))
+			List<Books> results = (List<Books>) getSession().createCriteria("edu.lms.bean.Books").add(create(instance))
 					.list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
@@ -83,9 +83,9 @@ public class BookDAO extends TempletDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Book instance with property: " + propertyName + ", value: " + value);
+		log.debug("finding Books instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from Book as model where model." + propertyName + "= ?";
+			String queryString = "from Books as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -95,50 +95,50 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public List<Book> findByIsbn(Object isbn) {
+	public List<Books> findByIsbn(Object isbn) {
 		return findByProperty(ISBN, isbn);
 	}
 
-	public List<Book> findByTitle(Object title) {
+	public List<Books> findByTitle(Object title) {
 		return findByProperty(TITLE, title);
 	}
 
-	public List<Book> findByAuthor(Object author) {
+	public List<Books> findByAuthor(Object author) {
 		return findByProperty(AUTHOR, author);
 	}
 
-	public List<Book> findByPublisher(Object publisher) {
+	public List<Books> findByPublisher(Object publisher) {
 		return findByProperty(PUBLISHER, publisher);
 	}
 
-	public List<Book> findByNumberOfPages(Object numberOfPages) {
+	public List<Books> findByNumberOfPages(Object numberOfPages) {
 		return findByProperty(NUMBER_OF_PAGES, numberOfPages);
 	}
 
-	public List<Book> findByCover(Object cover) {
+	public List<Books> findByCover(Object cover) {
 		return findByProperty(COVER, cover);
 	}
 
-	public List<Book> findByStudio(Object studio) {
+	public List<Books> findByStudio(Object studio) {
 		return findByProperty(STUDIO, studio);
 	}
 
-	public List<Book> findByManufactor(Object manufactor) {
+	public List<Books> findByManufactor(Object manufactor) {
 		return findByProperty(MANUFACTOR, manufactor);
 	}
 
-	public List<Book> findByStatus(Object status) {
+	public List<Books> findByStatus(Object status) {
 		return findByProperty(STATUS, status);
 	}
 
-	public List<Book> findByGeneratedId(Object generatedId) {
+	public List<Books> findByGeneratedId(Object generatedId) {
 		return findByProperty(GENERATED_ID, generatedId);
 	}
 
 	public List findAll() {
-		log.debug("finding all Book instances");
+		log.debug("finding all Books instances");
 		try {
-			String queryString = "from Book";
+			String queryString = "from Books";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -147,10 +147,10 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public Book merge(Book detachedInstance) {
-		log.debug("merging Book instance");
+	public Books merge(Books detachedInstance) {
+		log.debug("merging Books instance");
 		try {
-			Book result = (Book) getSession().merge(detachedInstance);
+			Books result = (Books) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -159,8 +159,8 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public void attachDirty(Book instance) {
-		log.debug("attaching dirty Book instance");
+	public void attachDirty(Books instance) {
+		log.debug("attaching dirty Books instance");
 		try {
 			getSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -170,8 +170,8 @@ public class BookDAO extends TempletDAO {
 		}
 	}
 
-	public void attachClean(Book instance) {
-		log.debug("attaching clean Book instance");
+	public void attachClean(Books instance) {
+		log.debug("attaching clean Books instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");

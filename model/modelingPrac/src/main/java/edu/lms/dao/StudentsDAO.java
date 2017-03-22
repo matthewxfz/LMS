@@ -9,21 +9,21 @@ import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.lms.bean.Student;
+import edu.lms.bean.Students;
 
 /**
  * A data access object (DAO) providing persistence and search support for
- * Student entities. Transaction control of the save(), update() and delete()
+ * Students entities. Transaction control of the save(), update() and delete()
  * operations can directly support Spring container-managed transactions or they
  * can be augmented to handle user-managed Spring transactions. Each of these
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see edu.lms.bean.Student
+ * @see edu.lms.bean.Students
  * @author MyEclipse Persistence Tools
  */
-public class StudentDAO extends TempletDAO {
-	private static final Logger log = LoggerFactory.getLogger(StudentDAO.class);
+public class StudentsDAO extends BaseHibernateDAO {
+	private static final Logger log = LoggerFactory.getLogger(StudentsDAO.class);
 	// property constants
 	public static final String MOBLIE = "moblie";
 	public static final String ADDRESS = "address";
@@ -37,8 +37,8 @@ public class StudentDAO extends TempletDAO {
 	public static final String USER_ID = "userId";
 	public static final String PAS = "pas";
 
-	public void save(Student transientInstance) {
-		log.debug("saving Student instance");
+	public void save(Students transientInstance) {
+		log.debug("saving Students instance");
 		try {
 			getSession().save(transientInstance);
 			log.debug("save successful");
@@ -48,8 +48,8 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public void delete(Student persistentInstance) {
-		log.debug("deleting Student instance");
+	public void delete(Students persistentInstance) {
+		log.debug("deleting Students instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -59,10 +59,10 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public Student findById(java.lang.Integer id) {
-		log.debug("getting Student instance with id: " + id);
+	public Students findById(java.lang.Integer id) {
+		log.debug("getting Students instance with id: " + id);
 		try {
-			Student instance = (Student) getSession().get("edu.lms.bean.Student", id);
+			Students instance = (Students) getSession().get("edu.lms.bean.Students", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -70,10 +70,10 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public List<Student> findByExample(Student instance) {
-		log.debug("finding Student instance by example");
+	public List<Students> findByExample(Students instance) {
+		log.debug("finding Students instance by example");
 		try {
-			List<Student> results = (List<Student>) getSession().createCriteria("edu.lms.bean.Student")
+			List<Students> results = (List<Students>) getSession().createCriteria("edu.lms.bean.Students")
 					.add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
@@ -84,9 +84,9 @@ public class StudentDAO extends TempletDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Student instance with property: " + propertyName + ", value: " + value);
+		log.debug("finding Students instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from Student as model where model." + propertyName + "= ?";
+			String queryString = "from Students as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -96,54 +96,54 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public List<Student> findByMoblie(Object moblie) {
+	public List<Students> findByMoblie(Object moblie) {
 		return findByProperty(MOBLIE, moblie);
 	}
 
-	public List<Student> findByAddress(Object address) {
+	public List<Students> findByAddress(Object address) {
 		return findByProperty(ADDRESS, address);
 	}
 
-	public List<Student> findByPower(Object power) {
+	public List<Students> findByPower(Object power) {
 		return findByProperty(POWER, power);
 	}
 
-	public List<Student> findByLastName(Object lastName) {
+	public List<Students> findByLastName(Object lastName) {
 		return findByProperty(LAST_NAME, lastName);
 	}
 
-	public List<Student> findByMiddleName(Object middleName) {
+	public List<Students> findByMiddleName(Object middleName) {
 		return findByProperty(MIDDLE_NAME, middleName);
 	}
 
-	public List<Student> findByFirstName(Object firstName) {
+	public List<Students> findByFirstName(Object firstName) {
 		return findByProperty(FIRST_NAME, firstName);
 	}
 
-	public List<Student> findByGender(Object gender) {
+	public List<Students> findByGender(Object gender) {
 		return findByProperty(GENDER, gender);
 	}
 
-	public List<Student> findByAge(Object age) {
+	public List<Students> findByAge(Object age) {
 		return findByProperty(AGE, age);
 	}
 
-	public List<Student> findByEmail(Object email) {
+	public List<Students> findByEmail(Object email) {
 		return findByProperty(EMAIL, email);
 	}
 
-	public List<Student> findByUserId(Object userId) {
+	public List<Students> findByUserId(Object userId) {
 		return findByProperty(USER_ID, userId);
 	}
 
-	public List<Student> findByPas(Object pas) {
+	public List<Students> findByPas(Object pas) {
 		return findByProperty(PAS, pas);
 	}
 
 	public List findAll() {
-		log.debug("finding all Student instances");
+		log.debug("finding all Students instances");
 		try {
-			String queryString = "from Student";
+			String queryString = "from Students";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -152,10 +152,10 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public Student merge(Student detachedInstance) {
-		log.debug("merging Student instance");
+	public Students merge(Students detachedInstance) {
+		log.debug("merging Students instance");
 		try {
-			Student result = (Student) getSession().merge(detachedInstance);
+			Students result = (Students) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -164,8 +164,8 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public void attachDirty(Student instance) {
-		log.debug("attaching dirty Student instance");
+	public void attachDirty(Students instance) {
+		log.debug("attaching dirty Students instance");
 		try {
 			getSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -175,8 +175,8 @@ public class StudentDAO extends TempletDAO {
 		}
 	}
 
-	public void attachClean(Student instance) {
-		log.debug("attaching clean Student instance");
+	public void attachClean(Students instance) {
+		log.debug("attaching clean Students instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");

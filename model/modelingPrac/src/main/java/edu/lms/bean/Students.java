@@ -16,12 +16,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Student entity. @author MyEclipse Persistence Tools
+ * Students entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "Student", catalog = "lms")
+@Table(name = "Students", catalog = "lms")
 
-public class Student implements java.io.Serializable {
+public class Students implements java.io.Serializable {
 
 	// Fields
 
@@ -39,17 +39,17 @@ public class Student implements java.io.Serializable {
 	private String userId;
 	private String pas;
 	private Set<Parents> parentses = new HashSet<Parents>(0);
+	private Set<Teachers> teacherses = new HashSet<Teachers>(0);
 	private Set<Orders> orderses = new HashSet<Orders>(0);
-	private Set<Teacher> teachers = new HashSet<Teacher>(0);
 
 	// Constructors
 
 	/** default constructor */
-	public Student() {
+	public Students() {
 	}
 
 	/** minimal constructor */
-	public Student(String power, String lastName, String firstName, Date birthday, String gender, Integer age,
+	public Students(String power, String lastName, String firstName, Date birthday, String gender, Integer age,
 			String email, String userId) {
 		this.power = power;
 		this.lastName = lastName;
@@ -62,9 +62,9 @@ public class Student implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Student(String moblie, String address, String power, String lastName, String middleName, String firstName,
+	public Students(String moblie, String address, String power, String lastName, String middleName, String firstName,
 			Date birthday, String gender, Integer age, String email, String userId, String pas, Set<Parents> parentses,
-			Set<Orders> orderses, Set<Teacher> teachers) {
+			Set<Teachers> teacherses, Set<Orders> orderses) {
 		this.moblie = moblie;
 		this.address = address;
 		this.power = power;
@@ -78,8 +78,8 @@ public class Student implements java.io.Serializable {
 		this.userId = userId;
 		this.pas = pas;
 		this.parentses = parentses;
+		this.teacherses = teacherses;
 		this.orderses = orderses;
-		this.teachers = teachers;
 	}
 
 	// Property accessors
@@ -217,7 +217,7 @@ public class Student implements java.io.Serializable {
 		this.pas = pas;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "students")
 
 	public Set<Parents> getParentses() {
 		return this.parentses;
@@ -227,7 +227,17 @@ public class Student implements java.io.Serializable {
 		this.parentses = parentses;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "students")
+
+	public Set<Teachers> getTeacherses() {
+		return this.teacherses;
+	}
+
+	public void setTeacherses(Set<Teachers> teacherses) {
+		this.teacherses = teacherses;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "students")
 
 	public Set<Orders> getOrderses() {
 		return this.orderses;
@@ -235,16 +245,6 @@ public class Student implements java.io.Serializable {
 
 	public void setOrderses(Set<Orders> orderses) {
 		this.orderses = orderses;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "student")
-
-	public Set<Teacher> getTeachers() {
-		return this.teachers;
-	}
-
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
 	}
 
 }

@@ -2,15 +2,17 @@ package edu.lms.dao;
 
 import org.hibernate.Session;
 
+import edu.lms.util.HibernateSessionFactory;
+
+
 /**
  * Data access object (DAO) for domain model
  * @author MyEclipse Persistence Tools
  */
-public class TempletDAO implements IBaseHibernateDAO {
+public class BaseHibernateDAO implements IBaseHibernateDAO {
 	
 	public Session getSession() {
-		//FIXME: Implement this method
-		return null;
+		return HibernateSessionFactory.getSession();
 	}
 	
 }

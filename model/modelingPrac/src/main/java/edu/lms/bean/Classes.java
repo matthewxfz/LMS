@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Class entity. @author MyEclipse Persistence Tools
+ * Classes entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "Class", catalog = "lms")
+@Table(name = "Classes", catalog = "lms")
 
-public class Class implements java.io.Serializable {
+public class Classes implements java.io.Serializable {
 
 	// Fields
 
@@ -31,17 +31,17 @@ public class Class implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Class() {
+	public Classes() {
 	}
 
 	/** minimal constructor */
-	public Class(Integer section, String title) {
+	public Classes(Integer section, String title) {
 		this.section = section;
 		this.title = title;
 	}
 
 	/** full constructor */
-	public Class(Integer section, String title, Set<TeachBy> teachBies, Set<Recommend> recommends) {
+	public Classes(Integer section, String title, Set<TeachBy> teachBies, Set<Recommend> recommends) {
 		this.section = section;
 		this.title = title;
 		this.teachBies = teachBies;
@@ -82,7 +82,7 @@ public class Class implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "class")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "classes")
 
 	public Set<TeachBy> getTeachBies() {
 		return this.teachBies;
@@ -92,7 +92,7 @@ public class Class implements java.io.Serializable {
 		this.teachBies = teachBies;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "class")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "classes")
 
 	public Set<Recommend> getRecommends() {
 		return this.recommends;

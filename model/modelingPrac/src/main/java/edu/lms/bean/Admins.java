@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Admin entity. @author MyEclipse Persistence Tools
+ * Admins entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "Admin", catalog = "lms")
+@Table(name = "Admins", catalog = "lms")
 
-public class Admin implements java.io.Serializable {
+public class Admins implements java.io.Serializable {
 
 	// Fields
 
@@ -37,11 +37,11 @@ public class Admin implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Admin() {
+	public Admins() {
 	}
 
 	/** minimal constructor */
-	public Admin(String userId, String lastName, String email, String power, String firstName) {
+	public Admins(String userId, String lastName, String email, String power, String firstName) {
 		this.userId = userId;
 		this.lastName = lastName;
 		this.email = email;
@@ -50,7 +50,7 @@ public class Admin implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Admin(String userId, String lastName, String moblie, String address, String email, String power,
+	public Admins(String userId, String lastName, String moblie, String address, String email, String power,
 			String firstName, String middleName, String pas, Set<Orders> orderses) {
 		this.userId = userId;
 		this.lastName = lastName;
@@ -168,7 +168,7 @@ public class Admin implements java.io.Serializable {
 		this.pas = pas;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "admin")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "admins")
 
 	public Set<Orders> getOrderses() {
 		return this.orderses;

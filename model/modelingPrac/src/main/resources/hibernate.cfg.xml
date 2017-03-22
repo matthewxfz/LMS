@@ -27,6 +27,20 @@
 		<mapping class="edu.lms.bean.Admin" />
 		<mapping class="edu.lms.bean.Teacher" />
 		<mapping class="edu.lms.bean.Book" />
+		<mapping class="iit.bean.Orders" />
+		<mapping class="iit.bean.Classes" />
+		<mapping class="iit.bean.Recommend" />
+		<mapping class="iit.bean.Books" />
+		<mapping class="iit.bean.Admins" />
+		<mapping class="iit.bean.Parents" />
+		<mapping class="iit.bean.TeachBy" />
+		<mapping class="iit.bean.Teachers" />
+		<mapping class="iit.bean.Students" />
+		<mapping class="edu.lms.bean.Students" />
+		<mapping class="edu.lms.bean.Books" />
+		<mapping class="edu.lms.bean.Teachers" />
+		<mapping class="edu.lms.bean.Admins" />
+		<mapping class="edu.lms.bean.Classes" />
 
 	</session-factory>
 

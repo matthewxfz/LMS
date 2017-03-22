@@ -1,34 +1,34 @@
 package edu.lms.dao;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.lms.bean.Orders;
+import edu.lms.bean.Classes;
 
 /**
  * A data access object (DAO) providing persistence and search support for
- * Orders entities. Transaction control of the save(), update() and delete()
+ * Classes entities. Transaction control of the save(), update() and delete()
  * operations can directly support Spring container-managed transactions or they
  * can be augmented to handle user-managed Spring transactions. Each of these
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see edu.lms.bean.Orders
+ * @see edu.lms.bean.Classes
  * @author MyEclipse Persistence Tools
  */
-public class OrdersDAO extends TempletDAO {
-	private static final Logger log = LoggerFactory.getLogger(OrdersDAO.class);
+public class ClassesDAO extends BaseHibernateDAO {
+	private static final Logger log = LoggerFactory.getLogger(ClassesDAO.class);
 	// property constants
-	public static final String TYPE = "type";
-	public static final String STATUES = "statues";
+	public static final String SECTION = "section";
+	public static final String TITLE = "title";
 
-	public void save(Orders transientInstance) {
-		log.debug("saving Orders instance");
+	public void save(Classes transientInstance) {
+		log.debug("saving Classes instance");
 		try {
 			getSession().save(transientInstance);
 			log.debug("save successful");
@@ -38,8 +38,8 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public void delete(Orders persistentInstance) {
-		log.debug("deleting Orders instance");
+	public void delete(Classes persistentInstance) {
+		log.debug("deleting Classes instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -49,10 +49,10 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public Orders findById(java.lang.Integer id) {
-		log.debug("getting Orders instance with id: " + id);
+	public Classes findById(java.lang.Integer id) {
+		log.debug("getting Classes instance with id: " + id);
 		try {
-			Orders instance = (Orders) getSession().get("edu.lms.bean.Orders", id);
+			Classes instance = (Classes) getSession().get("edu.lms.bean.Classes", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -60,10 +60,10 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public List<Orders> findByExample(Orders instance) {
-		log.debug("finding Orders instance by example");
+	public List<Classes> findByExample(Classes instance) {
+		log.debug("finding Classes instance by example");
 		try {
-			List<Orders> results = (List<Orders>) getSession().createCriteria("edu.lms.bean.Orders")
+			List<Classes> results = (List<Classes>) getSession().createCriteria("edu.lms.bean.Classes")
 					.add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
@@ -74,9 +74,9 @@ public class OrdersDAO extends TempletDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Orders instance with property: " + propertyName + ", value: " + value);
+		log.debug("finding Classes instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from Orders as model where model." + propertyName + "= ?";
+			String queryString = "from Classes as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -86,18 +86,18 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public List<Orders> findByType(Object type) {
-		return findByProperty(TYPE, type);
+	public List<Classes> findBySection(Object section) {
+		return findByProperty(SECTION, section);
 	}
 
-	public List<Orders> findByStatues(Object statues) {
-		return findByProperty(STATUES, statues);
+	public List<Classes> findByTitle(Object title) {
+		return findByProperty(TITLE, title);
 	}
 
 	public List findAll() {
-		log.debug("finding all Orders instances");
+		log.debug("finding all Classes instances");
 		try {
-			String queryString = "from Orders";
+			String queryString = "from Classes";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -106,10 +106,10 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public Orders merge(Orders detachedInstance) {
-		log.debug("merging Orders instance");
+	public Classes merge(Classes detachedInstance) {
+		log.debug("merging Classes instance");
 		try {
-			Orders result = (Orders) getSession().merge(detachedInstance);
+			Classes result = (Classes) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -118,8 +118,8 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public void attachDirty(Orders instance) {
-		log.debug("attaching dirty Orders instance");
+	public void attachDirty(Classes instance) {
+		log.debug("attaching dirty Classes instance");
 		try {
 			getSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -129,8 +129,8 @@ public class OrdersDAO extends TempletDAO {
 		}
 	}
 
-	public void attachClean(Orders instance) {
-		log.debug("attaching clean Orders instance");
+	public void attachClean(Classes instance) {
+		log.debug("attaching clean Classes instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");

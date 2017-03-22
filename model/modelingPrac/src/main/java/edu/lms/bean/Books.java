@@ -16,12 +16,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Book entity. @author MyEclipse Persistence Tools
+ * Books entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "Book", catalog = "lms")
+@Table(name = "Books", catalog = "lms")
 
-public class Book implements java.io.Serializable {
+public class Books implements java.io.Serializable {
 
 	// Fields
 
@@ -43,11 +43,11 @@ public class Book implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Book() {
+	public Books() {
 	}
 
 	/** minimal constructor */
-	public Book(String isbn, String title, String author, String publisher, Integer numberOfPages, String cover,
+	public Books(String isbn, String title, String author, String publisher, Integer numberOfPages, String cover,
 			Date publicationDate, String studio, String manufactor, String status, String generatedId) {
 		this.isbn = isbn;
 		this.title = title;
@@ -63,7 +63,7 @@ public class Book implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Book(String isbn, String title, String author, String publisher, Integer numberOfPages, String cover,
+	public Books(String isbn, String title, String author, String publisher, Integer numberOfPages, String cover,
 			Date publicationDate, String studio, String manufactor, String status, String generatedId,
 			Set<Orders> orderses, Set<Recommend> recommends) {
 		this.isbn = isbn;
@@ -206,7 +206,7 @@ public class Book implements java.io.Serializable {
 		this.generatedId = generatedId;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "books")
 
 	public Set<Orders> getOrderses() {
 		return this.orderses;
@@ -216,7 +216,7 @@ public class Book implements java.io.Serializable {
 		this.orderses = orderses;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "books")
 
 	public Set<Recommend> getRecommends() {
 		return this.recommends;

@@ -1,38 +1,41 @@
 package edu.lms.dao;
 
 import java.util.List;
+import java.util.Set;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import static org.hibernate.criterion.Example.create;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.lms.bean.Parents;
-import edu.lms.bean.ParentsId;
+import edu.lms.bean.Admins;
 
 /**
  * A data access object (DAO) providing persistence and search support for
- * Parents entities. Transaction control of the save(), update() and delete()
+ * Admins entities. Transaction control of the save(), update() and delete()
  * operations can directly support Spring container-managed transactions or they
  * can be augmented to handle user-managed Spring transactions. Each of these
  * methods provides additional information for how to configure it for the
  * desired type of transaction control.
  * 
- * @see edu.lms.bean.Parents
+ * @see edu.lms.bean.Admins
  * @author MyEclipse Persistence Tools
  */
-public class ParentsDAO extends TempletDAO {
-	private static final Logger log = LoggerFactory.getLogger(ParentsDAO.class);
+public class AdminsDAO extends BaseHibernateDAO {
+	private static final Logger log = LoggerFactory.getLogger(AdminsDAO.class);
 	// property constants
-	public static final String ADDRESS = "address";
+	public static final String USER_ID = "userId";
+	public static final String LAST_NAME = "lastName";
 	public static final String MOBLIE = "moblie";
+	public static final String ADDRESS = "address";
 	public static final String EMAIL = "email";
-	public static final String MIDDLE_NAME = "middleName";
-	public static final String RELATIONSHIP = "relationship";
 	public static final String POWER = "power";
+	public static final String FIRST_NAME = "firstName";
+	public static final String MIDDLE_NAME = "middleName";
+	public static final String PAS = "pas";
 
-	public void save(Parents transientInstance) {
-		log.debug("saving Parents instance");
+	public void save(Admins transientInstance) {
+		log.debug("saving Admins instance");
 		try {
 			getSession().save(transientInstance);
 			log.debug("save successful");
@@ -42,8 +45,8 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public void delete(Parents persistentInstance) {
-		log.debug("deleting Parents instance");
+	public void delete(Admins persistentInstance) {
+		log.debug("deleting Admins instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -53,10 +56,10 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public Parents findById(edu.lms.bean.ParentsId id) {
-		log.debug("getting Parents instance with id: " + id);
+	public Admins findById(java.lang.Integer id) {
+		log.debug("getting Admins instance with id: " + id);
 		try {
-			Parents instance = (Parents) getSession().get("edu.lms.bean.Parents", id);
+			Admins instance = (Admins) getSession().get("edu.lms.bean.Admins", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,10 +67,10 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public List<Parents> findByExample(Parents instance) {
-		log.debug("finding Parents instance by example");
+	public List<Admins> findByExample(Admins instance) {
+		log.debug("finding Admins instance by example");
 		try {
-			List<Parents> results = (List<Parents>) getSession().createCriteria("edu.lms.bean.Parents")
+			List<Admins> results = (List<Admins>) getSession().createCriteria("edu.lms.bean.Admins")
 					.add(create(instance)).list();
 			log.debug("find by example successful, result size: " + results.size());
 			return results;
@@ -78,9 +81,9 @@ public class ParentsDAO extends TempletDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Parents instance with property: " + propertyName + ", value: " + value);
+		log.debug("finding Admins instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from Parents as model where model." + propertyName + "= ?";
+			String queryString = "from Admins as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -90,34 +93,46 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public List<Parents> findByAddress(Object address) {
-		return findByProperty(ADDRESS, address);
+	public List<Admins> findByUserId(Object userId) {
+		return findByProperty(USER_ID, userId);
 	}
 
-	public List<Parents> findByMoblie(Object moblie) {
+	public List<Admins> findByLastName(Object lastName) {
+		return findByProperty(LAST_NAME, lastName);
+	}
+
+	public List<Admins> findByMoblie(Object moblie) {
 		return findByProperty(MOBLIE, moblie);
 	}
 
-	public List<Parents> findByEmail(Object email) {
+	public List<Admins> findByAddress(Object address) {
+		return findByProperty(ADDRESS, address);
+	}
+
+	public List<Admins> findByEmail(Object email) {
 		return findByProperty(EMAIL, email);
 	}
 
-	public List<Parents> findByMiddleName(Object middleName) {
-		return findByProperty(MIDDLE_NAME, middleName);
-	}
-
-	public List<Parents> findByRelationship(Object relationship) {
-		return findByProperty(RELATIONSHIP, relationship);
-	}
-
-	public List<Parents> findByPower(Object power) {
+	public List<Admins> findByPower(Object power) {
 		return findByProperty(POWER, power);
 	}
 
+	public List<Admins> findByFirstName(Object firstName) {
+		return findByProperty(FIRST_NAME, firstName);
+	}
+
+	public List<Admins> findByMiddleName(Object middleName) {
+		return findByProperty(MIDDLE_NAME, middleName);
+	}
+
+	public List<Admins> findByPas(Object pas) {
+		return findByProperty(PAS, pas);
+	}
+
 	public List findAll() {
-		log.debug("finding all Parents instances");
+		log.debug("finding all Admins instances");
 		try {
-			String queryString = "from Parents";
+			String queryString = "from Admins";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -126,10 +141,10 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public Parents merge(Parents detachedInstance) {
-		log.debug("merging Parents instance");
+	public Admins merge(Admins detachedInstance) {
+		log.debug("merging Admins instance");
 		try {
-			Parents result = (Parents) getSession().merge(detachedInstance);
+			Admins result = (Admins) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -138,8 +153,8 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public void attachDirty(Parents instance) {
-		log.debug("attaching dirty Parents instance");
+	public void attachDirty(Admins instance) {
+		log.debug("attaching dirty Admins instance");
 		try {
 			getSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -149,8 +164,8 @@ public class ParentsDAO extends TempletDAO {
 		}
 	}
 
-	public void attachClean(Parents instance) {
-		log.debug("attaching clean Parents instance");
+	public void attachClean(Admins instance) {
+		log.debug("attaching clean Admins instance");
 		try {
 			getSession().buildLockRequest(LockOptions.NONE).lock(instance);
 			log.debug("attach successful");

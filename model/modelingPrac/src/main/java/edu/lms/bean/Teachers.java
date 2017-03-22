@@ -15,17 +15,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Teacher entity. @author MyEclipse Persistence Tools
+ * Teachers entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "Teacher", catalog = "lms")
+@Table(name = "Teachers", catalog = "lms")
 
-public class Teacher implements java.io.Serializable {
+public class Teachers implements java.io.Serializable {
 
 	// Fields
 
 	private Integer teacherId;
-	private Student student;
+	private Students students;
 	private String lastName;
 	private String moblie;
 	private String email;
@@ -40,12 +40,12 @@ public class Teacher implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Teacher() {
+	public Teachers() {
 	}
 
 	/** minimal constructor */
-	public Teacher(Student student, String lastName, String email, String userId, String firstName, String power) {
-		this.student = student;
+	public Teachers(Students students, String lastName, String email, String userId, String firstName, String power) {
+		this.students = students;
 		this.lastName = lastName;
 		this.email = email;
 		this.userId = userId;
@@ -54,9 +54,9 @@ public class Teacher implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Teacher(Student student, String lastName, String moblie, String email, String address, String userId,
+	public Teachers(Students students, String lastName, String moblie, String email, String address, String userId,
 			String firstName, String middleName, String power, String pas, Set<TeachBy> teachBies) {
-		this.student = student;
+		this.students = students;
 		this.lastName = lastName;
 		this.moblie = moblie;
 		this.email = email;
@@ -86,12 +86,12 @@ public class Teacher implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "StudentID", nullable = false)
 
-	public Student getStudent() {
-		return this.student;
+	public Students getStudents() {
+		return this.students;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudents(Students students) {
+		this.students = students;
 	}
 
 	@Column(name = "LastName", nullable = false, length = 20)
@@ -184,7 +184,7 @@ public class Teacher implements java.io.Serializable {
 		this.pas = pas;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "teacher")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "teachers")
 
 	public Set<TeachBy> getTeachBies() {
 		return this.teachBies;
