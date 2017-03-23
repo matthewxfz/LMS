@@ -2,8 +2,12 @@ package edu.lms.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 public class MySession {
 		protected List<Table> tables;
@@ -38,10 +42,10 @@ public class MySession {
 		 */
 		public Table production(Table ta, Table tb){
 			//creat a new Schema
-			String[][] content = new String[ta.rowLength*tb.rowLength][tb.rowLength+ta.rowLength];
+			String[][] content = new String[ta.rowLength*tb.rowLength][tb.colLength+ta.colLength];
 			
 			//write schema to merge content
-			mergeArray(ta.content[0], tb.content[1], content[0]);
+			mergeArray(ta.content[0], tb.content[0], content[0]);
 			
 			//write content to merge content
 			for(int i = 1;i<ta.rowLength;i++){
@@ -62,6 +66,21 @@ public class MySession {
 			for( int i=0;i<oldA.length;i++){
 				newA[i] = oldA[i];
 			}
+		}
+		
+		public Table natrueJoin(Table ta, Table tb){
+			//Find the command schema
+			List<String> schemaA = ta.attris;
+			HashMap<String , Integer > schemaB = tb.schema;
+			List<String> commonAttri = new LinkedList<String>();
+			
+			Iterator<String> ite = schemaA.iterator();
+			while(ite.hasNext()){
+				String attri = ite.next();
+				if(schemaB.containsKey(attri));
+					commonAttri.add(attri);
+			}
+			
 		}
 		
 		/**

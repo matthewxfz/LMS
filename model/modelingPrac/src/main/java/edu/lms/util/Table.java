@@ -2,12 +2,14 @@ package edu.lms.util;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder.In;
 
 public class Table {
 	 HashMap<String, Integer> schema;
+	 List<String > attris = new LinkedList<String>();
 	 String[][] content;
 	 int colLength = 0;
 	 int rowLength = 0;
@@ -18,6 +20,7 @@ public class Table {
 		if(content.length > 0){
 			for(int i = 0;i<content[0].length;i++){
 				schema.put(content[0][i], i);
+				attris.add(content[0][i]);
 			}
 			rowLength = content.length;
 			colLength = content[0].length;

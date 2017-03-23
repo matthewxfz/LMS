@@ -98,17 +98,12 @@ public class testAggregateFunction {
 		MySession session = new MySession();
 
 		try {
-			session.addTable(new File("/Users/matthewxfz/Workspaces/tmp/autompg.csv"));
-			Table table = session.tables.get(0);
-			List<String> attris = new LinkedList<String>();
-
-			attris.add("mpg");
-			attris.add("weight");
-
-			table = table.select(new Condition(""));
-
+			session.addTable(new File("/Users/matthewxfz/Workspaces/tmp/autompg_1.csv"));
+			session.addTable(new File("/Users/matthewxfz/Workspaces/tmp/autompg_2.csv"));
+//			List<Table> tableList = session.tables;
+			Table table = session.production(session.tables.get(0),session.tables.get(1));
+			
 			printTableInArray(table.content);
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
