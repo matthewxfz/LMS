@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,24 +21,40 @@ public class CSVUtil {
 	private HashMap<Integer, String> schema = new HashMap<Integer, String>();
 	private int colengh;
 
-	/**
-	 * 
-	 * @param file
-	 *            -csv file
-	 * @throws FileNotFoundException
-	 */
 	public CSVUtil(File file) throws FileNotFoundException {
 		this.file = file;
 		colengh = 0;
 
 	}// constructor
 	
-//	public writeCSVFile(List<HashMap<Integer, String>> table){
-//		
-//	}
+	/**
+	 * Get the 2-d array for tabel, schema is in the firt row
+	 * @return 
+	 */
+	public String[][] getTableToArray() {
+		List<HashMap<String, String>> linkListTable = getTableToLinkList();
+		String[][] table = new String[linkListTable.size()][linkListTable.get(0).size()];
 
+		// write schema
+		for (int i = 0; i < schema.size(); i++) {
+			table[0][i] = schema.get(i);
+		}
 
-	public List<HashMap<String, String>> getTable() {
+		// write content
+		Iterator<HashMap<String, String>> ite = linkListTable.iterator();
+
+		for (int i = 1; i < linkListTable.size(); i++) {
+			HashMap<String, String> tuple = ite.next();
+			for (int j = 0; j < linkListTable.get(0).size(); j++) {// copy the
+																	// elements
+				table[i][j] = tuple.get(schema.get(j));
+			}
+		}
+
+		return table;
+	}
+
+	public List<HashMap<String, String>> getTableToLinkList() {
 		List<HashMap<String, String>> table = new LinkedList<HashMap<String, String>>();
 		FileInputStream fis;
 		try {
@@ -46,7 +63,7 @@ public class CSVUtil {
 			sc = new Scanner(fis, charset);
 
 			if (schema.isEmpty()) {
-				getSchemaHelper();
+				getSchemaHelperT();
 			} else {
 				sc.next();
 			}
@@ -77,22 +94,22 @@ public class CSVUtil {
 			return null;
 		}
 	}
-	
-	public String[] getSchema(){
-		if(schema.isEmpty()){
+
+	public String[] getSchema() {
+		if (schema.isEmpty()) {
 			return null;
 		}
-		
+
 		String[] schema = new String[colengh];
-		
-		for(int i=0;i<colengh;i++){
+
+		for (int i = 0; i < colengh; i++) {
 			schema[i] = this.schema.get(i);
 		}
-		
+
 		return schema;
 	}
-	
-	private HashMap<Integer, String> getSchemaHelper() {
+
+	private HashMap<Integer, String> getSchemaHelperT() {
 		if (schema.isEmpty()) {
 
 			if (sc.hasNextLine()) {
@@ -113,5 +130,5 @@ public class CSVUtil {
 			return schema;
 		}
 	}
-	
+
 }
