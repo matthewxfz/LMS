@@ -14,12 +14,14 @@ import java.util.List;
 public class CSVIO {
 
 	public static List<String> importCsv(File file){
+		//a list to store the data from file
         List<String> dataList=new ArrayList<String>();
         
         BufferedReader br=null;
         try { 
             br = new BufferedReader(new FileReader(file));
             String line = ""; 
+            //put data into the list line by line
             while ((line = br.readLine()) != null) { 
                 dataList.add(line);
             }
@@ -47,15 +49,17 @@ public class CSVIO {
         OutputStreamWriter osw=null;
         BufferedWriter bw=null;
         try {
+        	//write data into file
             out = new FileOutputStream(file);
             osw = new OutputStreamWriter(out);
             bw =new BufferedWriter(osw);
+            //write data into bufferwriter
             if(dataList!=null && !dataList.isEmpty()){
                 for(String data : dataList){
                     bw.append(data).append("\r");
                 }
             }
-            isSucess=true;
+            isSucess=true;//if operation is success,set the flag to true
         } catch (Exception e) {
             isSucess=false;
         }finally{

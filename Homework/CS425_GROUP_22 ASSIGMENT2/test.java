@@ -9,7 +9,7 @@ public class test {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Query query = new Query();
+		QueryList query = new QueryList();
 		CSVIO csv = new CSVIO();
 		List<String> datalist1 = CSVIO.importCsv(new File("D:/student.csv"));	
 		List<String> datalist2 = CSVIO.importCsv(new File("D:/major.csv"));	
