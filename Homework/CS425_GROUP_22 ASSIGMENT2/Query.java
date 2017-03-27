@@ -2,7 +2,6 @@ package lms.hw;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class Query {
 	public static String comma = ",";
 	//select count(*),address from student group by address having count(*)>1
@@ -78,11 +77,11 @@ public class Query {
 			for(String data2:table2){
 				String[] array2 = data2.split(comma);
 				if(result.isEmpty()){
-					String line = data1+comma+array2[2];
+					String line = data1+comma+array2[0]+comma+array2[2];
 					result.add(line);
 					break;
 				}else if(array1[3].equals(array2[1])){
-					String line = data1+comma+array2[2];
+					String line = data1+comma+array2[0]+comma+array2[2];
 					result.add(line);
 					break;
 				}			

@@ -31,7 +31,7 @@ public class test {
 			System.out.println("Export Failed");
 		//Join test
 		result = query.Join(datalist1, datalist2);
-		isSuccess = csv.exportCsv(new File("D:/JOIN.csv"), result);
+		isSuccess = csv.exportCsv(new File("D:/NATURALJOIN.csv"), result);
         if(isSuccess)
 			System.out.println("Export Success");
 		else
