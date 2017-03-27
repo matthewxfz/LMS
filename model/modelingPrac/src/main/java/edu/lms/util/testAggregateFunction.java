@@ -1,15 +1,16 @@
 package edu.lms.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
-
-import edu.lms.util.Session;
 
 public class testAggregateFunction {
 	@Test
@@ -122,6 +123,72 @@ public class testAggregateFunction {
 				System.out.print(", " + table[i][j]);
 			}
 			System.out.println("\n");
+		}
+	}
+	
+	private void printHashTable(List<HashMap<String, String>> table){
+		Iterator<HashMap<String, String>> ite = table.iterator();
+		
+		while(ite.hasNext()){
+			System.out.println(ite.next().toString());
+		}
+	}
+	private void printList(List<String> table){
+		Iterator<String> ite =  table.iterator();
+		
+		while(ite.hasNext()){
+			System.out.println(ite.next());
+		}
+	}
+	
+	@Test
+	public void testHashMap(){
+		HashMap<String, String> tuple = new HashMap<String, String>();
+		
+		tuple.put("hello", "world");
+		tuple.put("hello", "new");
+		
+		Set<String> keys = tuple.keySet();
+		keys.iterator();
+		
+		assertEquals("new", tuple.get("hello"));
+	}
+	
+	@Test
+	public void testQueriesGroupByHavingCount(){
+		try {
+			CSVUtil csvUtil = new CSVUtil();
+			Queries q = new Queries();
+			printList(q.groupByHaving(csvUtil.getTableToLinkList(new File("/Users/matthewxfz/Workspaces/tmp/Customers.csv")), "Country",1));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testNexstQuery(){
+		try {
+			File customers = new File("/Users/matthewxfz/Workspaces/tmp/Customers.csv");
+			File orders = new File("/Users/matthewxfz/Workspaces/tmp/Orders.csv");
+			CSVUtil customer = new CSVUtil());
+			CSVUtil Orders = new CSVUtil();
+			Queries q = new Queries();
+			printList(q.nestedQuery(customer.getTableToLinkList(customers), Orders.getTableToLinkList(orders)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testJoinQuery(){
+		try {
+			File customers = new File("/Users/matthewxfz/Workspaces/tmp/Customers.csv");
+			File orders = new File("/Users/matthewxfz/Workspaces/tmp/Orders.csv");
+			CSVUtil csvUtil = new CSVUtil();
+
+			Queries q = new Queries();
+			printList(q.natureJoin(csvUtil.getTableToLinkList(customers), csvUtil.getTableToLinkList(orders)));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
