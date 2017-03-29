@@ -186,7 +186,7 @@ public class testAggregateFunction {
 			CSVUtil csvUtil = new CSVUtil();
 
 			Queries q = new Queries();
-			printList(q.natureJoin(csvUtil.getTableToLinkList(customers), csvUtil.getTableToLinkList(orders)));
+			printList(q.linearNatureJoin(csvUtil.getTableToLinkList(customers), csvUtil.getTableToLinkList(orders)));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

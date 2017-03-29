@@ -10,6 +10,7 @@ import java.util.TreeSet;
 import javax.persistence.criteria.From;
 
 import org.hibernate.hql.internal.classic.GroupByParser;
+import org.hibernate.sql.Select;
 
 public class Queries {
 
@@ -103,9 +104,94 @@ public class Queries {
 		return result;
 	}
 	
+	/**
+	 * SELECT * FROM <table1>, <tabl2>
+	 * @param table1
+	 * @param table2
+	 * @return
+	 */
+	public List<String> linearNatureJoin(List<HashMap<String, String>> table1, List<HashMap<String, String>> table2){
+		//get the key of common columne value
+		List<String> comSchema = new LinkedList<String>();
+		List<String> table1Schema = new LinkedList<String>();
+		List<String> table2Schema = new LinkedList<String>();
+		
+		List<String> result = new LinkedList<String>();
+		
+		Iterator<HashMap<String, String>> ite1 = table1.iterator();
+		Iterator<HashMap<String, String>> ite2 = table2.iterator();
+		
+		Set<String> ks1 = ite1.next().keySet();
+		Set<String> ks2 = ite2.next().keySet();
+		Iterator<String> kite1 = ks1.iterator();
+		//find the commmon schema
+		while(kite1.hasNext()){
+			String key = kite1.next();
+			if(ks2.contains(key)){
+				comSchema.add(key);
+			}else{
+				table1Schema.add(key);
+			}
+		}
+		Iterator<String> kite2 = ks1.iterator();
+		while(kite2.hasNext()){
+			String key = kite2.next();
+			if(!comSchema.contains(key))
+				table2Schema.add(key);
+		}
+		
+		
+		//Generate Two hashTable hashing from value from common key and rest value
+		HashMap<String, String[]> hashTable1 = getColumneHashingTable(table1, comSchema, table1Schema);
+		HashMap<String, String[]> hashTable2 = getColumneHashingTable(table1, comSchema, table1Schema);
+		
+		Set<String> keySet = hashTable1.keySet();
+		Iterator<String> iks = keySet.iterator();
+		
+		while(iks.hasNext()){
+			String comKey = iks.next();
+			String finalTuple = "";
+			if(hashTable2.containsKey(comKey)){
+				String[] tuple1 = hashTable1.get(comKey);
+				String[] tuple2 = hashTable2.get(comKey);
+				
+				finalTuple = comKey ; 
+				for(int i=0; i< tuple1.length;i++){
+					finalTuple += ","+tuple1[i];
+				}
+				for(int i=0; i< tuple2.length;i++){
+					finalTuple += ","+tuple1[i];
+				}
+				result.add(finalTuple);
+			}
+		}
+		
+		return result;
+		
+	}
 	
 	/**
-	 * SELECT Students.Name, Students. Major
+	 * Generate the HashMap whose key is the common key combination and value is the other values
+	 * @param table1
+	 * @param comSchema
+	 * @param tableSchema
+	 * @return hash table
+	 */
+	private HashMap<String, String[]> getColumneHashingTable(List<HashMap<String, String>> table, List<String> comSchema, List<String> tableSchema){
+		HashMap<String, String[]> hashTable = new HashMap<String, String[]>();
+		
+		Iterator<HashMap<String, String>> tableIte = table.iterator();
+		
+		while(tableIte.hasNext()){
+			HashMap<String, String> tuple = tableIte.next();
+			Iterator<String> comSchemaIte = comSchema.iterator();
+			String comKey = 
+		}
+		
+		return hashTable;
+	}
+	/**
+	 * SELECT * FROM <table1>, <table2>
 	 * @return
 	 */
 	public List<String> natureJoin(List<HashMap<String, String>> table1, List<HashMap<String, String>> table2){
@@ -119,8 +205,6 @@ public class Queries {
 		Set<String> ks1 = ite1.next().keySet();
 		Set<String> ks2 = ite2.next().keySet();
 		Iterator<String> kite1 = ks1.iterator();
-		Iterator<String> kite2 = ks1.iterator();
-		String schema = "";
 		//find the commmon schema
 		while(kite1.hasNext()){
 			String key = kite1.next();
@@ -129,27 +213,38 @@ public class Queries {
 			}
 		}
 		
-		result.add(getSchema(ite1.next(), ite2.next(), comSchema));
-		
+		result.add(getSchema(table1.iterator().next(), table2.iterator().next(), comSchema));
+//		HashMap<String, String> emptyTuple1 = getEmptyTuple(table1.iterator().next());
+//		HashMap<String, String> emptyTuple2 = getEmptyTuple(table2.iterator().next());
 		//joint
 		Iterator<HashMap<String, String>> ite1x = table1.iterator();
 		Iterator<HashMap<String, String>> ite2x = table2.iterator();
 		
+		
 		while(ite1x.hasNext()){
 			HashMap<String, String> tuple1 = ite1x.next();
-			
+			ite2x = table2.iterator();
 			while(ite2x.hasNext()){
 				HashMap<String, String> tuple2 = ite2x.next();
 				if(equalTuples(tuple1, tuple2, comSchema)){
 					result.add(joinTuples(tuple1, tuple2, comSchema));
+					ite2x.remove();
 				}
-				
-				table2.remove(tuple2);
 			}
 		}
 		return result;
 	}
 	
+	private HashMap<String, String> getEmptyTuple(HashMap<String, String> next) {
+		Set<String> keyset =  next.keySet();
+		Iterator<String> ite = keyset.iterator();
+		HashMap<String, String> nhash = new HashMap<String, String>();
+		while(ite.hasNext()){
+			nhash.put(ite.next(), "null");
+		}
+		return nhash;
+	}
+
 	private boolean equalTuples(HashMap<String, String> tuple1,HashMap<String, String> tuple2, List<String> schema) {
 		Iterator<String> ite = schema.iterator();
 		while(ite.hasNext()){
@@ -180,8 +275,8 @@ public class Queries {
 		
 		//add table2
 		Set<String> keySet2 = tuple2.keySet();
-		Iterator<String> ite2 = keySet.iterator();
-		while(ite1.hasNext()){
+		Iterator<String> ite2 = keySet2.iterator();
+		while(ite2.hasNext()){
 			result += tuple2.get(ite2.next())+",";
 		}
 		
