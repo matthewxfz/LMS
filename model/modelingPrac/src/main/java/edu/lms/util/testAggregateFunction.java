@@ -181,8 +181,8 @@ public class testAggregateFunction {
 	@Test
 	public void testJoinQuery(){
 		try {
-			File customers = new File("/Users/matthewxfz/Workspaces/tmp/Customers.csv");
-			File orders = new File("/Users/matthewxfz/Workspaces/tmp/Orders.csv");
+			File customers = new File("/Users/yanxinzhou/GitHub/LMS/tmp/Customers.csv");
+			File orders = new File("/Users/yanxinzhou/GitHub/LMS/tmp/Orders.csv");
 			CSVUtil csvUtil = new CSVUtil();
 
 			Queries q = new Queries();
