@@ -7,6 +7,7 @@ import csv
 
 
 def innitialation(key, table):
+    #turn tuple with same key to list
     hashtable = {}
     for row in table:
         real_key = ''
@@ -20,21 +21,39 @@ def innitialation(key, table):
 
 
 def main():
-    string1= input('please input the address of First table')
-    string2= input('please input the address of Second table')
+    string1= raw_input('please input the address of First table')
+    string2= raw_input('please input the address of Second table')
     table1 = open(string1, 'rb')
     table2 = open(string2, 'rb')
     reader1 = csv.DictReader(table1)
     reader2 = csv.DictReader(table2)
-    #select(['vendorid'], '*', 'productprice', reader1, ['vendorid'])
-    #print nature_join(reader1, reader2)
-    print outjoin(reader1, reader2)
+
+    print ("===================================================\n"+
+          "This is the result of Nature Join\n"+
+          "===================================================\n")
+    #test select
+    select(['vendorid'], '*', 'productprice', reader1, ['vendorid'])
+    # print the  result of nature join
+    list_nature_join =  outjoin(reader1, reader2)
+    for i in range(len(list_nature_join)):
+        print list_nature_join[i]
+
+    print ("===================================================\n"+
+          "This is the result of Out Join"+
+          "===================================================\n")
+
+
+    #print the result of outjoin
+    list_outjoin =  outjoin(reader1, reader2)
+    for i in range(len(list_outjoin)):
+        print list_outjoin[i]
     #print len(outjoin(reader1, reader2))
 
 
 def outjoin(reader1, reader2):
     equal_column = []
     tuplelist = []
+    #find the common key
     for name1 in reader1.fieldnames:
         for name2 in reader2.fieldnames:
             if name1.upper() == name2.upper():
@@ -42,9 +61,11 @@ def outjoin(reader1, reader2):
     if len(equal_column) == 0:
         print("failed")
     else:
+        # turn list into hashtable, key in common key
         hashtable1 = innitialation(equal_column, reader1)
         hashtable2 = innitialation(equal_column, reader2)
         for key in hashtable1:
+            #join common key
             if key in hashtable2:
                 for i in range(len(hashtable1[key])):
                     for j in range(len(hashtable2[key])):
@@ -52,9 +73,11 @@ def outjoin(reader1, reader2):
                         tuplelist.append(tuple_)
                         pass
             else:
+                #join different key in table1
                 for i in range(len(hashtable1[key])):
                     tuple_ = dict(zip(reader2.fieldnames, [None] * len(reader2.fieldnames)))
                     tuplelist.append(hashtable1[key][i] + tuple_.values())
+        #join different key in table2
         for key in hashtable2:
             if key in hashtable1:
                 pass
@@ -77,6 +100,7 @@ def _in(name, destination, dictionary):  # dictionary gotten from prerequsit
 def nature_join(reader1, reader2):
     equal_column = []
     tuplelist = []
+     #find the common key
     for name1 in reader1.fieldnames:
         for name2 in reader2.fieldnames:
             if name1.upper() == name2.upper():
@@ -84,11 +108,10 @@ def nature_join(reader1, reader2):
     if len(equal_column) == 0:
         print("failed")
     else:
+        # turn list into hashtable, key in common key
         hashtable1 = innitialation(equal_column, reader1)
         hashtable2 = innitialation(equal_column, reader2)
-        # print hashtable1
-        # print '------------'
-        # print hashtable2
+        #join common key in different table
         for key in hashtable1:
             if key in hashtable2:
                 for i in range(len(hashtable1[key])):
