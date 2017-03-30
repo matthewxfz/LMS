@@ -55,4 +55,24 @@ The result:
 You will find five csv files in D:/ or in the path you modified in the code after the test.java is executed.
 You can find the expected result in CS425_GROUP_22 ASSIGMENT2/expected result
 
+The Python
+Compiler : Sublime3 
+OS : ISO
+These codes have implemented these 5 functions: group by with having, in, natural join, outjoin
+The running complexity of the  nature join is o(n+m), out join is O(n+m)
+
+Natural Join:
+select * from Customers,Orders where Customers.CustomerID = Order
+Using hashtable to realize the simulation
+
+Outer Join:	
+select c.CustomerID, c.CustomerName, o.OrderID from Customers c left outer join Orders o on c.CustomerID = o.CustomerID;
+Using hashtable to realize the simulation
+
+***********************************************
+Please run this code by following steps below:
+1.Open Jupiter to run the code with numpy
+2.when drag address into system input, please remove space behind .csv
+
+***********************************************
 _______________________________________________
