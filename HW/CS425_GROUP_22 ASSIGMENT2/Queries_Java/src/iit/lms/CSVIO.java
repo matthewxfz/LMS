@@ -1,4 +1,4 @@
-package lms.hw;
+package iit.lms;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,6 +26,9 @@ public class CSVIO {
                 dataList.add(line);
             }
         }catch (Exception e) {
+        	System.out.println("The File is not exist!!!, make suer the Customer.csv and Orders.csv is in the same directory with the jar file! or under the projcet file if excuted in IDE");
+        	System.exit(0);
+        	e.printStackTrace();
         }finally{
             if(br!=null){
                 try {

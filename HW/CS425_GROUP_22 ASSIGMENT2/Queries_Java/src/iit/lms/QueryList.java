@@ -1,11 +1,17 @@
-package lms.hw;
+package iit.lms;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
 public class QueryList {
 	public static String comma = ",";
 	
-	//select count(*),City from Customers group by City having count(*)>1;
+	/**
+	 * select count(*),City from Customers group by City having count(*)>1;
+	 * @param datalist -table
+	 * @return 
+	 */
 	public List<String> GroupByHaving(List<String> datalist){
 		//a list to store the result of the query
 		List<String> result = new ArrayList<String>();
@@ -57,8 +63,12 @@ public class QueryList {
 		}
 		return result;
 	}
-	//select CustomerID,CustomerName from Customer where CustomerID 
-	//IN(select CustomerID from Order where ShipperID = 3);
+	/**
+	 * select CustomerID,CustomerName from Customer where CustomerID IN(select CustomerID from Order where ShipperID = 3);
+	 * @param datalist1 -table1
+	 * @param datalist2 -table2
+	 * @return
+	 */
 	public List<String> IN(List<String> datalist1,List<String> datalist2){
 		//a list to store the result of the query
 		List<String> result = new ArrayList<String>(),
@@ -90,7 +100,13 @@ public class QueryList {
 
 		return result;
 	}
-	//select * from Customers,Orders where Customers.CustomerID = Orders.CustomerID
+	
+	/**
+	 * select * from Customers,Orders where Customers.CustomerID = Orders.CustomerID
+	 * @param table1
+	 * @param table2
+	 * @return
+	 */
 	public List<String> NaturalJoin(List<String> table1,List<String> table2){
 		
 		List<String> result = new ArrayList<String>();
@@ -113,7 +129,12 @@ public class QueryList {
 		}
 		return result;
 	}
-	//Select* from Customers where CustomerID NOT IN(Select CustomerID from Orders)
+	/**
+	 * SELECT* FROM Customers WHERE CustomerID NOT IN(SELECT CustomerID FROM Orders)
+	 * @param table1
+	 * @param table2
+	 * @return
+	 */
 	public List<String> AntiJoin(List<String> table1,List<String> table2){
 		List<String> result = new ArrayList<String>();
 		//process data in a relation tuple by tuple
@@ -139,8 +160,12 @@ public class QueryList {
 		}
 		return result;
 	}
-	//select c.CustomerID, c.CustomerName, o.OrderID from 
-	//Customers c left outer join Orders o on c.CustomerID = o.CustomerID;
+	/**
+	 * select c.CustomerID, c.CustomerName, o.OrderID from Customers c left outer join Orders o on c.CustomerID = o.CustomerID;
+	 * @param datalist1
+	 * @param datalist2
+	 * @return
+	 */
 	public List<String> LeftOuterJoin(List<String> datalist1,List<String> datalist2){
 		List<String> result = new ArrayList<String>();
 		//process data in a relation tuple by tuple

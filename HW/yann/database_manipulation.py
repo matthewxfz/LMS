@@ -39,7 +39,7 @@ def main():
         print list_nature_join[i]
 
     print ("===================================================\n"+
-          "This is the result of Out Join"+
+          "This is the result of Out Join\n"+
           "===================================================\n")
 
 
