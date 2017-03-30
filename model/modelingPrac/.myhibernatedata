@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Tue Mar 21 15:02:54 CDT 2017
+#Wed Mar 29 18:09:11 CDT 2017
 genBasicCompId=true
 sessionFactoryName=Util.HibernateSessionFactory
 profile=
@@ -18,4 +18,3 @@ genAnnotations=true
 reSettingsFile=/modeling practise/src/main/resources/hibernate.reveng.xml
 configFile=/modeling practise/src/main/resources/hibernate.cfg.xml
 createConfigFile=true
-baseDaoClass=BaseHibernateDAO
