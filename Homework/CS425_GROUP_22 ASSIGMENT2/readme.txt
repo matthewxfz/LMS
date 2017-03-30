@@ -22,3 +22,37 @@ ____________________________________________
 
 _______________________________________________
 The Java
+Compiler : Eclipse
+OS : windows 7
+These codes have implemented these 5 functions: group by with having, in, natural join, anti join and left outer join.
+The query for each function is:
+Group by having: 
+select count(*),City from Customers group by City having count(*)>1;
+
+IN:
+select CustomerID,CustomerName from Customer where CustomerID IN(select CustomerID from Order where ShipperID = 3);
+
+Natural Join:
+select * from Customers,Orders where Customers.CustomerID = Orders.CustomerID;
+
+Anti Join:
+Select* from Customers where CustomerID NOT IN(Select CustomerID from Orders);
+
+Left Outer Join:	
+select c.CustomerID, c.CustomerName, o.OrderID from Customers c left outer join Orders o on c.CustomerID = o.CustomerID;
+
+***********************************************
+Please run this code by following steps below:
+1.Open eclipse  and create a project
+2.Create package named lms.hw in the project and drag three java files into the package
+3.Put csv data files into D:/ or you can modify the path in test.java where the csv data file is.
+4.Run test.java.
+
+***********************************************
+The csv files used in the test case are Customers.csv and Orders.csv and you can find these files in CS425_GROUP_22 ASSIGMENT2.
+
+The result:
+You will find five csv files in D:/ or in the path you modified in the code after the test.java is executed.
+You can find the expected result in CS425_GROUP_22 ASSIGMENT2/expected result
+
+_______________________________________________

@@ -43,6 +43,13 @@ public class test {
         	System.out.println("Export Success");
         else
         	System.out.println("Export Failed");
+      //left outer Join test
+        result = query.LeftOuterJoin(datalist1, datalist2);
+        isSuccess = csv.exportCsv(new File("D:/LEFTOUTERJOIN.csv"), result);
+        if(isSuccess)
+        	System.out.println("Export Success");
+        else
+        	System.out.println("Export Failed");
 	}
 
 }

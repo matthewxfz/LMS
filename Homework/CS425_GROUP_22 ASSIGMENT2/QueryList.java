@@ -139,7 +139,39 @@ public class QueryList {
 		}
 		return result;
 	}
-
+	//select c.CustomerID, c.CustomerName, o.OrderID from 
+	//Customers c left outer join Orders o on c.CustomerID = o.CustomerID;
+	public List<String> LeftOuterJoin(List<String> datalist1,List<String> datalist2){
+		List<String> result = new ArrayList<String>();
+		//process data in a relation tuple by tuple
+		//and construct result list
+		for(String data1:datalist1){
+			String[] array1 = data1.split(comma);
+			int count = 0;
+			for(String data2:datalist2){//compare every tuple of the same column in relation 2
+				String[] array2 = data2.split(comma);
+				if(result.isEmpty()){//add the schema into the result
+					String line = array1[0]+comma+array1[1]+comma+array2[0];
+					result.add(line);
+					break;
+				//add data into the result if the query condition is satisfied
+				}else if(array1[0].equals(array2[1])){
+					String line = array1[0]+comma+array1[1]+comma+array2[0];
+					result.add(line);
+				}else if(array2[1].equals("CustomerID")){//if the compared line is the schema,then skip
+					continue;
+				}else//if the CustomerID doesn't exist in Orders
+					count++;
+			}
+			//determine if its CustomerID exist in Orders
+			if(count == datalist2.size()-1){
+				String line = array1[0]+comma+array1[1]+comma+"null";
+				result.add(line);
+			}
+		}
+		
+		return result;
+	}
 	
 	//Node to store data from group by and count the number of same data
 	class Node{
