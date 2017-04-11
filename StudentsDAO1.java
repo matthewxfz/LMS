@@ -45,7 +45,7 @@ public class StudentsDAO extends BaseHibernateDAO {
 
 	public Student findByUID(String UID,String PAS){
 		
-		SessionFactory sessionfactory = new Configuration().configure().buildSessionFactory();
+			
 		Session session = sessionfactory.openSession();
 		Transaction tx = session.beginTransaction();
 		String sql="select* from Student where UserID="+UID+"PAS="+PAS;
