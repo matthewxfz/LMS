@@ -1,0 +1,6 @@
+Create table RegisterTo(
+	StudentID int(11),
+	ClassID int(11),
+	primary Key(StudentId,ClassID),
+	foreign key(StudentID) references Students(StudentID),
+	foreign key(ClassID) reference Classes(ClassID));
