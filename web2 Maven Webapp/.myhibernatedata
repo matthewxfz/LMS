@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Tue Apr 11 09:44:22 CDT 2017
+#Sat Apr 15 10:22:38 CDT 2017
 genBasicCompId=true
 sessionFactoryName=edu.iit.dao.HibernateSessionFactory
 profile=
@@ -18,4 +18,3 @@ genAnnotations=false
 reSettingsFile=
 configFile=/web2 Maven Webapp/src/main/resources/hibernate.cfg.xml
 createConfigFile=true
-baseDaoClass=BaseHibernateDAO

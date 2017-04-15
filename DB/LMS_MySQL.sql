@@ -99,6 +99,13 @@ CREATE TABLE Books
   GeneratedID VARCHAR(30) NOT NULL,
   PRIMARY KEY (BookID));
 
+Create table RegisterTo(
+  StudentID int(11),
+  ClassID int(11),
+  primary Key(StudentId,ClassID),
+  foreign key(StudentID) references Students(StudentID),
+  foreign key(ClassID) references Classes(ClassID));
+
 CREATE TABLE Recommend
 (
   BookID INT NOT NULL,
