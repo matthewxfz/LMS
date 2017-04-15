@@ -102,7 +102,7 @@ CREATE TABLE Books
 Create table RegisterTo(
   StudentID int(11),
   ClassID int(11),
-  primary Key(StudentId,ClassID),
+  primary Key(StudentID,ClassID),
   foreign key(StudentID) references Students(StudentID),
   foreign key(ClassID) references Classes(ClassID));
 
