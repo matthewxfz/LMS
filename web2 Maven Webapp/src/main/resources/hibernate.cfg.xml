@@ -43,16 +43,16 @@
 		<mapping resource="edu/iit/dao/TeachBy.hbm.xml" />
 		<mapping resource="edu/iit/dao/Classes.hbm.xml" />
 		<mapping resource="edu/iit/dao/RegisterTo.hbm.xml" />
-		<mapping resource="edu/iit/bean/Books.hbm.xml" />
-		<mapping resource="edu/iit/bean/Admins.hbm.xml" />
-		<mapping resource="edu/iit/bean/Teachers.hbm.xml" />
-		<mapping resource="edu/iit/bean/Classes.hbm.xml" />
-		<mapping resource="edu/iit/bean/Recommend.hbm.xml" />
-		<mapping resource="edu/iit/bean/Orders.hbm.xml" />
-		<mapping resource="edu/iit/bean/RegisterTo.hbm.xml" />
-		<mapping resource="edu/iit/bean/Students.hbm.xml" />
-		<mapping resource="edu/iit/bean/Parents.hbm.xml" />
-		<mapping resource="edu/iit/bean/TeachBy.hbm.xml" />
+		<mapping resource="edu/iit/dao/Books.hbm.xml" />
+		<mapping resource="edu/iit/dao/Admins.hbm.xml" />
+		<mapping resource="edu/iit/dao/Teachers.hbm.xml" />
+		<mapping resource="edu/iit/dao/Classes.hbm.xml" />
+		<mapping resource="edu/iit/dao/Recommend.hbm.xml" />
+		<mapping resource="edu/iit/dao/Orders.hbm.xml" />
+		<mapping resource="edu/iit/dao/RegisterTo.hbm.xml" />
+		<mapping resource="edu/iit/dao/Students.hbm.xml" />
+		<mapping resource="edu/iit/dao/Parents.hbm.xml" />
+		<mapping resource="edu/iit/dao/TeachBy.hbm.xml" />
 
 	</session-factory>
 
