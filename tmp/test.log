@@ -5371,3 +5371,147 @@ Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lms
 14:32:29,781  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
 14:32:29,782  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
 14:32:29,783 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+15:15:54,688  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+15:15:54,859  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+15:15:54,860  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+15:15:54,861 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+15:20:27,357  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+15:20:27,597  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+15:20:27,597  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+15:20:27,598 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+15:24:10,593  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+15:24:10,736  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+15:24:10,737  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+15:24:10,738 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+16:18:25,155  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+16:18:25,472  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+16:18:25,473  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+16:18:25,474 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+16:24:12,229  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+16:24:12,488  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+16:24:12,489  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+16:24:12,491 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+16:35:20,269  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+16:35:20,575  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+16:35:20,576  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+16:35:20,578 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+19:27:09,377  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+19:27:09,645  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+19:27:09,646  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+19:27:09,648 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+19:56:45,663  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+19:56:45,898  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+19:56:45,899  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+19:56:45,900 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+19:59:11,614  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+19:59:12,155  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+19:59:12,156  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+19:59:12,158 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:08:28,739  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:08:29,032  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:08:29,033  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:08:29,035 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:10:40,255  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:10:40,474  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:10:40,475  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:10:40,476 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:12:03,725  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:12:03,976  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:12:03,976  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:12:03,978 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:14:12,519  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:14:12,961  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:14:12,962  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:14:12,963 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:18:19,662  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:18:19,921  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:18:19,922  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:18:19,923 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:20:03,042  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:20:03,234  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:20:03,234  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:20:03,236 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:20:56,041  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:20:56,286  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:20:56,287  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:20:56,289 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:22:39,371  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:22:39,705  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:22:39,708  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:22:39,710 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:26:02,007  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:26:02,360  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:26:02,361  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:26:02,363 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:29:15,449  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:29:15,792  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:29:15,795  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:29:15,798 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:33:28,039  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:33:28,219  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:33:28,219  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:33:28,220 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:34:29,468  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:34:29,735  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:34:29,736  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:34:29,737 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+20:38:46,727  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+20:38:46,952  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+20:38:46,953  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+20:38:46,954 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+22:13:29,047  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+22:13:29,232  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+22:13:29,233  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+22:13:29,234 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+22:26:42,277  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+22:26:42,469  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+22:26:42,470  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+22:26:42,471 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+12:07:30,903  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+12:07:31,267  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+12:07:31,268  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+12:07:31,269 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+12:16:25,008  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+12:16:25,158  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+12:16:25,159  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+12:16:25,160 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+12:52:39,558  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+12:52:39,919  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+12:52:39,920  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+12:52:39,921 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+12:54:11,907  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+12:54:12,051  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+12:54:12,052  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+12:54:12,053 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+13:02:14,641  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+13:02:14,786  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+13:02:14,787  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+13:02:14,788 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+13:12:56,830  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+13:12:56,973  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+13:12:56,974  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+13:12:56,975 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+14:32:06,899  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+14:32:07,053  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+14:32:07,054  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+14:32:07,054 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+14:32:28,899  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+14:32:29,167  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+14:32:29,168  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+14:32:29,170 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+14:47:31,595  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+14:47:31,776  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+14:47:31,777  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+14:47:31,778 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+14:47:44,290  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+14:47:44,498  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+14:47:44,499  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+14:47:44,500 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+15:37:39,337  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+15:37:39,515  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+15:37:39,515  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+15:37:39,516 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+16:24:07,746  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+16:24:07,984  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+16:24:07,985  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+16:24:07,986 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml

@@ -20,7 +20,8 @@ CREATE TABLE Admins
   FirstName VARCHAR(30) NOT NULL,
   MiddleName VARCHAR(30),
   PAS VARCHAR(40) DEFAULT '123456',
-  PRIMARY KEY (AdminID));
+  PRIMARY KEY (AdminID)) ENGINE = MyISAM;
+
 
 CREATE TABLE Students
 (
@@ -37,7 +38,8 @@ CREATE TABLE Students
   Email VARCHAR(20) NOT NULL,
   UserID VARCHAR(20) NOT NULL,
   PAS VARCHAR(40) DEFAULT '123456',
-  PRIMARY KEY (StudentID));
+  PRIMARY KEY (StudentID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Parents
 (
@@ -51,7 +53,8 @@ CREATE TABLE Parents
   Power Enum('0') NOT NULL,
   StudentID INT NOT NULL,
   PRIMARY KEY (LastName, FirstName,StudentID),
-  FOREIGN KEY (StudentID) REFERENCES Students(StudentID));
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Teachers
 (
@@ -67,21 +70,24 @@ CREATE TABLE Teachers
   PAS VARCHAR(40) DEFAULT '123456',
   StudentID INT NOT NULL,
   PRIMARY KEY (TeacherID),
-  FOREIGN KEY (StudentID) REFERENCES Students(StudentID));
+  FOREIGN KEY (StudentID) REFERENCES Students(StudentID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Classes
 (
   ClassID INT AUTO_INCREMENT NOT NULL,
   Section INT NOT NULL,
   Title VARCHAR(30) NOT NULL,
-  PRIMARY KEY (ClassID));
+  PRIMARY KEY (ClassID))
+  ENGINE = MyISAM;
 
 CREATE TABLE TeachBy
 (
   ClassID INT NOT NULL,
   TeacherID INT NOT NULL,
   FOREIGN KEY (ClassID) REFERENCES Classes(ClassID),
-  FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID));
+  FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Books
 (
@@ -97,21 +103,24 @@ CREATE TABLE Books
   Manufactor VARCHAR(50) NOT NULL,
   Status ENUM('available','not available') NOT NULL,
   GeneratedID VARCHAR(30) NOT NULL,
-  PRIMARY KEY (BookID));
+  PRIMARY KEY (BookID))
+  ENGINE = MyISAM;
 
 Create table RegisterTo(
   StudentID int(11),
   ClassID int(11),
   primary Key(StudentID,ClassID),
   foreign key(StudentID) references Students(StudentID),
-  foreign key(ClassID) references Classes(ClassID));
+  foreign key(ClassID) references Classes(ClassID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Recommend
 (
   BookID INT NOT NULL,
   ClassID INT NOT NULL,
   FOREIGN KEY (BookID) REFERENCES Books(BookID),
-  FOREIGN KEY (ClassID) REFERENCES Classes(ClassID));
+  FOREIGN KEY (ClassID) REFERENCES Classes(ClassID))
+  ENGINE = MyISAM;
 
 CREATE TABLE Orders
 (
@@ -127,4 +136,5 @@ CREATE TABLE Orders
   PRIMARY KEY (OrderID),
   FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
   FOREIGN KEY (BookID) REFERENCES Books(BookID),
-  FOREIGN KEY (AdminID) REFERENCES Admins(AdminID));
+  FOREIGN KEY (AdminID) REFERENCES Admins(AdminID))
+  ENGINE = MyISAM;
