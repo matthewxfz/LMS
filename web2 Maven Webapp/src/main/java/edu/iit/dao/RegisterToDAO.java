@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class RegisterToDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory.getLogger(RegisterToDAO.class);
 	// property constants
-
+	private StudentsDAO dao = new StudentsDAO();
 	public void save(RegisterTo transientInstance) {
 		log.debug("saving RegisterTo instance");
 		try {
@@ -68,7 +68,15 @@ public class RegisterToDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	public int count_book(Object stuid){
+		List<RegisterTo> ss= dao.findByProperty("studentId",stuid);
+		if(ss.isEmpty()){
+			return 0;
+		}else{
+			List<RegisterTo> ll= this.findByProperty("students",ss.get(0));
+			return ll.size();
+		}
+	}
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding RegisterTo instance with property: " + propertyName + ", value: " + value);
 		try {

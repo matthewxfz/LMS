@@ -1,6 +1,9 @@
 package edu.iit.dao;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Orders entity. @author MyEclipse Persistence Tools
@@ -26,29 +29,23 @@ public class Orders implements java.io.Serializable {
 	public Orders() {
 	}
 
-	/** minimal constructor */
-	public Orders(Books books, Admins admins, Students students, Timestamp checkinDate, Timestamp dueDate, String type,
-			String statues) {
-		this.books = books;
-		this.admins = admins;
-		this.students = students;
-		this.checkinDate = checkinDate;
-		this.dueDate = dueDate;
-		this.type = type;
-		this.statues = statues;
-	}
+
 
 	/** full constructor */
 	public Orders(Books books, Admins admins, Students students, Timestamp checkinDate, Timestamp checkoutDate,
-			Timestamp dueDate, String type, String statues) {
+		 String type, String statues) {
+		Calendar cal = Calendar.getInstance();
 		this.books = books;
 		this.admins = admins;
 		this.students = students;
 		this.checkinDate = checkinDate;
+		cal.setTime(checkinDate);
+		cal.add(Calendar.MONTH,1);
 		this.checkoutDate = checkoutDate;
-		this.dueDate = dueDate;
+		this.dueDate = (Timestamp) cal.getTime();
 		this.type = type;
 		this.statues = statues;
+		
 	}
 
 	// Property accessors
@@ -93,7 +90,7 @@ public class Orders implements java.io.Serializable {
 		this.checkinDate = checkinDate;
 	}
 
-	public Timestamp getCheckoutDate() {
+	public Date getCheckoutDate() {
 		return this.checkoutDate;
 	}
 

@@ -147,4 +147,21 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
+	
+	public List check_overdue(int p,int k){
+		
+		try {
+			String queryString = "from Orders where CheckoutDate > DueDate";
+			Query queryObject = getSession().createQuery(queryString);
+			//queryObject.setParameter(0, value);
+			queryObject.setFirstResult((p-1)*k);//显示第几页，当前页
+			queryObject.setMaxResults(2);//每页做多显示的记录数
+			 List<Orders> list=queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+		
+	}
 }
