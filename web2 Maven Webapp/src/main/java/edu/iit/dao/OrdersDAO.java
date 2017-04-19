@@ -155,7 +155,7 @@ public class OrdersDAO extends BaseHibernateDAO {
 			Query queryObject = getSession().createQuery(queryString);
 			//queryObject.setParameter(0, value);
 			queryObject.setFirstResult((p-1)*k);//显示第几页，当前页
-			queryObject.setMaxResults(2);//每页做多显示的记录数
+			queryObject.setMaxResults(k);//每页做多显示的记录数
 			 List<Orders> list=queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
