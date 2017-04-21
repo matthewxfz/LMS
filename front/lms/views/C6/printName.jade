@@ -1,0 +1,19 @@
+//
+   Created by matthewxfz on 4/12/17.
+
+extends c6layout
+
+block content
+    mixin users(users)
+        ul
+            each user in users
+                li=user
+    - abc = ['a','b','c']
+    mixin users(abc)
+    - efgh = ['e','f','g','h']
+    mixin users(efgh)
+
+    h2 Inline JavaScript
+        script.alter('inline javas script in jade')
+
+    include ../footer

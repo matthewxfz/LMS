@@ -1,0 +1,15 @@
+    //
+   Created by matthewxfz on 4/12/17.
+
+extends ../layout
+block content
+    h1 new task view
+
+    form(role='form', method='post', method='/task')
+        fieldset
+            legend Add a task
+            div.form-group
+                lable task
+                input(name='task[task]', class='form-control')
+             button.btn.btn-primary(type='submit') Submit
+             button.btn.btn-default(type='reset') Clear

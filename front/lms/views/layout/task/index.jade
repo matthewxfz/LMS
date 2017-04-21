@@ -1,0 +1,22 @@
+//
+   Created by matthewxfz on 4/12/17.
+
+extends ../layout
+
+block content
+    h1 task
+    p
+        a(href='/task/new', class='btn btn-primary') Add a Task
+
+    - if(doc.length)
+        table.table
+            tr
+                th Task
+                th &nbsp;
+                    each task in docs
+                        tr
+                            td #{task.task}
+                            td
+                                a.btn.btn-default(href='/tasks/#{task.id}/edit') Edit
+    - else
+        p You don't have any tasks!

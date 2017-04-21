@@ -1,0 +1,147 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1.page-header  Search Books
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/dashboard') Dashboard
+                li.active
+                    i.fa.fa-edit
+                    |  Search Books
+    .row
+        .col-lg-6.col-lg-offset-3
+            .form-group.input-group
+                input#search-input.form-control(type = 'text', placeholder='Enter title, author, or ISBN')
+                span.input-group-btn
+                    button#search-btn.btn.btn-default(type='button')
+                        i.fa.fa-search
+    .row
+        #msg-brand.alert.alert-danger
+            strong oops
+            #msg
+    .row
+        .col-lg-12
+            h3 Here is your luck
+            .table-responsive
+                table.table.table-bordered.table-hover.table-striped
+                    thead
+                        tr
+                            th BookId
+                            th Title
+                            th Author
+                            th Publisher
+                            th Available
+                    tbody#search-table
+                        tr
+                            td
+                            td
+                            td
+                            td
+                            td
+
+    .row
+        .col-sm-2.col-sm-offset-3
+            button#lastpage.btn.btn-default(type='button') Last Page
+        .col-sm-2
+            select#search-selector.form-control
+                option 1
+                option 2
+                option 3
+                option 4
+                option 5
+        .col-sm-2
+             button#nextpage.btn.btn-default(type='button') Next Page
+
+
+    script.
+        $('#msg-brand').hide();
+        var duebooks;
+        var rentbooks;
+        var capacity;
+        var username=" ";
+        var page = 1;
+        var keyword="";
+        var pagesize=6;
+        var totalPage=1;
+
+        //update all books student could have
+        //update rent books
+        //update due books
+
+
+        //searching mechanism
+        var timer; // external so it's value is held over all instances of the timer function
+        $('#search-input').on('keyup', function () {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                keyword = $('#search-input').val();
+                search_update(keyword);
+            }, 500);
+        });
+
+        //searching button
+        $('#search-btn').click(function () {
+            keyword = $('#search-input').val();
+            search_update(keyword);
+        });
+
+        //last button
+        $('#lastpage').click(function(){
+            search_update(keyword,page+1, pagesize)
+        });
+        //next button
+        //select the page
+
+        function search_update(keyword){
+            var books = "";
+            if(keyword != ""){
+                $.post(document.location.origin + '/searchBooks', {
+                    keyword: keyword,
+                    pagenumber: page,
+                    pagesize:pagesize
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    books = data.responseJSON.content?data.responseJSON.content:"";
+                    console.log(books);
+                    if (data.status == 'false') {
+                        showError('Inner server errors!');
+                    } else {
+                        updateTable(books);
+                        page = data.responseJSON.page?data.responseJSON.page:page;
+                        newTp = data.responseJSON.totalPage?data.responseJSON.totalPage:totalPage;
+                        updateSelector(page,totalPage,newTp);
+                    }
+                });
+            }
+        }
+
+        function updateTable(books){
+            $('#search-table').empty();
+            for (i = 0; i < books.length; i++) {
+                book = books[i];
+                $('#search-table').append("<tr><td>"+book.bookId+"</td><td>"+book.title+"</td><td>"+book.author+"</td><td>"+book.publisher+"</td><td>"+book.status+"</td></tr>")
+            }
+        }
+
+        function updateSelector(page, preTp, newTp){
+           // $('#search-selector').empty();
+            if(newTp >= preTp){
+                for( i = preTp;i<=newTp;i++){
+                    $('#search-selector').append("<option>"+i+"</option>");
+                }
+            }else {
+                $('#search-selector').empty();
+                for (i = 1; i <= newTp; i++) {
+                    $('#search-selector').append("<option>" + i + "</option>");
+                }
+            }
+
+            totalPage = newTp;
+        }
+

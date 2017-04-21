@@ -1,0 +1,75 @@
+//
+   Created by matthewxfz on 4/14/17.
+doctype html
+html(lang='en')
+    head
+        title LMS-Student
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+        script(type='text/javascript',src='javascripts/lib/socket.io.js')
+        //link(rel='text/javascript', href='javascript/lib/socket.io.js')
+        link(rel='stylesheet', href='stylesheets/login_style.css')
+
+
+
+    body#myPage(data-spy='scroll', data-target='.navbar', data-offset='60')
+        #title-box.jumbotron.text-center
+             h1#library Hawk Library
+             //h3#quote Knowledge is power - Matthew Xiong
+        #login-box.container-fluid
+            .row
+                .col-sm-12
+                    h2 Student Login
+                    //(style='display:none')
+                    #msg-brand.alert.alert-danger
+                        strong oops
+                        #msg
+                    form#login-form
+                        .form-group
+                            label(for='email') Email:
+                            |
+                            input#account.form-control(type='email', placeholder='Enter email',required)
+                        .form-group
+                            label(for='pwd') Password:
+                            |
+                            input#pwd.form-control(type='password', placeholder='Enter password',required)
+                        .checkbox
+                            label
+                                input(type='checkbox')
+                                |  Remember me
+                        |
+                        button#submitBtn.btn.btn-default(type='button') Submit
+            script(type='text/javascript', src='javascripts/student/login.js')
+
+
+
+
+        include include/footer
+
+        //
+
+                        socket.on('direct',function (message) {
+                            window.location.href = "http://"+window.location.hostname+message.content;
+                        });
+        //var socket = io.connect('http://localhost:8081/login');
+        //                console.log("after connnection");
+        //
+        //                /*Initializing the connection with the server via websockets */
+        //                socket.on("message", function (message) {
+        //                    toggleInput('on');
+        //                    msg = JSON.parse(message);
+        //                    if(msg.status == 'ok'){
+        //                        $('#msg').text('Server issue, please try again later!');
+        //                        $('#msg-brand').show();
+        //                    }else{
+        //                        $('#msg').text(msg.content);
+        //                        $('#msg-brand').show();
+        //                    }
+        //                    console.log(msg);
+        //                });
+
+
