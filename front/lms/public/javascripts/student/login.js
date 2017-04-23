@@ -39,7 +39,7 @@ $(function () {
     $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
         var data = {
             /*creating a Js ojbect to be sent to the server*/
-            account: $('#account').val(), /*getting the text input data      */
+            account: $('#account').val()+"@hawk.iit.edu", /*getting the text input data      */
             pwd: $('#pwd').val()
         }
 

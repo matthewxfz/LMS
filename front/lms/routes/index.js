@@ -23,20 +23,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-    console.log(req.body);
-    // if(!validator.isEmail(req.body.param.account) || validator.isEmpty(req.body.param.account)){
-    //     msg.title = 'error';
-    //     msg.content = 'the input is illegal!'
-    //     console.log('[ERROR]'+JSON.stringify(msg));
-    //     res.send(msg);
-    // }else{// ask authorization for server
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('student/dashboard',{title:'LMS-student'})
+    }
+    else{
         console.log('[Sending data to AA]')
         postLoginRequest(req, res,'loginServer');
-    // }
+    }
 });
 
 router.get('/dashboard',function (req,res,next){
-    res.render('student/dashboard');
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('student/dashboard',{title:'LMS-student'})
+    }
+    else{
+        res.render('student/login', { title: 'LMS-login' });
+    }
+
 });
 
 router.get('/logout',function (req,res,next) {
@@ -123,6 +130,19 @@ router.get('/showBooks',function(req,res,next){
         // id:'HK_2018_into_3rd_123',author:"Thomas H. Cormen  (Author), Charles E. Leiserson  (Author), Ronald L. Rivest  (Author), Clifford Stein  (Author)",isbn10:'0262033844',
         //publisher:"MIT Press",ava:'available'});
         getRequestRender(req, res, {param:"bookId="+req.query.bookid},'student/showBooks');
+    }
+    else{
+        res.render('student/login', { title: 'LMS-login' });
+    }
+});
+
+router.get('/profile',function(req,res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        req.body = {userId:sess.userId};
+       res.render('student/profile');
     }
     else{
         res.render('student/login', { title: 'LMS-login' });

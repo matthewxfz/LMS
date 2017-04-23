@@ -1,0 +1,92 @@
+//
+   Created by matthewxfz on 4/14/17.
+-var duebook = 'Na';
+-var rentbook = 'Na';
+-var capacity ='Na';
+-var book1 = {title:'Na', href:''}
+-var book2 = {title:'Na', href:''}
+
+ul.nav.navbar-nav.side-nav
+    li.active(id="search_btn")
+        a(href='index')
+            i.fa.fa-dashboard.fa-fw
+            |  Search Books
+    li#due-book-btn
+        a(href='javascript:;', data-toggle='collapse', data-target='#due-list', aria-expanded='true')
+            i.fa.fa-calendar.fa-fw
+            b#due-books  Search Due Books #{duebook}
+            i.fa.fa-fw.fa-caret-down
+        ul#due-list.collapse
+            li
+                a(href=book1.href) #{book1.title}
+            li
+                a(href=book2.href) #{book2.title}
+    li#rent-book-btn
+        a(href='javascript:;', data-toggle='collapse', data-target='#rent-list',aria-expanded='true')
+            i.fa.fa-shopping-cart.fa-fw
+            b#rent-books  Search Rent Books #{rentbook}
+            i.fa.fa-fw.fa-caret-down
+        ul#rent-list.collapse
+            li
+                a(href=book1.href) #{book1.title}
+            li
+                a(href=book2.href) #{book2.title}
+
+    li#add_btn
+        a(href='javascript:;')
+            i.fa.fa-book.fa-fw
+            b  Add Book
+
+
+script.
+    console.log('side bar script');
+    var cap = 'Na';
+
+    $.post("http://localhost:8081/checkCap", function (data) {
+        //console.log(data.responseJSON);
+        if (data.status == 'false') {
+            showError('Inner server errors!');
+        } else {
+            cap = data.content ? data.content : 0;
+            $('#cap-band').text('Your capacity: '+cap);
+        }
+    })
+
+    $.post("http://localhost:8081/checkRent", function (data) {
+        //console.log(data.responseJSON);
+        if (data.status == 'false') {
+            showError('Inner server errors!');
+        } else {
+           if(data.content){
+
+               books = data.content;
+               $('#rent-list').empty();
+               for (i = 0; i < books.length;i++){
+                    book = books[i];
+                   $('#rent-list').append("<li><a href=\"/showBooks\"\?bookid="+book.bookId+"\">"+book.title+"</a></li>");
+
+               }
+               $('#rent-books').text("Rent Books "+books.length);
+           }
+        }
+    });
+
+    $.post("http://localhost:8081/checkDue", function (data) {
+        //console.log(data.responseJSON);
+        if (data.status == 'false') {
+            showError('Inner server errors!');
+        } else {
+            if (data.content) {
+
+                books = data.content;
+                $('#due-list').empty();
+                for (i = 0; i < books.length; i++) {
+                    book = books[i];
+                    $('#due-list').append("<li><a href=\"/showBooks\?bookid=" + book.bookId + "\">" + book.title + "</a></li>");
+
+                }
+                $('#due-books').text("Due Books " + books.length );
+            }
+        }
+    });
+

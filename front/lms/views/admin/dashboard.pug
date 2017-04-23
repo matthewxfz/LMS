@@ -62,11 +62,11 @@ block page-content
         var duebooks;
         var rentbooks;
         var capacity;
-        var username = " ";
+        var username=" ";
         var page = 1;
-        var keyword = "";
-        var pagesize = 6;
-        var totalPage = 1;
+        var keyword="";
+        var pagesize=6;
+        var totalPage=1;
 
         //update all books student could have
         //update rent books
@@ -92,50 +92,50 @@ block page-content
         });
 
         //last button
-        $('#lastpage').click(function () {
-            search_update(keyword, page + 1, pagesize)
+        $('#lastpage').click(function(){
+            search_update(keyword,page+1, pagesize)
         });
         //next button
         //select the page
 
-        function search_update(keyword) {
+        function search_update(keyword){
             var books = "";
-            if (keyword != "") {
+            if(keyword != ""){
                 $.post(document.location.origin + '/searchBooks', {
                     keyword: keyword,
                     pagenumber: page,
-                    pagesize: pagesize
+                    pagesize:pagesize
                 }, function (req, res, data) {
                     //console.log(data.responseJSON);
-                    books = data.responseJSON.content ? data.responseJSON.content : "";
+                    books = data.responseJSON.content?data.responseJSON.content:"";
                     console.log(books);
                     if (data.status == 'false') {
                         showError('Inner server errors!');
                     } else {
                         updateTable(books);
-                        page = data.responseJSON.page ? data.responseJSON.page : page;
-                        newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
-                        updateSelector(page, totalPage, newTp);
+                        page = data.responseJSON.page?data.responseJSON.page:page;
+                        newTp = data.responseJSON.totalPage?data.responseJSON.totalPage:totalPage;
+                        updateSelector(page,totalPage,newTp);
                     }
                 });
             }
         }
 
-        function updateTable(books) {
+        function updateTable(books){
             $('#search-table').empty();
             for (i = 0; i < books.length; i++) {
                 book = books[i];
-                $('#search-table').append("<tr><td>" + book.bookId + "</td><td>" + book.title + "</td><td>" + book.author + "</td><td>" + book.publisher + "</td><td>" + book.status + "</td></tr>")
+                $('#search-table').append("<tr><td>"+book.bookId+"</td><td>"+book.title+"</td><td>"+book.author+"</td><td>"+book.publisher+"</td><td>"+book.status+"</td></tr>")
             }
         }
 
-        function updateSelector(page, preTp, newTp) {
-            // $('#search-selector').empty();
-            if (newTp >= preTp) {
-                for (i = preTp; i <= newTp; i++) {
-                    $('#search-selector').append("<option>" + i + "</option>");
+        function updateSelector(page, preTp, newTp){
+           // $('#search-selector').empty();
+            if(newTp >= preTp){
+                for( i = preTp;i<=newTp;i++){
+                    $('#search-selector').append("<option>"+i+"</option>");
                 }
-            } else {
+            }else {
                 $('#search-selector').empty();
                 for (i = 1; i <= newTp; i++) {
                     $('#search-selector').append("<option>" + i + "</option>");
@@ -144,6 +144,4 @@ block page-content
 
             totalPage = newTp;
         }
-        $.post("http://localhost:8081/checkCap", function (data) {
-
 

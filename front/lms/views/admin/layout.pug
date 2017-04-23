@@ -1,10 +1,9 @@
-//
-   Created by matthewxfz on 4/18/17.
+-var username='matthewxfz'
 
 doctype html
 html(lang='en')
     head
-        title= 'Student-dashboard'
+        title= 'LMS-Admins'
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
@@ -14,6 +13,7 @@ html(lang='en')
         link(rel='stylesheet', type='text/css', href='stylesheets/font-awesome/css/font-awesome.min.css')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(type='text/javascript',src='javascripts/lib/socket.io.js')
     body
         #wrapper
             nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
@@ -24,7 +24,7 @@ html(lang='en')
                         span.icon-bar
                         span.icon-bar
                     |
-                    a.navbar-brand(href='index.html') SB Admin
+                    a.navbar-brand(href='   /dashboard') LMS Student
                 ul.nav.navbar-right.top-nav
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -102,9 +102,9 @@ html(lang='en')
                             li
                                 a(href='#') View All
                     li.dropdown
-                        a.dropdown-toggle(href='#', data-toggle='dropdown')
+                        a#username.dropdown-toggle(href='#', data-toggle='dropdown')
                             i.fa.fa-user
-                            |  John Smith
+                            | Unknow User
                             b.caret
                         ul.dropdown-menu
                             li
@@ -120,35 +120,31 @@ html(lang='en')
                                     i.fa.fa-fw.fa-gear
                                     |  Settings
                             li.divider
-                            li
+                            li.logOut
                                 a(href='#')
                                     i.fa.fa-fw.fa-power-off
                                     |  Log Out
                 include include/sidebar.pug
             #page-wrapper
                 .container-fluid
-                    .row
-                        .col-lg-12
-                            h1.page-header
-                                | Dashboard
-                                small Statistics Overview
-                            ol.breadcrumb
-                                li.active
-                                    i.fa.fa-dashboard
-                                    |  Dashboard
-                    .row
-                        .col-lg-12
-                            .alert.alert-info.alert-dismissable
-                                button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
-                                i.fa.fa-info-circle
-                                |
-                                strong Like SB Admin?
-                                |  Try out
-                                a.alert-link(href='http://startbootstrap.com/template-overviews/sb-admin-2') SB Admin 2
-                                |  for additional features!
+                    block page-content
 
-        //script(src='js/jquery.js')
-        //script(src='js/bootstrap.min.js')
-        //script(src='js/plugins/morris/raphael.min.js')
-        //script(src='js/plugins/morris/morris.min.js')
-        //script(src='js/plugins/morris/morris-data.js')
+        script.
+            $(".logOut").click(function () {
+                window.location.href = "/logout";
+            });
+            //update username
+            $.get(document.location.origin + '/getUserName', function (req, res, data) {
+                if (username = " ") {
+                    username = data.responseJSON.username;
+                    console.log('user name:' + username);
+                    $('#username').text(username);
+                } else {
+                    $('#username').text('Unknow User!');
+                }
+            });
+
+            function showError(msg) {
+                $('#msg').text(msg);
+                $('#msg-brand').show();
+            }

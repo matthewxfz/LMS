@@ -5571,3 +5571,7 @@ Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lms
 13:56:09,546  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
 13:56:09,549  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
 13:56:09,552 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml
+13:20:50,527  INFO ActionServlet:1686 - Loading chain catalog from jar:file:/Users/matthewxfz/Workspaces/Eclipse/.metadata/.me_tcat85/webapps/web2/WEB-INF/lib/struts-core-1.3.10.jar!/org/apache/struts/chain/chain-config.xml
+13:20:50,772  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en_US.properties Not Found.
+13:20:50,773  WARN PropertyMessageResources:352 -   Resource org/apache/struts/action/ActionResources_en.properties Not Found.
+13:20:50,775 ERROR ActionServlet:1871 - Missing configuration resource for path /WEB-INF/struts-config.xml

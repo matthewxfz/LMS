@@ -1,0 +1,43 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1#title.page-header  #{title}
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/dashboard.pug') Dashboard
+                li.active
+                    i.fa.fa-bookmark-o
+                    b#title2  #{title}
+    .row
+        .col-lg-6
+            img#cover-pic.img-thumbnail(src="http://placehold.it/400x400", alt='')
+
+        .col-lg-6
+            ul.list-group
+                li.list-group-item.active
+                    b Information
+                li.list-group-item
+                    b ID
+                    |   #{generatedId}
+                li.list-group-item
+                    b By
+                    |   #{author}
+                li.list-group-item
+                    b Publisher
+                    |   #{publisher}
+                li.list-group-item
+                    b ISBN-10
+                    |   #{isbn10}
+                li.list-group-item
+                    b Availability
+                    |   #{status}
+                li.list-group-item
+                    b Location
+                    |   HK Library
+    script.
+        var cover = '#{cover}';
+        $('#cover-pic').attr('src',cover);
