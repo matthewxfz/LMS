@@ -11,7 +11,7 @@ var SessionStore = require('session-file-store')(Session);
 var session = Session({store: new SessionStore({path: __dirname+'/tmp/sessions'}), secret: 'pass', resave: true, saveUninitialized: true});
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/admin');
 
 var app = express();
 

@@ -143,41 +143,6 @@ router.post('/reci', function (req,res,next) {
 
     response.send(JSON.stringify(user));
 });
-// c6
-router.get('/c6', function (req,res,next) {
-  res.render('C6/printName', {title:'c6'});
-});
 
-//c7
-router.get('/c7:id', function(req,res,next){
-  res.send("This is use ;"+req.params.id);
-});
-
-//c7_1
-router.get('/c7/1', function(req,res,next){
-  var user = {
-    first_name :'Fangzhou',
-    last_name : 'Xinog'
-  };
-  res.render('c7/index', {title:'c7', user:user})
-});
-
-//c8/task
-router.get('/c8/task',function(req,res,next){
-
-});
-
-
-router.get('/c11',function(req, res, next){
-    res.render('c11/index', {title:'HOME'});
-});
-
-router.get('/c11/about',function(req, res, next){
-  res.render('c11/about', {title:'about'});
-});
-
-router.get('/c11/contact',function(req, res, next){
-  res.render('c11/contact', {title:'contact'});
-});
 
 module.exports = router;
