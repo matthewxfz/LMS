@@ -1,0 +1,12 @@
+test & update log
+1.bookdao normal search check
+1.bookdao key word search check
+2.studentdao update check
+3.class foreign key book id, insert or update class with book classdao
+4.bookdao foreign key from order count where
+5.bookdao search ability
+6.orderdao search
+7.orderdao search ---student overdue
+8.orderdao search ---student record
+9.studetndao,staffdao power
+10. registerdao count group by student

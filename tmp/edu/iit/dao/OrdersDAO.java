@@ -1,6 +1,7 @@
 package edu.iit.dao;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
@@ -148,14 +149,15 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 	
-	public List check_overdue(int p,int k){
+	public List findAllDueBooks(int pageNumber,int pageSize){
 		
 		try {
-			String queryString = "from Orders where CheckoutDate > DueDate";
+			String queryString = "from Orders where Statues =? and Date(now()) > DueDate";
 			Query queryObject = getSession().createQuery(queryString);
-			//queryObject.setParameter(0, value);
-			queryObject.setFirstResult((p-1)*k);//显示第几页，当前页
-			queryObject.setMaxResults(k);//每页做多显示的记录数
+			Object value ="Open";
+			queryObject.setParameter(0, value);
+			queryObject.setFirstResult((pageNumber-1)*pageSize);//显示第几页，当前页
+			queryObject.setMaxResults(pageSize);//每页做多显示的记录数
 			 List<Orders> list=queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
@@ -164,4 +166,108 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 		
 	}
+
+	public List findDueBooksByStudentId(int pageNumber,int pageSize,Students sd){
+		try {
+			String queryString = "from Orders where Statues =? and Date(now()) > DueDate and StudentID = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			Object value ="Open";
+			queryObject.setParameter(0, value);
+			queryObject.setParameter(1, sd.getStudentId());
+			queryObject.setFirstResult((pageNumber-1)*pageSize);//显示第几页，当前页
+			queryObject.setMaxResults(pageSize);//每页做多显示的记录数
+			 List<Orders> list=queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findAllBooksByStudentId(int pageNumber,int pageSize,Students sd){
+		try {
+			String queryString = "from Orders where StudentID = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, sd.getStudentId());
+			queryObject.setFirstResult((pageNumber-1)*pageSize);//显示第几页，当前页
+			queryObject.setMaxResults(pageSize);//每页做多显示的记录数
+			 List<Orders> list=queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findALLBooks_book_ByStudentId(int pageNumber,int pageSize,Students sd){
+		try {
+			List<Orders> overdue_order=findAllBooksByStudentId(pageNumber,pageSize,sd);
+			List<Books> overdue_book = new ArrayList<Books>();
+			for(int i =0; i<overdue_order.size();i++){
+				overdue_book.add(overdue_order.get(i).getBooks());
+			}
+			return overdue_book;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findDueBooks_book_ByStudentId(int pageNumber,int pageSize,Students sd){
+		try {
+			List<Orders> overdue_order=findDueBooksByStudentId(pageNumber,pageSize,sd);
+			List<Books> overdue_book = new ArrayList<Books>();
+			for(int i =0; i<overdue_order.size();i++){
+				overdue_book.add(overdue_order.get(i).getBooks());
+			}
+			return overdue_book;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findAllrentBooks(int pageNumber,int pageSize){
+		
+		try {
+			String queryString = "from Orders where Statues =?";
+			Query queryObject = getSession().createQuery(queryString);
+			Object value ="Open";
+			queryObject.setParameter(0, value);
+			queryObject.setFirstResult((pageNumber-1)*pageSize);//显示第几页，当前页
+			queryObject.setMaxResults(pageSize);//每页做多显示的记录数
+			 List<Orders> list=queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+		
+	}
+public List find_overdue_student(int pageNumber,int pageSize){
+		
+		try {
+			
+			List<Orders> overdue_order=findAllDueBooks(pageNumber,pageSize);
+			List<Students> overdue_student = new ArrayList<Students>();
+			for(int i =0; i<overdue_order.size();i++){
+				overdue_student.add(overdue_order.get(i).getStudents());
+			}
+			return overdue_student;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+		
+	}
+public List check_overdue_book(int pageNumber,int pageSize){
+	try {
+		List<Orders> overdue_order=findAllDueBooks(pageNumber,pageSize);
+		List<Books> overdue_book= new ArrayList<Books>();
+		for(int i =0; i<overdue_order.size();i++){
+			overdue_book.add(overdue_order.get(i).getBooks());
+		}
+		return overdue_book;
+	} catch (RuntimeException re) {
+		log.error("find by property name failed", re);
+		throw re;
+	}
+	
+}
 }

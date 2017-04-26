@@ -10,7 +10,7 @@ public class test_login {
 	
 	public static void main(String[] args){
 		StudentsDAO dao = new StudentsDAO();
-		Object email ="xf@gmail.com";
+		Object email ="fxiong4@hawk.iit.edu";
 		String password ="123456";
 		List<Students>  ll = dao.findByEmail(email);
 		if(ll.isEmpty()){
