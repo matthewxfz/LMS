@@ -11,7 +11,7 @@ var SessionStore = require('session-file-store')(Session);
 var session = Session({store: new SessionStore({path: __dirname+'/tmp/sessions'}), secret: 'pass', resave: true, saveUninitialized: true});
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/admin');
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 console.log('loading router');
 app.use('/', index);
-app.use('/users', users);
+app.use('/admin', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

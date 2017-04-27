@@ -26,7 +26,7 @@ function postRequest(req, res,mark) {
 
 	var callBack = function(error, response, body, data) {
 		
-		console.log('---------- post login request url -----------',ApplicationServer.baseUrl+req.url);
+		console.log('---------- post login request url -----------',ApplicationServer.baseUrl+req.originalUrl);
 		console.log('---------- post login request param -----------',msg);
 		console.log('---------- post login request response body -----------',body);
 		

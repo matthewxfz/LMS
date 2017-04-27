@@ -39,7 +39,7 @@ $(function () {
     $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
         var data = {
             /*creating a Js ojbect to be sent to the server*/
-            account: $('#account').val()+"@hawk.iit.edu", /*getting the text input data      */
+            account: $('#account').val()+"@iit.edu", /*getting the text input data      */
             pwd: $('#pwd').val()
         }
 
@@ -48,7 +48,7 @@ $(function () {
         if(validateLoginForm()){
             toggleInput('off');
             console.log('post');
-            $.post("http://localhost:8081/login", {account: data.account, password: data.pwd}, function (req, res, data) {
+            $.post("http://localhost:8081/admin/login", {account: data.account, password: data.pwd}, function (req, res, data) {
                 console.log(data.responseJSON.title);
                 if (data.responseJSON.title == 'pass') {
                     window.location.href = "/dashboard";

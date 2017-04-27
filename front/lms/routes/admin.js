@@ -1,14 +1,5 @@
 var express = require('express');
-var http = require('http');
 var router = express.Router();
-var io = require('socket.io');
-var request = require('request');
-var validator = require('validator');
-var postLoginRequest = require('../modules/postLoginRequest');
-var postRequest = require('../modules/postRequest');
-var getRequestRender = require('../modules/getRequestRender')
-var config = require("../config/config");
-io = io.listen(this.server);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,7 +9,7 @@ router.get('/', function(req, res, next) {
         res.redirect('/dashboard');
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -26,7 +17,7 @@ router.post('/login', function(req, res, next) {
     sess=req.session;
     if(sess.email)
     {
-        res.render('student/dashboard',{title:'LMS-student'})
+        res.render('admin/dashboard',{title:'LMS-student'})
     }
     else{
         console.log('[Sending data to AA]')
@@ -38,10 +29,10 @@ router.get('/dashboard',function (req,res,next){
     sess=req.session;
     if(sess.email)
     {
-        res.render('student/dashboard',{title:'LMS-student'})
+        res.render('admin/dashboard',{title:'LMS-student'})
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 
 });
@@ -65,7 +56,7 @@ router.get('/getUserName', function(req,res, next){
         res.send({username:req.session.userName});
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -77,7 +68,7 @@ router.post('/searchBooks*', function(req, res,next){
         postRequest(req, res, "");
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -90,7 +81,7 @@ router.post('/checkCap', function(req, res,next){
         postRequest(req, res, "");
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -103,7 +94,7 @@ router.post('/checkRent', function(req, res,next){
         postRequest(req, res, "");
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -116,7 +107,7 @@ router.post('/checkDue', function(req, res,next){
         postRequest(req, res, "");
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -129,10 +120,10 @@ router.get('/showBooks',function(req,res,next){
         // res.render('student/showBooks',{title:'Introduction to Algorithms, 3rd Edition', cover:'https://images-na.ssl-images-amazon.com/images/I/41-1VkO%2B1lL._SX359_BO1,204,203,200_.jpg',
         // id:'HK_2018_into_3rd_123',author:"Thomas H. Cormen  (Author), Charles E. Leiserson  (Author), Ronald L. Rivest  (Author), Clifford Stein  (Author)",isbn10:'0262033844',
         //publisher:"MIT Press",ava:'available'});
-        getRequestRender(req, res, {param:"bookId="+req.query.bookid},'student/showBooks');
+        getRequestRender(req, res, {param:"bookId="+req.query.bookid},'admin/showBooks');
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
@@ -142,12 +133,11 @@ router.get('/profile',function(req,res,next){
     if(sess.email)
     {
         req.body = {userId:sess.userId};
-       res.render('student/profile');
+        res.render('admin/profile');
     }
     else{
-        res.render('student/login', { title: 'LMS-login' });
+        res.render('admin/login', { title: 'LMS-login' });
     }
 });
-
 
 module.exports = router;

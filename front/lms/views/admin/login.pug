@@ -23,7 +23,7 @@ html(lang='en')
         #login-box.container-fluid
             .row
                 .col-sm-12
-                    h2 Student Login
+                    h2 Admin Login
                     //(style='display:none')
                     #msg-brand.alert.alert-danger
                         strong oops
@@ -33,7 +33,7 @@ html(lang='en')
                             label(for='email') Email:
                             .input-group
                                 input#account.form-control(type='email', placeholder='Enter email',required)
-                                span.input-group-addon @hawk.iit.edu
+                                span.input-group-addon @iit.edu
                         .form-group
                             label(for='pwd') Password:
                             |
@@ -44,11 +44,10 @@ html(lang='en')
                                 |  Remember me
                         |
                         button#submitBtn.btn.btn-default(type='button') Submit
-            script(type='text/javascript', src='javascripts/student/login.js')
+            script(type='text/javascript', src='javascripts/admin/login.js')
 
 
 
 
         include include/footer
-
 

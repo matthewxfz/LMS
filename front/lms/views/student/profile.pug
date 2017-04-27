@@ -1,0 +1,110 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1.page-header Profile
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/dashboard') Dashboard
+                li.active
+                    i.fa.fa-bookmark-o
+                    b  Profile
+    .row
+        .col-lg-12
+            h1#msg #{title}
+    form(role='form')
+        .form-group
+            label Name
+            .input-group
+                span.input-group-addon @First Name
+                |
+                input#first_name.form-control(type='text', placeholder='First Name')
+                span.input-group-addon @Middle Name
+                |
+                input#middle_name.form-control(type='text', placeholder='Middle Name')
+                span.input-group-addon @Last Name
+                |
+                input#last_name.form-control(type='text', placeholder='Last Name')
+            label Student ID
+            input#student_id.form-control(type='text', placeholder='Student Id Number')
+            label Email
+            input#email.form-control(type='text', placeholder='@hawk.iit.edu', disabled)
+            label Power
+            input#power.form-control(type='text', placeholder='Can/Cannot Rent Book', disabled)
+            label address
+            input#address.form-control(type='text', placeholder='country, state, city, street')
+            lable Parents
+            .input-group
+                span.input-group-addon @First Name
+                |
+                inpu#parent_first_name.form-control(type='text', placeholder='First Name')
+                span.input-group-addon @Last Name
+                |
+                input#parent_last_name.form-control(type='text', placeholder='Last Name')
+                span.input-group-addon @Phone Number
+                |
+                input#parent_phone_number.form-control(type='text', placeholder='Phone Number')
+        button#save-btn.btn.btn-primary(type='submit') Save
+    script.
+        var student = {first_name : '#{first_name}',
+            middle_name : '#{middle_name}',
+         last_name : '#{last_name}',
+         student_id : '#{student_id}',
+         email : '#{email}',
+         address : '#{address}',
+         parent_last_name : '#{parent_last_name}',
+         parent_first_name : '#{parent_first_name}',
+         parent_phone_number : '#{parent_phone_number}',
+         power : '#{power}'}
+
+        update(student);
+
+        $.save-btn.onclick(function(){
+            //check if anything is different
+        });
+
+        function checkDifferent(){
+            if($('#first_name').val() == student.first_name &&
+            $('#middle_name').val() == student.middle_name &&
+            $('#last_name').val() == student.last_name &&
+            $('#student_id').val() == student.student_id &&
+            $('#email').val() == student.email &&
+            $('#address').val() == student.address &&
+            $('#parent_last_name').val() == student.parent_last_name &&
+            $('#parent_first_name').val() == student.parent_first_name &&
+            $('#parent_phone_number').val() == student.parent_phone_number &&
+            $('#power').val() == student.power){
+                //do nothing
+            }else{
+                $.post(document.location.origin + '/updateProfile',
+                    JSON.stringify(student)
+                , function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    books = data.responseJSON.content ? data.responseJSON.content : "";
+                    console.log(books);
+                    if (data.status == 'false') {
+                        showError('Inner server errors!');
+                    } else {
+                        student = data.responseJSON.content ? data.responseJSON.content : student;
+                        udate(student);
+                    }
+                });
+            }
+        }
+
+
+        function update(student){
+            $('#first_name').attr('src', student.first_name);
+            $('#middle_name').attr('src', student.middle_name);
+            $('#last_name').attr('src', student.last_name);
+            $('#student_id').attr('src', student.student_id);
+            $('#email').attr('src', student.email);
+            $('#address').attr('src', address);
+            $('#parent_last_name').attr('src', student.parent_last_name);
+            $('#parent_first_name').attr('src', student.parent_first_name);
+            $('#parent_phone_number').attr('src', student.parent_phone_number);
+            $('#power').attr('src', student.power);
+        }

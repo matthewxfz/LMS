@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //You can configure one or multiple paths can access this Servlet
-@WebServlet(urlPatterns = { "/annotationExample", "/annExample" }, initParams = {
-		@WebInitParam(name = "emailSupport1", value = "abc@example.com"),
-		@WebInitParam(name = "emailSupport2", value = "tom@example.com") })
+//@WebServlet(urlPatterns = { "/annotationExample", "/annExample" }, initParams = {
+//		@WebInitParam(name = "emailSupport1", value = "abc@example.com"),
+//		@WebInitParam(name = "emailSupport2", value = "tom@example.com") })
 public class AnnotationExampleServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

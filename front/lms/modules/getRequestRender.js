@@ -35,20 +35,23 @@ function getRequestRender(req, res, dataBody,renderUrl) {
 					res.set('Content-Type','application/json; charset=utf-8')
 					res.render(renderUrl,bodyData);
                 }else{
-                    res.send({title:'error',content:'Seems There is no information about this book'});
+                    res.render(renderUrl,{
+                        title: 'Error in inner server',
+                        content: 'Error in inner server'
+                    });
                 }
             }else{
-            res.send({
-                title: 'Error in inner server',
-                content: 'Error in inner server'
-            });
+                res.render(renderUrl,{
+                    title: 'Error in inner server',
+                    content: 'Error in inner server'
+                });
       	  }
     	} else {
 
-        res.send({
-            title: 'Error in inner server',
-            content: 'Error in inner server'
-       		 });
+            res.render(renderUrl,{
+                title: 'Error in inner server',
+                content: 'Error in inner server'
+            });
     	}
 };
 	

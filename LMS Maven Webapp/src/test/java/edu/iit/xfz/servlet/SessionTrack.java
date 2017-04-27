@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.util.*;
 
-@WebServlet(urlPatterns = { "/SessionTrack" })
+//@WebServlet(urlPatterns = { "/SessionTrack" })
 public class SessionTrack extends HttpServlet {
 	/**
 	 * 
