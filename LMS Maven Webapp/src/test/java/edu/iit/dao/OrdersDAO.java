@@ -1,10 +1,13 @@
 package edu.iit.dao;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +73,30 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	public void update_order(int bookid,int studentid){
+		//Orders or= this.fin
+		try {
+			String queryString = "from Orders where BookID =? and Statues = ? and StudentID = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			Transaction tx = getSession().beginTransaction();
+			Object value = "Open";
+			queryObject.setParameter(0, bookid);
+			queryObject.setParameter(1, "Open");
+			queryObject.setParameter(2, studentid);
+			List<Orders> list = queryObject.list();
+			Orders temp_order = list.get(0);
+			ZoneId zonedId = ZoneId.of( "America/Chicago" );
+			LocalDate ltoday = LocalDate.now( zonedId );
+			java.util.Date today = java.sql.Date.valueOf(ltoday);
+			temp_order.setCheckoutDate(today);
+			temp_order.setStatues("Closed");
+			tx.commit();
+			getSession().close();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}			
+	}
 	public List findByExample(Orders instance) {
 		log.debug("finding Orders instance by example");
 		try {
@@ -201,9 +227,10 @@ public class OrdersDAO extends BaseHibernateDAO {
 
 	public List findAllBooksByStudentId(int pageNumber, int pageSize, Integer studentId) {
 		try {
-			String queryString = "from Orders where StudentID = ?";
+			String queryString = "from Orders where StudentID = ? and Statues = ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, studentId);
+			queryObject.setParameter(1, "Open");
 			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
 			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
 			List<Orders> list = queryObject.list();
