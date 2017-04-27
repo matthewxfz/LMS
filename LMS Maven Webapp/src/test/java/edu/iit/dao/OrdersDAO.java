@@ -26,11 +26,23 @@ public class OrdersDAO extends BaseHibernateDAO {
 	public static final String TYPE = "type";
 	public static final String STATUES = "statues";
 
-	public void save(Orders transientInstance) {
+	public void save(Orders transientInstance) throws Exception{
 		log.debug("saving Orders instance");
 		try {
-			getSession().save(transientInstance);
-			log.debug("save successful");
+			Students student =new Students();
+			student =transientInstance.getStudents();
+			RegisterToDAO rdao= new RegisterToDAO();
+			OrdersDAO odao= new OrdersDAO();
+			StudentsDAO sudao= new StudentsDAO();
+			int capacity= sudao.booktoborrow(student.getStudentId());
+			List bookrent = odao.findALLBooks_book_ByStudentId(1, 20, student.getStudentId());
+			if(capacity>bookrent.size()){
+				getSession().save(transientInstance);
+				log.debug("save successful");
+			}else{
+				throw new Exception("Out of Capacity");
+				//System.out.println("Out of Capacity");
+			}
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
@@ -187,11 +199,11 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findAllBooksByStudentId(int pageNumber, int pageSize, Students sd) {
+	public List findAllBooksByStudentId(int pageNumber, int pageSize, Integer studentId) {
 		try {
 			String queryString = "from Orders where StudentID = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, sd.getStudentId());
+			queryObject.setParameter(0, studentId);
 			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
 			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
 			List<Orders> list = queryObject.list();
@@ -202,9 +214,9 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findALLBooks_book_ByStudentId(int pageNumber, int pageSize, Students sd) {
+	public List findALLBooks_book_ByStudentId(int pageNumber, int pageSize, Integer studentId) {
 		try {
-			List<Orders> overdue_order = findAllBooksByStudentId(pageNumber, pageSize, sd);
+			List<Orders> overdue_order = findAllBooksByStudentId(pageNumber, pageSize, studentId);
 			List<Books> overdue_book = new ArrayList<Books>();
 			for (int i = 0; i < overdue_order.size(); i++) {
 				overdue_book.add(overdue_order.get(i).getBooks());
@@ -279,9 +291,5 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 
 	}
-<<<<<<< HEAD
 
-}
-=======
->>>>>>> origin/master
 }

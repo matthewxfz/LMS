@@ -93,11 +93,11 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	public int booktoborrow(Students sd){
+	public int booktoborrow(Integer studentId){
 		try {
 			String queryString = "from RegisterTo where StudentID = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, sd.getStudentId());
+			queryObject.setParameter(0, studentId);
 			//List<Integer> bb=new ArrayList<Integer>();
 			//bb=queryObject.list();
 			return queryObject.list().size();
