@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns={"/Refresh"})
+//@WebServlet(urlPatterns={"/Refresh"})
 public class Refresh extends HttpServlet{
 	// Method to handle GET method request.
 	   public void doGet(HttpServletRequest request, HttpServletResponse response)

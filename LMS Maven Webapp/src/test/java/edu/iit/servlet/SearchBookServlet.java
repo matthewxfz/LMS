@@ -1,10 +1,11 @@
-package edu.iit.xfz.servlet;
+package edu.iit.servlet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,8 @@ import edu.iit.bean.SearchBookMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
 
+//search
+@WebServlet(urlPatterns = { "/search" })
 public class SearchBookServlet extends HttpServlet{
 	/**
 	 * 
