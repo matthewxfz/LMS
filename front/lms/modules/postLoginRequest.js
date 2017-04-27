@@ -17,8 +17,8 @@ function postLoginRequest(req, res,mark) {
 			'node': 'open'
 		},
 		method: 'POST',
-        baseUrl: 'http://localhost:8080',
-        url: '/web2/auth',
+        baseUrl: ApplicationServer.baseUrl,
+        url: req.originalUrl,
 		body: JSON.stringify(msg),
 		//qs:{sid:session.id}
 	}
@@ -26,7 +26,7 @@ function postLoginRequest(req, res,mark) {
 
 	var callBack = function(error, response, body, data) {
 		
-		console.log('---------- post login request url -----------',ApplicationServer.baseUrl+ApplicationServer.authUrl);
+		console.log('---------- post login request url -----------'+ApplicationServer.baseUrl+req.originalUrl);
 		console.log('---------- post login request param -----------',account);
 		console.log('---------- post login request response body -----------',body);
 		

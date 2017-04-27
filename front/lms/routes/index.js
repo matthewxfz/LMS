@@ -149,20 +149,5 @@ router.get('/profile',function(req,res,next){
     }
 });
 
-router.get('/allnew',function (req,res,next) {
-    res.render('student/allnew');
-});
-router.post('/reci', function (req,res,next) {
-    var msg = JSON.parse(req.data);
-    console.log('hello');
-    console.log('Get msg'+msg);
-    var user = {
-        'id':'A10234',
-        'name':'matthewxfz'
-    }
-
-    response.send(JSON.stringify(user));
-});
-
 
 module.exports = router;
