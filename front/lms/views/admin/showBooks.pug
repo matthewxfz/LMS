@@ -39,11 +39,14 @@ block page-content
                     b Location
                     |   HK Library
     #msg-success-band.alert.alert-success
-        strong Lucky for you!
+        strong#msg-suc-head  Lucky for you!
         #msg-suc  Something have been done.
     #msg-fail-band.alert.alert-danger
-        strong Oops!
+        strong#msg-fail-head Oops!
         #msg-fail  Something wrong!
+    #msg-info-band.alert.alert-info
+        strong#msg-info-head Oops!
+        #msg-info  Something wrong!
     .row
         .col-sm-12
             form
@@ -54,13 +57,16 @@ block page-content
                         |
                         small.form-text.text-muted Input the Student Id
     .row
-        .col-sm-6
-            button#showbook-update-btn.btn.btn-success(type='button') Update This book
-        .col-sm-6
-            .col-sm-2.col-sm-offset-3
+        .col-sm-3
+            //button#showbook-update-btn.btn.btn-success(type='button') Update This book
+        .col-sm-9
+            .col-sm-3
+                button#showbook-check-btn.btn.btn-secondary(type='button') Check Avalibility
+
+            .col-sm-3
                 button#showbook-rent-btn.btn.btn-primary(type='button') Rent This Book
 
-            .col-sm-2.col-sm-offset-3
+            .col-sm-3
                 button#showbook-return-btn.btn.btn-danger(type='button') Return This Book
 
     script.
@@ -73,22 +79,23 @@ block page-content
 
         $('#showbook-rent-btn').click(function(){
             s_id=$('#id_input').val();
-            if (s_id == undefined) {
+            if (s_id == "") {
                 showFail("The Student id is empty");
             } else {
                 $.post(document.location.origin + '/admin/tradeBook', {
-                    bookId: m_bookId,
+                    generatedId: m_bookId,
                     studentId: s_id,
-                    AdminID: "1",
-                    rent: "true"
+                    adminId: "1",
+                    operation: "rent",
+                    commit:"true"
                 }, function (req, res, data) {
-                    //console.log(data.responseJSON);
-                    books = data.responseJSON.content ? data.responseJSON.content : "";
-                    console.log(books);
-                    if (data.status == 'true') {
-                        showSuc(data.title);
+                    //console.log(data.responseJSON)
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showSuc(msg.title, msg.content);
                     } else {
-                        showFail("Inner Server Error!");
+                        showFail(msg.title, msg.content);
                     }
                 });
             }
@@ -96,40 +103,81 @@ block page-content
 
         $('#showbook-return-btn').click(function () {
             s_id = $('#id_input').val();
-            if(s_id == undefined) {
+            if(s_id == "") {
                 showFail("The Student id is empty");
             }else{
                 $.post(document.location.origin + '/admin/tradeBook', {
-                    bookId: m_bookId,
+                    generatedId: m_bookId,
                     studentId: s_id,
-                    rent: "false"
+                    adminId: "1",
+                    operation: "return",
+                    commit: "true"
                 }, function (req, res, data) {
                     //console.log(data.responseJSON);
-                    books = data.responseJSON.content ? data.responseJSON.content : "";
-                    console.log(books);
-                    if (data.status == 'true') {
-                        showSuc(data.title);
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showSuc(msg.title, msg.content);
                     } else {
-                        showFail("Inner Server Error!");
+                        showFail(msg.title, msg.content);
+                    }
+                });
+            }
+        });
+
+        $('#showbook-check-btn').click(function () {
+            s_id = $('#id_input').val();
+            if (s_id == "") {
+                showFail("The Student id is empty");
+            } else {
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    generatedId: m_bookId,
+                    studentId: s_id,
+                    adminId: "1",
+                    operation: "rent",
+                    commit: "false"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showRentInfo(msg.title, msg.content);
+                    } else {
+                        showFail(msg.title, msg.content);
                     }
                 });
             }
         });
 
 
-        function showFail(content){
+        function showFail(title, content){
             $('#msg-fail').text(content);
+            $('#msg-fail-head').text(title);
+
             $('#msg-fail-band').show();
+            $('#msg-info-band').hide();
             $('#msg-success-band').hide();
         }
 
+        function showRentInfo(title,content){
+            $('#msg-info').text(content);
+            $('#msg-info-head').text(title);
+
+            $('#msg-info-band').show();
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').hide();
+        }
         function hideBand(){
             $('#msg-fail-band').hide();
             $('#msg-success-band').hide();
+            $('#msg-info-band').hide();
         }
 
-        function showSuc(content){
+        function showSuc(title,content){
             $('#msg-suc').text(content);
+            $('#msg-suc-head').text(title);
+
             $('#msg-fail-band').hide();
             $('#msg-success-band').show();
+            $('#msg-info-band').hide();
         }
