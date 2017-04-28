@@ -5,7 +5,7 @@ import java.util.List;
 public class ParentsMessage {
 	private String title;
 	private String status;
-	private String content;
+	private Parents content;
 	public String getTitle() {
 		return title;
 	}
@@ -18,10 +18,10 @@ public class ParentsMessage {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getContent() {
+	public Parents getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(Parents content) {
 		this.content = content;
 	}
 }
