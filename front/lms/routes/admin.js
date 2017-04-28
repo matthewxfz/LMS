@@ -130,9 +130,6 @@ router.get('/showBooks',function(req,res,next){
     if(sess.email)
     {
         req.body = {userId:sess.userId};
-        // res.render('student/showBooks',{title:'Introduction to Algorithms, 3rd Edition', cover:'https://images-na.ssl-images-amazon.com/images/I/41-1VkO%2B1lL._SX359_BO1,204,203,200_.jpg',
-        // id:'HK_2018_into_3rd_123',author:"Thomas H. Cormen  (Author), Charles E. Leiserson  (Author), Ronald L. Rivest  (Author), Clifford Stein  (Author)",isbn10:'0262033844',
-        //publisher:"MIT Press",ava:'available'});
         getRequestRender(req, res, {param:"bookId="+req.query.bookid},'admin/showBooks');
     }
     else{

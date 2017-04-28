@@ -13,10 +13,10 @@ block page-content
                     i.fa.fa-bookmark-o
                     b#title2  #{title}
     .row
-        .col-lg-6
-            img#cover-pic.img-thumbnail(src="http://placehold.it/400x400", alt='')
+        .col-sm-6
+            img#cover-pic(src="http://placehold.it/400x400", style="width:240px;height:300px;")
 
-        .col-lg-6
+        .col-sm-6
             ul.list-group
                 li.list-group-item.active
                     b Information
@@ -38,6 +38,51 @@ block page-content
                 li.list-group-item
                     b Location
                     |   HK Library
+    #msg-success-band.alert.alert-success
+        strong Well done!
+        #msg-suc  You successfully read this important alert message.
+    #msg-fail-band.alert.alert-danger
+        strong Oh snap!
+        #msg-fail  Change a few things up and try submitting again.
+    .row
+        .col-sm-12
+            form
+                .form-group.row.has-success
+                    label.col-sm-2.col-form-label(for='inputHorizontalSuccess') Student User Id
+                    .col-sm-10
+                        input#inputHorizontalSuccess.form-control.form-control-success(type='email', placeholder='A*****')
+                        |
+                        small.form-text.text-muted Input the Student Id
+    .row
+        .col-sm-6.col-sm-offset-6
+            .col-sm-2.col-sm-offset-3
+                button#rent-btn.btn.btn-primary(type='button') Rent This Book
+
+            .col-sm-2.col-sm-offset-3
+                button#return-btn.btn.btn-primary(type='button') Return This Book
+
     script.
         var cover = '#{cover}';
         $('#cover-pic').attr('src',cover);
+
+        $('#rent-btn').click(function(){
+
+                    $.post(document.location.origin + '/rent', {
+                        keyword: keyword,
+                        pagenumber: page,
+                        pagesize: pagesize
+                    }, function (req, res, data) {
+                        //console.log(data.responseJSON);
+                        books = data.responseJSON.content ? data.responseJSON.content : "";
+                        console.log(books);
+                        if (data.status == 'false') {
+                            showError('Inner server errors!');
+                        } else {
+                            updateTable(books);
+                            page = data.responseJSON.page ? data.responseJSON.page : page;
+                            newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
+                            updateSelector(page, totalPage, newTp);
+                        }
+                    });
+
+        });

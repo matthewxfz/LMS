@@ -116,7 +116,7 @@ block page-content
         }
 
         function addRow(book){
-            $('#book-list').append("<a class= \"list-group-item\" href = \"#\" >"
+            $('#book-list').append("<a class= \"list-group-item\" href=\"/admin/showBooks\?bookId="+book.bookId+"\">"+book.title+"\" >"
                 + "<h4 class= \"list-group-item-heading\" > "+book.title+"</h4 >"
                 + "<p class= \"list-group-item-text\" > <i> By "+book.author+", "+book.publisher+", "+book.generatedId+"</i> <p>"
                 + "<Strong>"+book.status+"</Strong> </p> </p> </a> ");
