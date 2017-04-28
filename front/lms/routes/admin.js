@@ -1,5 +1,14 @@
 var express = require('express');
+var http = require('http');
 var router = express.Router();
+var io = require('socket.io');
+var request = require('request');
+var validator = require('validator');
+var postLoginRequest = require('../modules/postLoginRequest');
+var postRequest = require('../modules/postRequest');
+var getRequestRender = require('../modules/getRequestRender')
+var config = require("../config/config");
+io = io.listen(this.server);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -17,13 +26,17 @@ router.post('/login', function(req, res, next) {
     sess=req.session;
     if(sess.email)
     {
-        res.render('admin/dashboard',{title:'LMS-student'})
+        res.render('admin/dashboard',{title:'LMS-Admin'})
     }
     else{
         console.log('[Sending data to AA]')
         postLoginRequest(req, res,'loginServer');
     }
 });
+
+// router.get('/try',function(req,res,next){
+//     res.render('student2/dashboard');
+// });
 
 router.get('/dashboard',function (req,res,next){
     sess=req.session;

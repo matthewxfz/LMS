@@ -9,7 +9,7 @@ if (app.get('env') == 'development') {
 		service:{
 			ApplicationServer:{
 				host:"localhost",
-				baseUrl:"http://127.0.0.1:8080/web2",
+				baseUrl:"http://127.0.0.1:8080/lms",
 				port:"8080",
 				authUrl:'/auth',
 			},

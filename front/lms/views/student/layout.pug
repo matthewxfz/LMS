@@ -124,7 +124,7 @@ html(lang='en')
                                 a(href='#')
                                     i.fa.fa-fw.fa-power-off
                                     |  Log Out
-                include include/sidebar.pug
+                include ../student/include/sidebar
             #page-wrapper
                 .container-fluid
                     block page-content
@@ -140,7 +140,7 @@ html(lang='en')
                     console.log('user name:' + username);
                     $('#username').text(username);
                 } else {
-                    $('#username').text('Unknow User!');
+                    $('#username').text('Unknown User!');
                 }
             });
 

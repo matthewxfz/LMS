@@ -14,7 +14,7 @@ ul.nav.navbar-nav.side-nav
     li#due-book-btn
         a(href='javascript:;', data-toggle='collapse', data-target='#due-list', aria-expanded='true')
             i.fa.fa-calendar.fa-fw
-            b#due-books  Due Books #{duebook}
+            b#due-books  Search Due Books #{duebook}
             i.fa.fa-fw.fa-caret-down
         ul#due-list.collapse
             li
@@ -24,7 +24,7 @@ ul.nav.navbar-nav.side-nav
     li#rent-book-btn
         a(href='javascript:;', data-toggle='collapse', data-target='#rent-list',aria-expanded='true')
             i.fa.fa-shopping-cart.fa-fw
-            b#rent-books  Rent Books #{rentbook}
+            b#rent-books  Search Rent Books #{rentbook}
             i.fa.fa-fw.fa-caret-down
         ul#rent-list.collapse
             li
@@ -32,11 +32,10 @@ ul.nav.navbar-nav.side-nav
             li
                 a(href=book2.href) #{book2.title}
 
-    li#cap-btn
+    li#add_btn
         a(href='javascript:;')
             i.fa.fa-book.fa-fw
-            b#cap-band  Your capacity: #{capacity}
-
+            b  Add Book
 
 
 script.
@@ -58,17 +57,17 @@ script.
         if (data.status == 'false') {
             showError('Inner server errors!');
         } else {
-           if(data.content){
+            if(data.content){
 
-               books = data.content;
-               $('#rent-list').empty();
-               for (i = 0; i < books.length;i++){
+                books = data.content;
+                $('#rent-list').empty();
+                for (i = 0; i < books.length;i++){
                     book = books[i];
-                   $('#rent-list').append("<li><a href=\"/showBooks\"\?bookid="+book.bookId+"\">"+book.title+"</a></li>");
+                    $('#rent-list').append("<li><a href=\"/showBooks\?bookId="+book.bookId+"\">"+book.title+"</a></li>");
 
-               }
-               $('#rent-books').text("Rent Books "+books.length);
-           }
+                }
+                $('#rent-books').text("Rent Books "+books.length);
+            }
         }
     });
 
@@ -83,7 +82,7 @@ script.
                 $('#due-list').empty();
                 for (i = 0; i < books.length; i++) {
                     book = books[i];
-                    $('#due-list').append("<li><a href=\"/showBooks\?bookid=" + book.bookId + "\">" + book.title + "</a></li>");
+                    $('#due-list').append("<li><a href=\"/showBooks\?bookId=" + book.bookId + "\">" + book.title + "</a></li>");
 
                 }
                 $('#due-books').text("Due Books " + books.length );

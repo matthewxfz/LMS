@@ -1,14 +1,12 @@
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-var io = require('socket.io');
 var request = require('request');
 var validator = require('validator');
 var postLoginRequest = require('../modules/postLoginRequest');
 var postRequest = require('../modules/postRequest');
 var getRequestRender = require('../modules/getRequestRender')
 var config = require("../config/config");
-io = io.listen(this.server);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,6 +31,7 @@ router.post('/login', function(req, res, next) {
         postLoginRequest(req, res,'loginServer');
     }
 });
+
 
 router.get('/dashboard',function (req,res,next){
     sess=req.session;
@@ -126,10 +125,7 @@ router.get('/showBooks',function(req,res,next){
     if(sess.email)
     {
         req.body = {userId:sess.userId};
-        // res.render('student/showBooks',{title:'Introduction to Algorithms, 3rd Edition', cover:'https://images-na.ssl-images-amazon.com/images/I/41-1VkO%2B1lL._SX359_BO1,204,203,200_.jpg',
-        // id:'HK_2018_into_3rd_123',author:"Thomas H. Cormen  (Author), Charles E. Leiserson  (Author), Ronald L. Rivest  (Author), Clifford Stein  (Author)",isbn10:'0262033844',
-        //publisher:"MIT Press",ava:'available'});
-        getRequestRender(req, res, {param:"bookId="+req.query.bookid},'student/showBooks');
+        getRequestRender(req, res, {param:"bookId="+req.query.bookId},'student/showBooks');
     }
     else{
         res.render('student/login', { title: 'LMS-login' });

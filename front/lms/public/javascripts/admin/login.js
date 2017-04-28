@@ -51,7 +51,7 @@ $(function () {
             $.post("http://localhost:8081/admin/login", {account: data.account, password: data.pwd}, function (req, res, data) {
                 console.log(data.responseJSON.title);
                 if (data.responseJSON.title == 'pass') {
-                    window.location.href = "/dashboard";
+                    window.location.href = "/admin/dashboard";
                 }else{
                     $('#msg').text(data.responseJSON.content);
                     $('#msg-brand').show();
