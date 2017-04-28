@@ -35,7 +35,7 @@ ul.nav.navbar-nav.side-nav
     li#add_btn
         a(href='javascript:;')
             i.fa.fa-book.fa-fw
-            b  Add Book
+            b#cap-band  Your capacity:
 
 
 script.
@@ -47,8 +47,8 @@ script.
         if (data.status == 'false') {
             showError('Inner server errors!');
         } else {
-            cap = data.content ? data.content : 0;
-            $('#cap-band').text('Your capacity: '+cap);
+            cap = data.content ? data.content : "Na";
+            $('#cap-band').text('Your capacity: '+ cap);
         }
     })
 

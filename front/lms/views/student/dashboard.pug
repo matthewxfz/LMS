@@ -58,7 +58,7 @@ block page-content
 
 
     script.
-        $('#msg-brand').hide();
+        hideError();
         var duebooks;
         var rentbooks;
         var capacity;
@@ -144,6 +144,12 @@ block page-content
 
             totalPage = newTp;
         }
-        //$.post("http://localhost:8081/checkCap", function (data) {
+        function showError(msg) {
+            $('#msg').text(msg);
+            $('#msg-brand').show();
+        }
 
+        function hideError(){
+            $('#msg-brand').hide();
+        }
 

@@ -1,4 +1,4 @@
-extends ../com/layout
+extends layout
 
 block page-content
     .row
@@ -37,7 +37,7 @@ block page-content
             label address
             input#address.form-control(type='text', placeholder='country, state, city, street')
             lable Parents
-            .input-group
+            #parent-list.input-group
                 span.input-group-addon @First Name
                 |
                 inpu#parent_first_name.form-control(type='text', placeholder='First Name')
@@ -47,8 +47,61 @@ block page-content
                 span.input-group-addon @Phone Number
                 |
                 input#parent_phone_number.form-control(type='text', placeholder='Phone Number')
-        button#save-btn.btn.btn-primary(type='submit') Save
+        .row
+            #msg-band.alert.alert-info
+                strong#msg-head Oops!
+                #msg-content  Something wrong!
+        .row
+            .col-sm-6
+                button#save-btn.btn.btn-primary(type='button') Save
+            .col-sm-6
+                button#delete-btn.btn.btn-danger(type='butto') delete
+
+
     script.
+        $('#msg-band').hide();
+
+        function showErro(title, content){
+            $('#msg-head').text(title);
+            $('#msg-content').text(content);
+            $('#msg-band').show();
+        }
+
+        $.post(document.location.origin + '/getProfile', function (req, res, data) {
+            //console.log(data.responseJSON)
+            msg = data.responseJSON;
+            if (msg.status == "true") {
+                update(msg.content);
+            } else {
+                showErro(msg.title, msg.content);
+            }
+        });
+
+        $('#save-btn').click(function(){
+            $.post(document.location.origin + '/changeProfile',function (req, res, data) {
+                //console.log(data.responseJSON)
+                msg = data.responseJSON;
+                if(msg.status == "true"){
+                    update(msg.content);
+                }else{
+                    showErro(msg.title,msg.content);
+                }
+            });
+        });
+
+        $('#delete-btn').click(function () {
+            $.post(document.location.origin + '/deleteParents', function (req, res, data) {
+                //console.log(data.responseJSON)
+                msg = data.responseJSON;
+                if (msg.status == "true") {
+                    $('parent-list').empty();
+                    showErro("Delete Sucessfull","Parent Information delete");
+                } else {
+                    showErro(msg.title, msg.content);
+                }
+            });
+        });
+
         var student = {first_name : '#{first_name}',
             middle_name : '#{middle_name}',
          last_name : '#{last_name}',
@@ -60,22 +113,16 @@ block page-content
          parent_phone_number : '#{parent_phone_number}',
          power : '#{power}'}
 
-        update(student);
-
-        $.save-btn.onclick(function(){
-            //check if anything is different
-        });
-
         function checkDifferent(){
-            if($('#first_name').val() == student.first_name &&
-            $('#middle_name').val() == student.middle_name &&
-            $('#last_name').val() == student.last_name &&
-            $('#student_id').val() == student.student_id &&
+            if($('#first_name').val() == student.firstName &&
+            $('#middle_name').val() == student.middleName &&
+            $('#last_name').val() == student.lastName &&
+            $('#student_id').val() == student.studentId &&
             $('#email').val() == student.email &&
             $('#address').val() == student.address &&
-            $('#parent_last_name').val() == student.parent_last_name &&
-            $('#parent_first_name').val() == student.parent_first_name &&
-            $('#parent_phone_number').val() == student.parent_phone_number &&
+            $('#parent_last_name').val() == student.pLastName &&
+            $('#parent_first_name').val() == student.pFirstName &&
+            $('#parent_phone_number').val() == student.pMobile &&
             $('#power').val() == student.power){
                 //do nothing
             }else{
