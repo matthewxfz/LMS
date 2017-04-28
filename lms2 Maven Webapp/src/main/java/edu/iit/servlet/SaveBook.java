@@ -1,6 +1,8 @@
 package edu.iit.servlet;
 
 import java.io.BufferedReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -9,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import edu.iit.bean.BookMessage;
 import edu.iit.bean.SearchBookMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
@@ -50,14 +53,15 @@ public class SaveBook {
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
 		//Search in hibernate
-		SearchBookMessage msg;
-		msg = new SearchBookMessage();
+		BookMessage msg;
+		msg = new BookMessage();
 		try {
-			BooksDAO dao = new BooksDAO();
-			List<Books> li = (List<Books>)dao.findByIsbn(keyWord);
-			msg.setPage(Integer.valueOf(pageNumber));
-			msg.setTotalPage(100 / Integer.valueOf(pageSize));
-			msg.setContent(li);
+			BooksDAO dao =new  BooksDAO();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date pdate = sdf.parse(PublicationDate);
+			Books book =new Books(ISBN,Title, Author, Publisher,Integer.valueOf(NumberOfPages), Cover,pdate, Studio, Manufactor, Status, GeneratedID);
+			dao.save(book);
+			msg.setContent(book.toString());
 			msg.setStatus("true");
 		} catch (Exception e) {
 			msg.setStatus("false");
