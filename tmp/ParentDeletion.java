@@ -33,6 +33,7 @@ public class ParentDeletion {
 				pdao.save(pnt); //save parent
 				pmsg.setStatus("true");
 				pmsg.setTitle("Add Successful!");
+				pmsg.setScontent(stu);
 				pmsg.setContent("Student Information: \n" + "StutentID: \n"+stu.getStudentId()
 								+ "\n" +  "Student Name: \n" + stu.getFirstName() + " " + stu.getLastName() + "\n"
 								+ "Mobile: \n" + stu.getMoblie() + "\n" + "Address: \n" + stu.getAddress() + "\n" 
@@ -48,6 +49,7 @@ public class ParentDeletion {
 				pnt = pdao.findById(pid);
 				pmsg.setStatus("true");
 				pmsg.setTitle("Delete Successful!");
+				pmsg.setScontent(stu);
 				pmsg.setContent("Student Information: \n" + "StutentID: \n"+stu.getStudentId()
 								+ "\n" +  "Student Name: \n" + stu.getFirstName() + " " + stu.getLastName() + "\n"
 								+ "Mobile: \n" + stu.getMoblie() + "\n" + "Address: \n" + stu.getAddress() + "\n" 

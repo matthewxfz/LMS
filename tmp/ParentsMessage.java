@@ -6,6 +6,7 @@ public class ParentsMessage {
 	private String title;
 	private String status;
 	private String content;
+	private Students scontent;
 	public String getTitle() {
 		return title;
 	}
@@ -24,4 +25,11 @@ public class ParentsMessage {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public Students getScontent() {
+		return scontent;
+	}
+	public void setScontent(Students scontent) {
+		this.scontent = scontent;
+	}
+	
 }
