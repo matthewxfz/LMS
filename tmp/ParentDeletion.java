@@ -25,17 +25,19 @@ public class ParentDeletion {
 		ParentsId pid = new ParentsId(Lastpname, Firstpname, Integer.valueOf(StudentID));
 		Parents pnt;
 		ParentsMessage pmsg = new ParentsMessage();
+		StudentsDAO sdao = new StudentsDAO();
+		Students stu = sdao.findById(Integer.valueOf(StudentID));
 		try {
 			if(opt.equals("add")){//add parent
-				
-				StudentsDAO sdao = new StudentsDAO();
-				Students stu = sdao.findById(Integer.valueOf(StudentID));
 				pnt = new Parents(pid,stu,"21","lzq102@djd.com","Mother","0");
 				pdao.save(pnt); //save parent
 				pmsg.setStatus("true");
 				pmsg.setTitle("Add Successful!");
-				pmsg.setContent("StutentID: \n"+pid.getStudentId().toString() + "\n" 
-								+ "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
+				pmsg.setContent("Student Information: \n" + "StutentID: \n"+stu.getStudentId()
+								+ "\n" +  "Student Name: \n" + stu.getFirstName() + " " + stu.getLastName() + "\n"
+								+ "Mobile: \n" + stu.getMoblie() + "\n" + "Address: \n" + stu.getAddress() + "\n" 
+								+ "Gender: \n" + stu.getGender() + "\n" + "Age: \n" + stu.getAge() + "\n"
+								+" \n" + "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
 								+ pid.getLastName() + "\n" + "Mobile: \n" + pnt.getMoblie() + "\n" 
 								+ "Email: \n" + pnt.getEmail() + "\n" + "Relationship: \n"
 								+ pnt.getRelationship());
@@ -46,8 +48,11 @@ public class ParentDeletion {
 				pnt = pdao.findById(pid);
 				pmsg.setStatus("true");
 				pmsg.setTitle("Delete Successful!");
-				pmsg.setContent("StutentID: \n"+pid.getStudentId().toString() + "\n" 
-								+ "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
+				pmsg.setContent("Student Information: \n" + "StutentID: \n"+stu.getStudentId()
+								+ "\n" +  "Student Name: \n" + stu.getFirstName() + " " + stu.getLastName() + "\n"
+								+ "Mobile: \n" + stu.getMoblie() + "\n" + "Address: \n" + stu.getAddress() + "\n" 
+								+ "Gender: \n" + stu.getGender() + "\n" + "Age: \n" + stu.getAge() + "\n"
+								+ " \n" + "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
 								+ pid.getLastName() + "\n" + "Mobile: \n" + pnt.getMoblie() + "\n" 
 								+ "Email: \n" + pnt.getEmail() + "\n" + "Relationship: \n"
 								+ pnt.getRelationship());
