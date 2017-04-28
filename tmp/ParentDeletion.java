@@ -4,46 +4,64 @@ import edu.iit.dao.Parents;
 import edu.iit.dao.ParentsDAO;
 import edu.iit.dao.ParentsId;
 import edu.iit.dao.ParentsMessage;
+import edu.iit.dao.Students;
+import edu.iit.dao.StudentsDAO;
 
-public class testFind {
+public class ParentDeletion {
 
 	public static void main(String[] args) {
 		
-		int StudentID = 100;
+		String StudentID = "2";
 		String Lastpname = "matthew";
 		String Firstpname = "Xiong";
-		Process(StudentID,Lastpname,Firstpname);
+		String opt = "add";
+		Process(StudentID,Lastpname,Firstpname,opt);
 
 	}
 	
-	public static ParentsMessage Process(int StudentID,String Lastpname,String Firstpname){
+	public static ParentsMessage Process(String StudentID,String Lastpname,String Firstpname,String opt){
 		
 		ParentsDAO pdao = new ParentsDAO();
-		ParentsId pid = new ParentsId(Lastpname, Firstpname, StudentID);
-		Parents pnt = new Parents();
-		
-		pnt = pdao.findById(pid);
-		
+		ParentsId pid = new ParentsId(Lastpname, Firstpname, Integer.valueOf(StudentID));
+		Parents pnt;
 		ParentsMessage pmsg = new ParentsMessage();
-		
-		if(!pnt.equals(null)){
-			pmsg.setStatus("true");
-			pmsg.setTitle("Delete Successful!");
-			pmsg.setContent("StutentID: \n"+pid.getStudentId().toString() + "\n" 
-							+ "Parent information:\n" + pid.getFirstName() + " " 
-							+ pid.getLastName()
-							+ "\n");
-			pdao.delete(pnt);
-			System.out.println(pmsg.getContent().toString());
+		try {
+			if(opt.equals("add")){//add parent
+				
+				StudentsDAO sdao = new StudentsDAO();
+				Students stu = sdao.findById(Integer.valueOf(StudentID));
+				pnt = new Parents(pid,stu,"21","lzq102@djd.com","Mother","0");
+				pdao.save(pnt); //save parent
+				pmsg.setStatus("true");
+				pmsg.setTitle("Add Successful!");
+				pmsg.setContent("StutentID: \n"+pid.getStudentId().toString() + "\n" 
+								+ "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
+								+ pid.getLastName() + "\n" + "Mobile: \n" + pnt.getMoblie() + "\n" 
+								+ "Email: \n" + pnt.getEmail() + "\n" + "Relationship: \n"
+								+ pnt.getRelationship());
+				System.out.println(pmsg.getContent().toString());
+				return pmsg;
+				
+			}else if(opt.equals("delete")){//delete parent
+				pnt = pdao.findById(pid);
+				pmsg.setStatus("true");
+				pmsg.setTitle("Delete Successful!");
+				pmsg.setContent("StutentID: \n"+pid.getStudentId().toString() + "\n" 
+								+ "Parent information:\n" + "ParentName: \n" + pid.getFirstName() + " " 
+								+ pid.getLastName() + "\n" + "Mobile: \n" + pnt.getMoblie() + "\n" 
+								+ "Email: \n" + pnt.getEmail() + "\n" + "Relationship: \n"
+								+ pnt.getRelationship());
+				pdao.delete(pnt);// delete parent
+				System.out.println(pmsg.getContent().toString());
+			}
 			return pmsg;
-		}else{
+		} catch (Exception e) {
 			pmsg.setStatus("false");
-			pmsg.setTitle("Parent information not found!");
-			pmsg.setContent("Not found!");
+			pmsg.setTitle("error!");
+			pmsg.setContent("Inner Server Error!");
 			System.out.println(pmsg.getContent().toString());
 			return pmsg;
 		}
-		
 	}
 	
 }
