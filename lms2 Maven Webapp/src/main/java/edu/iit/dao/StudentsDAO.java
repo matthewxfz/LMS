@@ -1,5 +1,6 @@
 package edu.iit.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -92,7 +93,19 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	public int booktoborrow(Integer studentId){
+		try {
+			String queryString = "from RegisterTo where StudentID = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, studentId);
+			//List<Integer> bb=new ArrayList<Integer>();
+			//bb=queryObject.list();
+			return queryObject.list().size();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 	public List findByMoblie(Object moblie) {
 		return findByProperty(MOBLIE, moblie);
 	}
@@ -179,20 +192,6 @@ public class StudentsDAO extends BaseHibernateDAO {
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
-			throw re;
-		}
-	}
-	
-	public int booktoborrow(int studentId){
-		try {
-			String queryString = "from RegisterTo where StudentID = ?";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, studentId);
-			//List<Integer> bb=new ArrayList<Integer>();
-			//bb=queryObject.list();
-			return queryObject.list().size();
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
 			throw re;
 		}
 	}

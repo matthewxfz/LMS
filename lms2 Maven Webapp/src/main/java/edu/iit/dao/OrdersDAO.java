@@ -1,10 +1,13 @@
 package edu.iit.dao;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,28 +28,30 @@ public class OrdersDAO extends BaseHibernateDAO {
 	// property constants
 	public static final String TYPE = "type";
 	public static final String STATUES = "statues";
-
-	public void save(Orders transientInstance) {
+	public static final String BookID = "bookid";
+	public void save(Orders transientInstance) throws Exception{
 		log.debug("saving Orders instance");
 		try {
-			getSession().save(transientInstance);
-			log.debug("save successful");
+			Students student =new Students();
+			student =transientInstance.getStudents();
+			RegisterToDAO rdao= new RegisterToDAO();
+			OrdersDAO odao= new OrdersDAO();
+			StudentsDAO sudao= new StudentsDAO();
+			int capacity= sudao.booktoborrow(student.getStudentId());
+			List bookrent = odao.findALLBooks_book_ByStudentId(1, 20, student.getStudentId());
+			if(capacity>bookrent.size()){
+				getSession().save(transientInstance);
+				log.debug("save successful");
+			}else{
+				throw new Exception("Out of Capacity");
+				//System.out.println("Out of Capacity");
+			}
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
 		}
 	}
 
-	public void delete(Orders persistentInstance) {
-		log.debug("deleting Orders instance");
-		try {
-			getSession().delete(persistentInstance);
-			log.debug("delete successful");
-		} catch (RuntimeException re) {
-			log.error("delete failed", re);
-			throw re;
-		}
-	}
 
 	public Orders findById(java.lang.Integer id) {
 		log.debug("getting Orders instance with id: " + id);
@@ -58,7 +63,31 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	
+	public void update_order(int bookid,int studentid){
+		//Orders or= this.fin
+		try {
+			String queryString = "from Orders where BookID =? and Statues = ? and StudentID = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			Transaction tx = getSession().beginTransaction();
+			Object value = "Open";
+			queryObject.setParameter(0, bookid);
+			queryObject.setParameter(1, "Open");
+			queryObject.setParameter(2, studentid);
+			List<Orders> list = queryObject.list();
+			Orders temp_order = list.get(0);
+			ZoneId zonedId = ZoneId.of( "America/Chicago" );
+			LocalDate ltoday = LocalDate.now( zonedId );
+			java.util.Date today = java.sql.Date.valueOf(ltoday);
+			temp_order.setCheckoutDate(today);
+			temp_order.setStatues("Closed");
+			tx.commit();
+			getSession().close();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}			
+	}
 	public List findByExample(Orders instance) {
 		log.debug("finding Orders instance by example");
 		try {
@@ -105,7 +134,18 @@ public class OrdersDAO extends BaseHibernateDAO {
 	public List findByStatues(Object statues) {
 		return findByProperty(STATUES, statues);
 	}
-
+	public List findByBookID(int bookid) {
+		try {
+			String queryString = "from Orders where BookID =? ";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 	public List findAll() {
 		log.debug("finding all Orders instances");
 		try {
@@ -187,11 +227,12 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	private List findRentBooksByStudentId(int pageNumber, int pageSize, int studentId) {
+	public List findAllBooksByStudentId(int pageNumber, int pageSize, Integer studentId) {
 		try {
-			String queryString = "from Orders where StudentID = ?";
+			String queryString = "from Orders where StudentID = ? and Statues = ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, studentId);
+			queryObject.setParameter(1, "Open");
 			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
 			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
 			List<Orders> list = queryObject.list();
@@ -202,9 +243,9 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findALLBooks_book_ByStudentId(int pageNumber, int pageSize, int studentId) {
+	public List findALLBooks_book_ByStudentId(int pageNumber, int pageSize, Integer studentId) {
 		try {
-			List<Orders> overdue_order = findRentBooksByStudentId(pageNumber, pageSize, studentId);
+			List<Orders> overdue_order = findAllBooksByStudentId(pageNumber, pageSize, studentId);
 			List<Books> overdue_book = new ArrayList<Books>();
 			for (int i = 0; i < overdue_order.size(); i++) {
 				overdue_book.add(overdue_order.get(i).getBooks());
@@ -279,4 +320,5 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 
 	}
+
 }
