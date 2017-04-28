@@ -39,11 +39,11 @@ block page-content
                     b Location
                     |   HK Library
     #msg-success-band.alert.alert-success
-        strong Well done!
-        #msg-suc  You successfully read this important alert message.
+        strong Lucky for you!
+        #msg-suc  Something have been done.
     #msg-fail-band.alert.alert-danger
-        strong Oh snap!
-        #msg-fail  Change a few things up and try submitting again.
+        strong Oops!
+        #msg-fail  Something wrong!
     .row
         .col-sm-12
             form
@@ -54,56 +54,66 @@ block page-content
                         |
                         small.form-text.text-muted Input the Student Id
     .row
-        .col-sm-6.col-sm-offset-6
+        .col-sm-6
+            button#showbook-update-btn.btn.btn-success(type='button') Update This book
+        .col-sm-6
             .col-sm-2.col-sm-offset-3
-                button#rent-btn.btn.btn-primary(type='button') Rent This Book
+                button#showbook-rent-btn.btn.btn-primary(type='button') Rent This Book
 
             .col-sm-2.col-sm-offset-3
-                button#return-btn.btn.btn-primary(type='button') Return This Book
+                button#showbook-return-btn.btn.btn-danger(type='button') Return This Book
 
     script.
-        var m_bookId = '#{generatedId}';
-        var cover = '#{cover}';
-        var s_id ;
-        $('#cover-pic').attr('src',cover);
         hideBand();
 
-        $('#rent-btn').click(function(){
-                s_id=$('#id_input').val();
+        var m_bookId = '#{generatedId}';
+        var cover = '#{cover}';
+        var s_id =undefined;
+        $('#cover-pic').attr('src',cover);
 
-                    $.post(document.location.origin + '/admin/tradeBook', {
-                        bookId:m_bookId,
-                        studentId:s_id,
-                        AdminID:"1",
-                        rent:"true"
-                    }, function (req, res, data) {
-                        //console.log(data.responseJSON);
-                        books = data.responseJSON.content ? data.responseJSON.content : "";
-                        console.log(books);
-                        if (data.status == 'false') {
-                            showFail(data.title);
-                        } else {
-                            showSuc(data.title);
-                        }
-                    });
+        $('#showbook-rent-btn').click(function(){
+            s_id=$('#id_input').val();
+            if (s_id == undefined) {
+                showFail("The Student id is empty");
+            } else {
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    bookId: m_bookId,
+                    studentId: s_id,
+                    AdminID: "1",
+                    rent: "true"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    books = data.responseJSON.content ? data.responseJSON.content : "";
+                    console.log(books);
+                    if (data.status == 'true') {
+                        showSuc(data.title);
+                    } else {
+                        showFail("Inner Server Error!");
+                    }
+                });
+            }
         });
 
-        $('#return-btn').click(function () {
+        $('#showbook-return-btn').click(function () {
             s_id = $('#id_input').val();
-            $.post(document.location.origin + '/admin/tradeBook', {
-                bookId: m_bookId,
-                studentId: s_id,
-                rent:"false"
-            }, function (req, res, data) {
-                //console.log(data.responseJSON);
-                books = data.responseJSON.content ? data.responseJSON.content : "";
-                console.log(books);
-                if (data.status == 'false') {
-                    showFail(data.title);
-                } else {
-                    showSuc(data.title);
-                }
-            });
+            if(s_id == undefined) {
+                showFail("The Student id is empty");
+            }else{
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    bookId: m_bookId,
+                    studentId: s_id,
+                    rent: "false"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    books = data.responseJSON.content ? data.responseJSON.content : "";
+                    console.log(books);
+                    if (data.status == 'true') {
+                        showSuc(data.title);
+                    } else {
+                        showFail("Inner Server Error!");
+                    }
+                });
+            }
         });
 
 
