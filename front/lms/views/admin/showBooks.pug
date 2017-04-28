@@ -50,7 +50,7 @@ block page-content
                 .form-group.row.has-success
                     label.col-sm-2.col-form-label(for='inputHorizontalSuccess') Student User Id
                     .col-sm-10
-                        input#inputHorizontalSuccess.form-control.form-control-success(type='email', placeholder='A*****')
+                        input#id_input.form-control.form-control-success(type='text', placeholder='A*****')
                         |
                         small.form-text.text-muted Input the Student Id
     .row
@@ -62,27 +62,64 @@ block page-content
                 button#return-btn.btn.btn-primary(type='button') Return This Book
 
     script.
+        var m_bookId = '#{generatedId}';
         var cover = '#{cover}';
+        var s_id ;
         $('#cover-pic').attr('src',cover);
+        hideBand();
 
         $('#rent-btn').click(function(){
+                s_id=$('#id_input').val();
 
-                    $.post(document.location.origin + '/rent', {
-                        keyword: keyword,
-                        pagenumber: page,
-                        pagesize: pagesize
+                    $.post(document.location.origin + '/admin/tradeBook', {
+                        bookId:m_bookId,
+                        studentId:s_id,
+                        AdminID:"1",
+                        rent:"true"
                     }, function (req, res, data) {
                         //console.log(data.responseJSON);
                         books = data.responseJSON.content ? data.responseJSON.content : "";
                         console.log(books);
                         if (data.status == 'false') {
-                            showError('Inner server errors!');
+                            showFail(data.title);
                         } else {
-                            updateTable(books);
-                            page = data.responseJSON.page ? data.responseJSON.page : page;
-                            newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
-                            updateSelector(page, totalPage, newTp);
+                            showSuc(data.title);
                         }
                     });
-
         });
+
+        $('#return-btn').click(function () {
+            s_id = $('#id_input').val();
+            $.post(document.location.origin + '/admin/tradeBook', {
+                bookId: m_bookId,
+                studentId: s_id,
+                rent:"false"
+            }, function (req, res, data) {
+                //console.log(data.responseJSON);
+                books = data.responseJSON.content ? data.responseJSON.content : "";
+                console.log(books);
+                if (data.status == 'false') {
+                    showFail(data.title);
+                } else {
+                    showSuc(data.title);
+                }
+            });
+        });
+
+
+        function showFail(content){
+            $('#msg-fail').text(content);
+            $('#msg-fail-band').show();
+            $('#msg-success-band').hide();
+        }
+
+        function hideBand(){
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').hide();
+        }
+
+        function showSuc(content){
+            $('#msg-suc').text(content);
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').show();
+        }
