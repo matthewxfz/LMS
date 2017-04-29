@@ -12,49 +12,50 @@ import edu.iit.dao.OrdersDAO;
 import edu.iit.dao.RegisterTo;
 import edu.iit.dao.RegisterToDAO;
 import edu.iit.dao.RegisterToId;
+import edu.iit.dao.Students;
+import edu.iit.dao.StudentsDAO;
 
 public class searchClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String keyword = "1";
-		String isClose = "Closed";
-		String pageNumber = "1";
-		String pageSize = "3";
-		System.out.println("ok");
+		String keyword = "A20376382";
 		ClassMessage cmsg = process(keyword);
 		for(int i =0;i<cmsg.getContent().size();i++){
-			System.out.println(cmsg.getContent().get(i));
+			System.out.println(cmsg.getContent().get(i).getTitle());
 		}
 		System.out.println(cmsg);
 	}
 	public static ClassMessage process(String keyword){
 		RegisterToDAO rdao= new RegisterToDAO();
 		ClassesDAO cdao= new ClassesDAO();
-		String studentid = keyword;
+		StudentsDAO sdao=new StudentsDAO();
+		List<Students> generateIDlist=sdao.findByUserId(keyword);
 		ClassMessage cmsg= new ClassMessage();
+		if(generateIDlist.size()==0){
+			cmsg.setStatus("true");
+			cmsg.setTitle("Select Courses first");
+			cmsg.setTotalclass("0");
+			cmsg.setContent(null);
+		}
+		String studentid = String.valueOf(generateIDlist.get(0).getStudentId());
 		try {
 			List<RegisterTo> cl = rdao.findByStudentID(studentid);//find all order
-			List<Classes> classnameList=new ArrayList<Classes>();
-			if(cl.size()==0){//no class
-				cmsg.setStatus("true");
-				cmsg.setTitle("Select Courses first");
-				cmsg.setTotalNumber("0");
-				cmsg.setContent(null);
-			}else{//show classes
-				omsg.setStatus("true");
-				omsg.setTitle("Orders of book found");
-				omsg.setTotapage(String.valueOf(Math.round(total_pagenumber/num_pagesize)));
-				omsg.setTotalNumber(String.valueOf(total_pagenumber));
-				omsg.setContent(ol);
+			List<Classes> classList=new ArrayList<Classes>();
+			for(int i =0; i< cl.size();i++){
+				classList.add(cl.get(i).getClasses());
 			}
-			return omsg;
+				cmsg.setStatus("true");
+				cmsg.setTitle("Orders of book found");
+				cmsg.setTotalclass(String.valueOf(classList.size()));
+				cmsg.setContent(classList);
+			return cmsg;
 		} catch (Exception e) {
-			omsg.setStatus("false");
-			omsg.setTitle("error!");
-			omsg.setContent(null);
-			System.out.println(omsg.getContent().toString());
-			return omsg;
+			cmsg.setStatus("false");
+			cmsg.setTitle("error!");
+			cmsg.setContent(null);
+			System.out.println(cmsg.getContent().toString());
+			return cmsg;
 		}
 	}
 }
