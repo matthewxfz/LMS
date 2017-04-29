@@ -1,7 +1,7 @@
 SearchBook:
 
 Input:
-{keyword, isdue, isRent, pagenumber, pagesize}
+{keyword, operation:<isDue, isRent>, pagenumber, pagesize}
 
 Ouptut:
 {title, status, page, totalPage, totalNumber, 
