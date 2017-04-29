@@ -1,7 +1,7 @@
 SearchBook:
 
 Input:
-{keyword, operation:<isDue, isRent>, pagenumber, pagesize}
+{keyword, operation:<all, isDue, isRent>, pagenumber, pagesize}
 
 Ouptut:
 {title, status, page, totalPage, totalNumber, 
@@ -10,7 +10,7 @@ content{[bookId, title, author, isbn10, publisher, status, generatedId, cover]
 
 SearchOrder:
 Input:
-{keyword:, operation, pagenumber, pagesize}
+{keyword:, operation<all, closed, open>, pagenumber, pagesize}
 Output:
 {title, status, page, totalpage, totalNumber, content{[
 orderId, 
