@@ -19,7 +19,7 @@ public class searchClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String keyword = "A20376382";
+		String keyword = "A20376383";
 		ClassMessage cmsg = process(keyword);
 		for(int i =0;i<cmsg.getContent().size();i++){
 			System.out.println(cmsg.getContent().get(i).getTitle());
@@ -46,7 +46,7 @@ public class searchClass {
 				classList.add(cl.get(i).getClasses());
 			}
 				cmsg.setStatus("true");
-				cmsg.setTitle("Orders of book found");
+				cmsg.setTitle("Courses found");
 				cmsg.setTotalclass(String.valueOf(classList.size()));
 				cmsg.setContent(classList);
 			return cmsg;

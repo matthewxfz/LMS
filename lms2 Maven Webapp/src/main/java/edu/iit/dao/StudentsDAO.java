@@ -195,4 +195,31 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
+
+	public List<Students> findAll_Overdue(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students join (from Orders where Date(now()) > DueDate) a on Students.StudentID = a.StudentID;";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public List findAll_Indue(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students join (from Orders where Date(now()) < DueDate) a on Students.StudentID = a.StudentID;";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
 }
