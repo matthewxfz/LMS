@@ -134,11 +134,13 @@ public class OrdersDAO extends BaseHibernateDAO {
 	public List findByStatues(Object statues) {
 		return findByProperty(STATUES, statues);
 	}
-	public List findByBookID(int bookid) {
+	public List findByBookID(int bookid,int pageNumber, int pageSize) {
 		try {
 			String queryString = "from Orders where BookID =? ";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, bookid);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
 			List<Orders> list = queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
@@ -146,18 +148,44 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	public List findAll() {
+	public int findTotalNum(int bookid) {
+		try {
+			String queryString = "from Orders where BookID =? ";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			List<Orders> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List findAll(int pageNumber, int pageSize) {
 		log.debug("finding all Orders instances");
 		try {
 			String queryString = "from Orders";
 			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list();
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List<Orders> list = queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
 		}
 	}
-
+	public int findAllNum() {
+		log.debug("finding all Orders instances");
+		try {
+			String queryString = "from Orders";
+			Query queryObject = getSession().createQuery(queryString);
+			List<Orders> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
 	public Orders merge(Orders detachedInstance) {
 		log.debug("merging Orders instance");
 		try {
@@ -319,6 +347,39 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 
+	}
+	public List<Orders> findByBookID_Open(Integer bookid, int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		try {
+			String queryString = "from Orders where BookID =? and Statues =?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			queryObject.setParameter(1,"Open");
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List<Orders> findByBookID_Closed(Integer bookid, int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		try {
+			String queryString = "from Orders where BookID =? and Statues =?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			queryObject.setParameter(1,"Closed");
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
 	}
 
 }

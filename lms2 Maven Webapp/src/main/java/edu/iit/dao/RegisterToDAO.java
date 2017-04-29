@@ -79,7 +79,18 @@ public class RegisterToDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
+	public List<RegisterTo> findByStudentID(String value) {
+		//log.debug("finding RegisterTo instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from RegisterTo where StudentID= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
 	public List findAll() {
 		log.debug("finding all RegisterTo instances");
 		try {
