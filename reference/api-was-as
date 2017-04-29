@@ -10,7 +10,7 @@ content{[bookId, title, author, isbn10, publisher, status, generatedId, cover]
 
 SearchOrder:
 Input:
-{keyword:, isClose, pageNumber, pageSize}
+{keyword:, operation, pagenumber, pagesize}
 Output:
 {title, status, page, totalpage, totalNumber, content{[
 orderId, 
