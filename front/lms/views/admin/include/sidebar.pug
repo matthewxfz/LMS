@@ -10,19 +10,27 @@ ul.nav.navbar-nav.side-nav
     li.active(id="search_btn")
         a(href='/admin/dashboard')
             i.fa.fa-dashboard.fa-fw
-            |  Happy Search
+            |  Search Books
     li#add_btn
         a(href='javascript:;')
             i.fa.fa-book.fa-fw
             b  Add Book
     li
-        a(href='javascript:;')
+        a(href='/admin/searchOrders')
             i.fa.fa-book.fa-fw
-            b  Find Due Book
+            b  Search Orders
     li
-        a(href='javascript:;')
+        a(href='/admin/searchStudents')
             i.fa.fa-book.fa-fw
-            b  Find Rent Book
+            b  Search Students
+    li
+        a(href='/admin/searchTeachers')
+            i.fa.fa-book.fa-fw
+            b  Search Teachers
+    li
+        a(href='/admin/searchClasses')
+            i.fa.fa-book.fa-fw
+            b  Search Classes
 
 
 script.

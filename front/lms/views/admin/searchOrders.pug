@@ -3,7 +3,7 @@ extends layout
 block page-content
     .row
         .col-lg-12
-            h1.page-header  Search Books
+            h1.page-header Search Orders
             ol.breadcrumb
                 li
                     i.fa.fa-dashboard
@@ -11,11 +11,11 @@ block page-content
                     a(href='/admin/dashboard') Dashboard
                 li.active
                     i.fa.fa-edit
-                    |  Search Books
+                    |  Search Orders
     .row
         .col-lg-6.col-lg-offset-3
             .form-group.input-group
-                input#search-input.form-control(type = 'text', placeholder='Enter title, author, or ISBN')
+                input#search-input.form-control(type = 'text', placeholder='Enter book generated id')
                 span.input-group-btn
                     button#search-btn.btn.btn-default(type='button')
                         i.fa.fa-search
@@ -23,22 +23,22 @@ block page-content
                 label
                 |
                 label.radio-inline
-                    input#optionsRadiosInline1(type='radio', name='optionsRadiosInline', value='all', checked='')
-                    | All Book
+                    input#optionsRadiosInline1(type='radio', name='optionsRadiosInline', value='all')
+                    | all
                 |
                 label.radio-inline
-                    input#optionsRadiosInline2(type='radio', name='optionsRadiosInline', value='isDue')
-                    | Due Book
+                    input#optionsRadiosInline2(type='radio', name='optionsRadiosInline', value='closed')
+                    | Closed
                 |
                 label.radio-inline
-                    input#optionsRadiosInline3(type='radio', name='optionsRadiosInline', value='isRent')
-                    | Rent Book
+                    input#optionsRadiosInline3(type='radio', name='optionsRadiosInline', value='open')
+                    | Open
     .row
         #msg-brand.alert.alert-danger
             strong oops
             #msg
     .row
-        h5#totalNumber Total Result:
+        h5 Total Result:
         #book-list.list-group
             a.list-group-item(href='#')
                 h4.list-group-item-heading Get your Search Result
@@ -63,7 +63,6 @@ block page-content
         var keyword = "";
         var pagesize = 10;
         var totalPage = 1;
-        var totalNumber = 8;
         findAllBooks();
 
 
@@ -96,7 +95,7 @@ block page-content
         });
         //next button
         $('#next-page').click(function () {
-                search_update(keyword, page + 1, pagesize)
+            search_update(keyword, page + 1, pagesize)
 
         });
         //select the page
@@ -104,7 +103,7 @@ block page-content
         function search_update(keyword) {
             var books = "";
             if (keyword != "") {
-                $.post(document.location.origin + '/searchBooks', {
+                $.post(document.location.origin + '/searchOrders', {
                     keyword: keyword,
                     operation: $("input:radio[name=optionsRadiosInline]:checked").val(),
                     pagenumber: page,
@@ -112,18 +111,18 @@ block page-content
                 }, function (req, res, data) {
                     //console.log(data.responseJSON);
                     if (data.status == 'true') {
-                        books = data.responseJSON.content ? data.responseJSON.content : "";
-                        updateList(books);
+                        orders = data.responseJSON.content ? data.responseJSON.content : "";
+                        updateList(orders);
                         if (keyword == undefined) {
-                            $('#totalNumber').text("[All Books] " + data.responseJSON.totalNumber + " Books")
+                            $('#totalNumber').text("[All Orders] " + data.responseJSON.totalNumber + " Orders")
                         } else {
-                            $('#totalNumber').text("[" + keyword + "] " + data.responseJSON.totalNumber + " Books")
+                            $('#totalNumber').text("[" + keyword + "] " + data.responseJSON.totalNumber + " Orders")
                         }
                         page = data.responseJSON.page ? data.responseJSON.page : page;
                         newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
                         updateSelector(page);
                     }
-                    else{
+                    else {
                         showError('Inner server errors!');
                     }
                 });
@@ -138,40 +137,17 @@ block page-content
             }
         }
 
-        function addRow(book){
-            $('#book-list').append("<a class= \"list-group-item\" href=\"/admin/showBooks\?bookId="+book.bookId+"\">"+book.title+"\" >"
-                + "<h4 class= \"list-group-item-heading\" > "+book.title+"</h4 >"
-                + "<p class= \"list-group-item-text\" > <i> By "+book.author+", "+book.publisher+", "+book.generatedId+"</i> <p>"
-                + "<Strong>"+book.status+"</Strong> </p> </p> </a> ");
+        function addRow(order){
+            orderHead = "["+order.orderId+"] ,Check in on:"+order.checkInDate+", due on:"+order.dueDate
+            bookInfo = "["+order.bookTitle+"], by:"+order.bookAuthor+", pressed by:"+order.bookPublisher
+            studentInfo = "["+order.studentId+"], "+order.studentName
+            $('#book-list').append("<a class= \"list-group-item\">"+orderHead+"\" >"
+                + "<p class= \"list-group-item-heading\" > "+bookInfo+"</h4 >"
+                + "<p class= \"list-group-item-text\" > studentInfo <p>"
+                + "<Strong>"+order.status+"</Strong> </p> </p> </a> ");
         }
 
         function updateSelector(page) {
             // $('#search-selector').empty();
             $('#current-page').text(page);
-        }
-
-        function findAllBooks(){
-            $.post(document.location.origin + '/searchBooks', {
-                keyword: "",
-                operation: "all",
-                pagenumber: page,
-                pagesize: pagesize
-            }, function (req, res, data) {
-                //console.log(data.responseJSON);
-                if (data.status == 'true') {
-                    books = data.responseJSON.content ? data.responseJSON.content : "";
-                    updateList(books);
-                    if (keyword == undefined) {
-                        $('#totalNumber').text("[All Books] " + data.responseJSON.totalNumber + " Books")
-                    } else {
-                        $('#totalNumber').text("[" + keyword + "] " + data.responseJSON.totalNumber + " Books")
-                    }
-                    page = data.responseJSON.page ? data.responseJSON.page : page;
-                    newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
-                    updateSelector(page);
-                }
-                else {
-                    showError('Inner server errors!');
-                }
-            });
         }

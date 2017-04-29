@@ -85,6 +85,66 @@ router.post('/searchBooks*', function(req, res,next){
     }
 });
 
+router.get('/searchOrders', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('admin/searchOrders');
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
+router.post('/searchOrders', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        postRequest(req, res, "");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
+router.post('/searchStudents', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        postRequest(req, res, "");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
+router.post('/searchTeachers', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        postRequest(req, res, "");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
+router.post('/searchClasses', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        postRequest(req, res, "");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
 router.post('/checkCap', function(req, res,next){
     console.log(req.body);
     sess=req.session;
