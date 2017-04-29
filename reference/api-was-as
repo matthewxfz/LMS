@@ -1,0 +1,40 @@
+SearchBook:
+
+Input:
+{keyword, isdue, isRent, pagenumber, pagesize}
+
+Ouptut:
+{title, status, page, totalPage, totalNumber, 
+content{[bookId, title, author, isbn10, publisher, status, generatedId, cover]
+}}
+
+SearchOrder:
+Input:
+{keyword:, isClose, pageNumber, pageSize}
+Output:
+{title, status, page, totalpage, totalNumber, content{[
+orderId, 
+studentName, 
+bookGeneratedId, 
+bookTitle, 
+bookAuthor, 
+bookPublisher, 
+dueDate, 
+checkInDate, 
+status,
+]}
+}
+
+
+SearchStudent:
+input:
+{keyWords, pageNumber, pageSize}
+Output:
+{title, status, page, totalpage, totalNumber, content{[{studentId, studentFirstName, studentLastName, studentMiddleName, pLastName, pFirstName, pMobile, power}]}}
+
+
+SearchTeacher:
+input:
+{keyWords, pageNumber, pageSize}
+Output:
+{title, status, page, totalpage, totalNumber, content{[{studentId, studentFirstName, studentLastName, studentMiddleName, pLastName, pFirstName, pMobile, power}]}}
