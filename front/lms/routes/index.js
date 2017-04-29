@@ -145,5 +145,18 @@ router.get('/profile',function(req,res,next){
     }
 });
 
+router.post('/getProfile',function (req, res, next) {
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        req.body = {userId:sess.userId};
+        postRequest(req,res,"");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+
+});
 
 module.exports = router;
