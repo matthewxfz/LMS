@@ -1,15 +1,15 @@
 package edu.iit.dao;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.pattern.FullLocationPatternConverter;
 import org.hibernate.Criteria;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -40,16 +40,11 @@ public class BooksDAO extends BaseHibernateDAO {
 	public static final String MANUFACTOR = "manufactor";
 	public static final String STATUS = "status";
 	public static final String GENERATED_ID = "generatedId";
-	
 
 	public void save(Books transientInstance) {
 		log.debug("saving Books instance");
 		try {
-			Session session = getSession();
-			Transaction tx =session.beginTransaction();
-			session.save(transientInstance);
-			tx.commit();
-			session.close();
+			getSession().save(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -60,11 +55,7 @@ public class BooksDAO extends BaseHibernateDAO {
 	public void delete(Books persistentInstance) {
 		log.debug("deleting Books instance");
 		try {
-			Session session = getSession();
-			Transaction tx = session.beginTransaction();
-			session.delete(persistentInstance);
-			tx.commit();
-			session.close();
+			getSession().delete(persistentInstance);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -95,6 +86,19 @@ public class BooksDAO extends BaseHibernateDAO {
 		}
 	}
 
+	public List findByAnName(String propertyName, Object value) {
+		log.debug("finding Books instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from Books as model where model." + propertyName + "= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
 	public List findByProperty(String propertyName, Object value) {
 		log.debug("finding Books instance with property: " + propertyName + ", value: " + value);
 		try {
@@ -108,53 +112,50 @@ public class BooksDAO extends BaseHibernateDAO {
 		}
 	}
 
-//	public List findByKey(String propertyName, Object value) {
-//		log.debug("finding Books instance with property: " + propertyName + ", value: " + value);
-//		try {
-//			String queryString = "from Books as model where model." + propertyName + " like :obj";
-//			Query queryObject = getSession().createQuery(queryString);
-//			queryObject.setString("obj", "%"+value+"%");
-//			return queryObject.list();
-//		} catch (RuntimeException re) {
-//			log.error("find by property name failed", re);
-//			throw re;
-//		}
-//	}
-	//,int pagenumber,int pagesize
-	public List<Books> findbykey(Object value){
-		log.debug("finding Books instance with Keyword: " + value);
+	/**
+	 * find by the keywords, page number, page size
+	 * 
+	 * @param keyword
+	 * @param pageNumber from 1 to infiy
+	 * @param pageSize
+	 * @return the request result
+	 */
+	public List findByKeywords(String keyword, int pageNumber, int pageSize) {
+		log.debug("find the books by kewords:" + keyword.toString() + ",page number:" + pageNumber + ",pageSize:"
+				+ pageSize);
 		try {
-			String hql = "from Books where match(TITLE) against (? in natural language mode)";
-			Query query = getSession().createQuery(hql);
-			query.setParameter(0, value);
-			List<Books> list = query.list();
-			return list;
+			String queryString = "select B2.BookID, B2.ISBN, B2.Title, B2.Author, B2.Publisher, B2.NumberOfPages, B2.Cover, B2.PublicationDate, B2.Studio, B2.Manufactor, B2.Status, B2.GeneratedID  from"
+					+ "(select *, match(B1.Title, B1.Author, B1.Publisher, B1.ISBN, B1.GeneratedID) "
+					+ "against (\""+keyword+"\" WITH QUERY EXPANSION) as refference from Books as B1 order by refference desc"
+							+ " limit "+(pageNumber-1)*pageSize+", "+(pageNumber)*pageSize+") as B2";
+			System.out.println(queryString);
+			Query queryObject = getSession().createQuery(queryString);
+			//queryObject.setParameter(0, keyword);
+			return queryObject.list();
 		} catch (RuntimeException re) {
-			log.error("find by Keyword failed", re);
+			log.error("find by keywords fail", re);
 			throw re;
 		}
 	}
 	
-	public List<Books> findBooksBykeyword(Object keyword,int pagenumber,int pagesize) {
-		log.debug("finding Books instance with Keyword: " + keyword);
+	/**
+	 * Find the size of table
+	 * @return
+	 */
+	public int findTableSize(){
+		log.debug("find the size of table");
 		try {
-			Criteria criteria = getSession().createCriteria(Books.class);
-			List<Books> list = criteria.add(Restrictions.or(
-			Restrictions.like(AUTHOR, (String) keyword,MatchMode.ANYWHERE),
-			Restrictions.like(TITLE,(String) keyword,MatchMode.ANYWHERE ),
-			Restrictions.like(ISBN, (String) keyword,MatchMode.ANYWHERE)))
-			.setFirstResult((pagenumber-1)*pagesize)
-			.setMaxResults(pagesize).list();
-			return list;
+			String queryString = "select count(*) as size from Books";
+			Query queryObject = getSession().createQuery(queryString);
+	
+			return Integer.valueOf(queryObject.list().get(0).toString());
+			
 		} catch (RuntimeException re) {
-			log.error("find by Keyword failed", re);
+			log.error("find table size fail", re);
 			throw re;
 		}
 	}
-	
-	
-	
-	
+
 	public List findByIsbn(Object isbn) {
 		return findByProperty(ISBN, isbn);
 	}
@@ -210,11 +211,7 @@ public class BooksDAO extends BaseHibernateDAO {
 	public Books merge(Books detachedInstance) {
 		log.debug("merging Books instance");
 		try {
-			Session session = getSession();
-			Transaction tx = session.beginTransaction();
-			Books result = (Books) session.merge(detachedInstance);
-			tx.commit();
-			session.close();
+			Books result = (Books) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -241,6 +238,102 @@ public class BooksDAO extends BaseHibernateDAO {
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
+			throw re;
+		}
+	}
+	
+	public List findDueBooks(int studentId,int pageNumber,int pageSize){
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+			
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.studentId = ? and o.statues = ? and o.dueDate < ?";
+		
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, studentId);
+			orderQueryO.setParameter(1, "Open");
+			orderQueryO.setParameter(2, today);
+			List<String> bookids = (List<String>)orderQueryO.list();
+
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current page
+			queryObject.setMaxResults(pageSize);// the size of page
+			List<Books> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	public List findAllDueBooks(int pageNumber,int pageSize){
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+			
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.statues = ? and o.dueDate < ?";
+		
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, "Open");
+			orderQueryO.setParameter(1, today);
+			List<String> bookids = (List<String>)orderQueryO.list();
+
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current page
+			queryObject.setMaxResults(pageSize);// the size of page
+			List<Books> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	public int findDueBookNumber(int studentId,int pageNumber,int pageSize){
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+			
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.studentId = ? and o.statues = ? and o.dueDate < ?";
+		
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, studentId);
+			orderQueryO.setParameter(1, "Open");
+			orderQueryO.setParameter(2, today);
+			List<String> bookids = (List<String>)orderQueryO.list();
+
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current page
+			queryObject.setMaxResults(pageSize);// the size of page
+			List<Books> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	public List<Books> findBooksBykeyword(Object keyword,int pagenumber,int pagesize) {
+		log.debug("finding Books instance with Keyword: " + keyword);
+		try {
+			Criteria criteria = getSession().createCriteria(Books.class);
+			List<Books> list = criteria.add(Restrictions.or(
+			Restrictions.like(AUTHOR, (String) keyword,MatchMode.ANYWHERE),
+			Restrictions.like(TITLE,(String) keyword,MatchMode.ANYWHERE ),
+			Restrictions.like(ISBN, (String) keyword,MatchMode.ANYWHERE)))
+			.setFirstResult((pagenumber-1)*pagesize)
+			.setMaxResults(pagesize).list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by Keyword failed", re);
 			throw re;
 		}
 	}

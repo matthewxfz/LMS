@@ -90,9 +90,8 @@ block page-content
         function search_update(keyword) {
             var books = "";
             keyword = keyword == ""?" ":keyword;
-            $.post(document.location.origin + '/admin/searchOrders', {
+            $.post(document.location.origin + '/admin/search/Classes', {
                 keyword: keyword,
-                operation: $("input:radio[name=optionsRadiosInline]:checked").val(),
                 pagenumber: page,
                 pagesize: pagesize
             }, function (req, res, data) {
@@ -102,15 +101,15 @@ block page-content
                     books = data.content ? data.content : "";
                     updateList(books);
                     if (keyword == " ") {
-                        $('#totalNumber').text("[All Orders] " + data.totalNumber + " Orders")
+                        $('#totalNumber').text("[All Classes] " + data.totalNumber + " Classes")
                     } else {
-                        $('#totalNumber').text("[\"" + keyword + "\"] " + data.totalNumber + " Orders")
+                        $('#totalNumber').text("[\"" + keyword + "\"] " + data.totalNumber + " Classes")
                     }
-                    page = data.page ? data.rpage : page;
+                    //page = data.page ? data.page : page;
                     newTp = data.totalPage ? data.totalPage : totalPage;
                     updateSelector(page);
-                }
-                else {
+                    $('#msg-brand').hide();
+                }else {
                     showError('Inner server errors!');
                 }
             });
@@ -125,14 +124,9 @@ block page-content
         }
 
         function addRow(classes){
-            orderHead = "["+order.orderId+"] ,Check in on:"+order.checkInDate+", due on:"+order.dueDate
-            bookInfo = "["+order.booGeneratedId+"], "+order.bookTitle+"by:"+order.bookAuthor+", pressed by:"+order.bookPublisher
-            studentInfo = "["+order.studentGeneratedId+"], "+order.studentFirstName+", "+order.studentLastName
-            
-            $('#book-list').append("<a class= \"list-group-item\">"+orderHead+"\" >"
-                + "<p class= \"list-group-item-heading\" > "+bookInfo+"</h4 >"
-                + "<p class= \"list-group-item-text\" > studentInfo <p>"
-                + "<Strong>"+order.status+"</Strong> </p> </p> </a> ");
+            title = classes.title + "["+classes.section+"]";
+            $('#book-list').append("<a class= \"list-group-item\">"+title+"\" >"
+                + "<Strong>"+"2017"+"</Strong>  </a> ");
         }
 
         function updateSelector(page) {
