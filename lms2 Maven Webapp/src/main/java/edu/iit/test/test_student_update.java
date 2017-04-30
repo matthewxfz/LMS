@@ -14,10 +14,7 @@ public class test_student_update {
  		//stu_find.setAddress("0");
 		//Students result = dao.merge(stu_find);
 		//System.out.println("output is "+result.toString());
-		String s = "FirstName";
-		String o ="Fang";
-		List<Students> stures = dao.key_findByProperty(s,o);
-		System.out.println(stures.get(0).getFirstName());
+		System.out.println(dao.test(1, 3));
 	
 	}
 }

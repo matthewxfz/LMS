@@ -195,14 +195,29 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
-	public List<Students> findAll_Overdue(int pageNumber, int pageSize) {
+public List test(int pageNumber, int pageSize){
+	try {
+		String queryString = "from Students, Parents,Orders where Students.studentId = Parents.studentId ";
+		Query queryObject = getSession().createQuery(queryString);
+		queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+		queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+		List list = queryObject.list();
+		return list;
+	} catch (RuntimeException re) {
+		log.error("find all failed", re);
+		throw re;
+	}
+}
+	public List findAll_Overdue(int pageNumber, int pageSize) {
 		// TODO Auto-generated method stub
 		log.debug("finding all Students instances");
 		try {
-			String queryString = "from Students join (from Orders where Date(now()) > DueDate) a on Students.StudentID = a.StudentID;";
+			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate < Date(now())";
 			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list();
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List list = queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
@@ -213,13 +228,73 @@ public class StudentsDAO extends BaseHibernateDAO {
 		// TODO Auto-generated method stub
 		log.debug("finding all Students instances");
 		try {
-			String queryString = "from Students join (from Orders where Date(now()) < DueDate) a on Students.StudentID = a.StudentID;";
+			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate >= Date(now())";
 			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list();
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List<Students> list = queryObject.list();
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
 		}
 	}
+
+	public int findAll_OverdueNum() {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate < Date(now())";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list().size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public int findAll_IndueNum() {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate >= Date(now())";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list().size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public List findAll(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
+			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			List list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public int findAllNum() {
+		// TODO Auto-generated method stub
+		log.debug("finding all Students instances");
+		try {
+			String queryString = "from Students";
+			Query queryObject = getSession().createQuery(queryString);
+			return queryObject.list().size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re); 
+			throw re;
+		}
+	}
+
+
 
 }
