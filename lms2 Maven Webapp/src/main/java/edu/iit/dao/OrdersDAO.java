@@ -165,8 +165,8 @@ public class OrdersDAO extends BaseHibernateDAO {
 		try {
 			String queryString = "from Orders";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 
+			queryObject.setMaxResults(pageSize);// 
 			List<Orders> list = queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
@@ -372,8 +372,8 @@ public class OrdersDAO extends BaseHibernateDAO {
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, bookid);
 			queryObject.setParameter(1,"Closed");
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
 			List<Orders> list = queryObject.list();
 			return list;
 		} catch (RuntimeException re) {

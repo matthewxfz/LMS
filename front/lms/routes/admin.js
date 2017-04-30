@@ -73,7 +73,7 @@ router.get('/getUserName', function(req,res, next){
     }
 });
 
-router.post('/searchBooks*', function(req, res,next){
+router.post('/searchBooks', function(req, res,next){
     console.log(req.body);
     sess=req.session;
     if(sess.email)
@@ -85,7 +85,7 @@ router.post('/searchBooks*', function(req, res,next){
     }
 });
 
-router.get('/searchOrders', function(req, res,next){
+router.get('/searchOrdersPage', function(req, res,next){
     console.log(req.body);
     sess=req.session;
     if(sess.email)
@@ -97,60 +97,23 @@ router.get('/searchOrders', function(req, res,next){
     }
 });
 
-router.post('/searchOrders', function(req, res,next){
+router.get('/searchClasses', function(req, res,next){
     console.log(req.body);
     sess=req.session;
     if(sess.email)
     {
-        postRequest(req, res, "");
+        res.render('admin/searchClasses');
     }
     else{
         res.render('admin/login', { title: 'LMS-login' });
     }
 });
 
-router.post('/searchStudents', function(req, res,next){
+router.post('/search/*', function(req, res,next){
     console.log(req.body);
     sess=req.session;
     if(sess.email)
     {
-        postRequest(req, res, "");
-    }
-    else{
-        res.render('admin/login', { title: 'LMS-login' });
-    }
-});
-
-router.post('/searchTeachers', function(req, res,next){
-    console.log(req.body);
-    sess=req.session;
-    if(sess.email)
-    {
-        postRequest(req, res, "");
-    }
-    else{
-        res.render('admin/login', { title: 'LMS-login' });
-    }
-});
-
-router.post('/searchClasses', function(req, res,next){
-    console.log(req.body);
-    sess=req.session;
-    if(sess.email)
-    {
-        postRequest(req, res, "");
-    }
-    else{
-        res.render('admin/login', { title: 'LMS-login' });
-    }
-});
-
-router.post('/checkCap', function(req, res,next){
-    console.log(req.body);
-    sess=req.session;
-    if(sess.email)
-    {
-        req.body = {userId:sess.userId};
         postRequest(req, res, "");
     }
     else{

@@ -102,32 +102,31 @@ block page-content
         //select the page
 
         function search_update(keyword) {
-            var books = "";
-            if (keyword != "") {
-                $.post(document.location.origin + '/searchBooks', {
+            var books = ""
+                $.post(document.location.origin + '/admin/searchBooks', {
                     keyword: keyword,
-                    operation: $("input:radio[name=optionsRadiosInline]:checked").val(),
+                    operation:$("input:radio[name=optionsRadiosInline]:checked").val(),
                     pagenumber: page,
                     pagesize: pagesize
                 }, function (req, res, data) {
                     //console.log(data.responseJSON);
+                    data = data.responseJSON
                     if (data.status == 'true') {
-                        books = data.responseJSON.content ? data.responseJSON.content : "";
+                        books = data.content ? data.content : "";
                         updateList(books);
-                        if (keyword == undefined) {
-                            $('#totalNumber').text("[All Books] " + data.responseJSON.totalNumber + " Books")
+                        if (keyword == "") {
+                            $('#totalNumber').text("[All Books] " + data.totalNumber + " Books")
                         } else {
-                            $('#totalNumber').text("[" + keyword + "] " + data.responseJSON.totalNumber + " Books")
+                            $('#totalNumber').text("[\"" + keyword + "\"] " + data.totalNumber + " Books")
                         }
-                        page = data.responseJSON.page ? data.responseJSON.page : page;
-                        newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
+                        page = data.page ? data.rpage : page;
+                        newTp = data.totalPage ? data.totalPage : totalPage;
                         updateSelector(page);
                     }
                     else{
                         showError('Inner server errors!');
                     }
                 });
-            }
         }
 
         function updateList(books) {
@@ -151,27 +150,5 @@ block page-content
         }
 
         function findAllBooks(){
-            $.post(document.location.origin + '/searchBooks', {
-                keyword: "",
-                operation: "all",
-                pagenumber: page,
-                pagesize: pagesize
-            }, function (req, res, data) {
-                //console.log(data.responseJSON);
-                if (data.status == 'true') {
-                    books = data.responseJSON.content ? data.responseJSON.content : "";
-                    updateList(books);
-                    if (keyword == undefined) {
-                        $('#totalNumber').text("[All Books] " + data.responseJSON.totalNumber + " Books")
-                    } else {
-                        $('#totalNumber').text("[" + keyword + "] " + data.responseJSON.totalNumber + " Books")
-                    }
-                    page = data.responseJSON.page ? data.responseJSON.page : page;
-                    newTp = data.responseJSON.totalPage ? data.responseJSON.totalPage : totalPage;
-                    updateSelector(page);
-                }
-                else {
-                    showError('Inner server errors!');
-                }
-            });
+            search_update("");
         }

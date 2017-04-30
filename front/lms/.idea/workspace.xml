@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="profile.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/student/profile.pug">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
-              <caret line="87" column="17" lean-forward="true" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
+            <state relative-caret-position="141">
+              <caret line="70" column="25" lean-forward="true" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -33,18 +33,18 @@
       <file leaf-file-name="dashboard.pug" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/admin/dashboard.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="113" column="20" lean-forward="true" selection-start-line="113" selection-start-column="20" selection-end-line="127" selection-end-column="21" />
+            <state relative-caret-position="269">
+              <caret line="25" column="112" lean-forward="false" selection-start-line="25" selection-start-column="102" selection-end-line="25" selection-end-column="112" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="searchOrders.pug" pinned="false" current-in-tab="true">
+      <file leaf-file-name="searchOrders.pug" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/admin/searchOrders.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-661">
-              <caret line="49" column="8" lean-forward="true" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+            <state relative-caret-position="-140">
+              <caret line="114" column="44" lean-forward="true" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="searchClass.pug" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/admin/searchClass.pug">
+      <file leaf-file-name="searchClasses.pug" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/admin/searchClasses.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="196">
+              <caret line="130" column="12" lean-forward="false" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -83,8 +83,8 @@
       <file leaf-file-name="admin.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/admin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="39" />
+            <state relative-caret-position="304">
+              <caret line="120" column="5" lean-forward="true" selection-start-line="120" selection-start-column="5" selection-end-line="120" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -93,7 +93,7 @@
       <file leaf-file-name="sidebar.pug" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/admin/include/sidebar.pug">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
+            <state relative-caret-position="354">
               <caret line="30" column="36" lean-forward="false" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
               <folding />
             </state>
@@ -143,12 +143,12 @@
       <find>validating</find>
       <find>\/\*\*\n \* Created by chenjiajun on 2016\/11\/15\.\n \*\/\nvar request \= require\(\'request\'\)\;\nvar httpApi \= require\(\'\.\.\/config\/config\'\)\.service\.httpApi\;\nvar wechat \= require\(\'\.\.\/config\/config\'\)\.wechat\;\n\nfunction getRequestRender\(req\, res\, dataBody\,renderUrl\) \{\n\n\	var param \= dataBody\.param \? dataBody\.param \: \{\}\;\n\	\/\/var session \= req\.session\;\n\n\	var opt \= \{\n\	\	headers\: \{\n\	\	\	\'Connection\'\: \'close\'\,\n\	\	\	\'Content\-Type\'\: \'application\/json\; charset\=utf\-8\'\,\n\	\	\	\'node\'\: \'open\'\n\	\	\}\,\n\	\	method\: \'GET\'\,\n\	\	baseUrl\: httpApi\.url\,\n\	\	url\: dataBody\.url\,\n\	\	qs\: param\n\	\}\;\n\n\	var callBack \= function\(error\, response\, body\) \{\n\	\	\n\	\	console\.log\(\'\-\-\-\-\-\-\-\-\-\- get request url \-\-\-\-\-\-\-\-\-\-\-\'\, dataBody\.url\)\;\n\	\	console\.log\(\'\-\-\-\-\-\-\-\-\-\- get request param \-\-\-\-\-\-\-\-\-\-\-\'\,param\)\;\n\	\	console\.log\(\'\-\-\-\-\-\-\-\-\-\- get request response body \-\-\-\-\-\-\-\-\-\-\-\'\,body\)\;\n\	\	\n\	\	if \(\!error\) \{\n\	\	\	if \(response\.statusCode \=\= 200 \|\| response\.statusCode \=\= 400\) \{\n\	\	\	\	var bodyData \= JSON\.parse\(body\)\;\n\	\	\	\	if\(bodyData\.status \&amp;\&amp; bodyData\.data\)\{\n\	\	\	\	\	res\.set\(\'Content\-Type\'\,\'application\/json\; charset\=utf\-8\'\)\n\	\	\	\	\	res\.render\(renderUrl\,bodyData\)\;\n                \}else\{\n                    res\.send\(\{title\:\'error\'\,content\:\'Password or account not exist\'\}\)\;\n                \}\n            \}\n        \}else\{\n            res\.send\(\{\n                title\: \'Error in inner server\'\,\n                content\: \'Error in inner server\'\n            \}\)\;\n        \}\n    \} else \{\n\n        res\.send\(\{\n            title\: \'Error in inner server\'\,\n            content\: \'Error in inner server\'\n        \}\)\;\n\n    \}\n\	\}\;\n\	\n\	request\(opt\, callBack\)\;\n\}\n\nmodule\.exports \= getRequestRender\;</find>
       <find>jumbo</find>
+      <find>search</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/c11/layout.jade" />
         <option value="$PROJECT_DIR$/public/javascripts/testCommunication.js" />
         <option value="$PROJECT_DIR$/public/javascripts/index.html" />
         <option value="$PROJECT_DIR$/views/layout.pug" />
@@ -188,17 +188,18 @@
         <option value="$PROJECT_DIR$/views/student/layout.pug" />
         <option value="$PROJECT_DIR$/views/student/include/sidebar.pug" />
         <option value="$PROJECT_DIR$/views/student/showBooks.pug" />
-        <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/views/student/profile.pug" />
         <option value="$PROJECT_DIR$/views/student/dashboard.pug" />
         <option value="$PROJECT_DIR$/views/admin/showBooks.pug" />
         <option value="$PROJECT_DIR$/views/admin/searchStudents.pug" />
         <option value="$PROJECT_DIR$/views/admin/searchTeachers.pug" />
         <option value="$PROJECT_DIR$/views/admin/searchClass.pug" />
-        <option value="$PROJECT_DIR$/views/admin/include/sidebar.pug" />
-        <option value="$PROJECT_DIR$/routes/admin.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/views/admin/dashboard.pug" />
         <option value="$PROJECT_DIR$/views/admin/searchOrders.pug" />
+        <option value="$PROJECT_DIR$/routes/admin.js" />
+        <option value="$PROJECT_DIR$/views/admin/include/sidebar.pug" />
+        <option value="$PROJECT_DIR$/views/admin/searchClasses.pug" />
       </list>
     </option>
   </component>
@@ -349,24 +350,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -662,7 +645,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237717000" />
+    <option name="totallyTimeSpent" value="244144000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1042,14 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="159" column="3" lean-forward="false" selection-start-line="159" selection-start-column="3" selection-end-line="159" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/student/profile.pug">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
@@ -1098,17 +1073,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/admin/searchClass.pug">
+    <entry file="file://$PROJECT_DIR$/views/admin/dashboard.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="269">
+          <caret line="25" column="112" lean-forward="false" selection-start-line="25" selection-start-column="102" selection-end-line="25" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="70" column="25" lean-forward="true" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/admin/include/sidebar.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
+        <state relative-caret-position="354">
           <caret line="30" column="36" lean-forward="false" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
           <folding />
         </state>
@@ -1116,24 +1099,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/admin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/admin/dashboard.pug">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="113" column="20" lean-forward="true" selection-start-line="113" selection-start-column="20" selection-end-line="127" selection-end-column="21" />
+        <state relative-caret-position="304">
+          <caret line="120" column="5" lean-forward="true" selection-start-line="120" selection-start-column="5" selection-end-line="120" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/admin/searchOrders.pug">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-661">
-          <caret line="49" column="8" lean-forward="true" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+        <state relative-caret-position="-140">
+          <caret line="114" column="44" lean-forward="true" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/admin/searchClasses.pug">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="130" column="12" lean-forward="false" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
           <folding />
         </state>
       </provider>

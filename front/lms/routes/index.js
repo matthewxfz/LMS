@@ -68,7 +68,7 @@ router.get('/getUserName', function(req,res, next){
     }
 });
 
-router.post('/searchBooks*', function(req, res,next){
+router.post('/searchBooks', function(req, res,next){
     console.log(req.body);
     sess=req.session;
     if(sess.email)

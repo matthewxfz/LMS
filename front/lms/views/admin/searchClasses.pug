@@ -3,7 +3,7 @@ extends layout
 block page-content
     .row
         .col-lg-12
-            h1.page-header Search Orders
+            h1.page-header Search Classes
             ol.breadcrumb
                 li
                     i.fa.fa-dashboard
@@ -11,28 +11,14 @@ block page-content
                     a(href='/admin/dashboard') Dashboard
                 li.active
                     i.fa.fa-edit
-                    |  Search Orders
+                    |  Search Classes
     .row
         .col-lg-6.col-lg-offset-3
             .form-group.input-group
-                input#search-input.form-control(type = 'text', placeholder='Enter book generated id')
+                input#search-input.form-control(type = 'text', placeholder='Enter Student id')
                 span.input-group-btn
                     button#search-btn.btn.btn-default(type='button')
                         i.fa.fa-search
-            .form-group
-                label
-                |
-                label.radio-inline
-                    input#optionsRadiosInline1(type='radio', name='optionsRadiosInline', value='all',checked='')
-                    | all
-                |
-                label.radio-inline
-                    input#optionsRadiosInline2(type='radio', name='optionsRadiosInline', value='closed')
-                    | Closed
-                |
-                label.radio-inline
-                    input#optionsRadiosInline3(type='radio', name='optionsRadiosInline', value='open')
-                    | Open
     .row
         #msg-brand.alert.alert-danger
             strong oops
@@ -104,7 +90,7 @@ block page-content
         function search_update(keyword) {
             var books = "";
             keyword = keyword == ""?" ":keyword;
-            $.post(document.location.origin + '/admin/search/orders', {
+            $.post(document.location.origin + '/admin/searchOrders', {
                 keyword: keyword,
                 operation: $("input:radio[name=optionsRadiosInline]:checked").val(),
                 pagenumber: page,
@@ -138,10 +124,11 @@ block page-content
             }
         }
 
-        function addRow(order){
+        function addRow(classes){
             orderHead = "["+order.orderId+"] ,Check in on:"+order.checkInDate+", due on:"+order.dueDate
             bookInfo = "["+order.booGeneratedId+"], "+order.bookTitle+"by:"+order.bookAuthor+", pressed by:"+order.bookPublisher
             studentInfo = "["+order.studentGeneratedId+"], "+order.studentFirstName+", "+order.studentLastName
+            
             $('#book-list').append("<a class= \"list-group-item\">"+orderHead+"\" >"
                 + "<p class= \"list-group-item-heading\" > "+bookInfo+"</h4 >"
                 + "<p class= \"list-group-item-text\" > studentInfo <p>"
