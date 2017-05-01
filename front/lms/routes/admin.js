@@ -109,6 +109,32 @@ router.get('/searchClasses', function(req, res,next){
     }
 });
 
+
+
+router.get('/searchStudents', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('admin/searchStudents');
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
+router.get('/searchTeachers', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('admin/searchTeachers');
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
+});
+
 router.post('/search/*', function(req, res,next){
     console.log(req.body);
     sess=req.session;
