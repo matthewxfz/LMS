@@ -27,11 +27,11 @@ block page-content
                     | All Book
                 |
                 label.radio-inline
-                    input#optionsRadiosInline2(type='radio', name='optionsRadiosInline', value='isDue')
+                    input#optionsRadiosInline2(type='radio', name='optionsRadiosInline', value='due')
                     | Due Book
                 |
                 label.radio-inline
-                    input#optionsRadiosInline3(type='radio', name='optionsRadiosInline', value='isRent')
+                    input#optionsRadiosInline3(type='radio', name='optionsRadiosInline', value='rent')
                     | Rent Book
     .row
         #msg-brand.alert.alert-danger
@@ -46,6 +46,8 @@ block page-content
                     i Simply input your result
                     p
                         Strong
+
+
 
     .row
         nav(aria-label='Page navigation example')
@@ -90,20 +92,22 @@ block page-content
 
         //last button
         $('#pre-page').click(function () {
-            if(page > 2 ){
-                search_update(keyword, page-1, pagesize)
+            if(page > 1 ){
+                page = page-1;
+                search_update(keyword, page, pagesize)
             }
         });
         //next button
         $('#next-page').click(function () {
-                search_update(keyword, page + 1, pagesize)
+            page = page+1;
+                search_update(keyword, page , pagesize)
 
         });
         //select the page
 
         function search_update(keyword) {
             var books = ""
-                $.post(document.location.origin + '/admin/searchBooks', {
+                $.post(document.location.origin + '/admin/search/books', {
                     keyword: keyword,
                     operation:$("input:radio[name=optionsRadiosInline]:checked").val(),
                     pagenumber: page,
@@ -115,13 +119,13 @@ block page-content
                         books = data.content ? data.content : "";
                         updateList(books);
                         if (keyword == "") {
-                            $('#totalNumber').text("[All Books] " + data.totalNumber + " Books")
+                            $('#totalNumber').text("["+$("input:radio[name=optionsRadiosInline]:checked").val()+" Books] " + data.totalNumber + " Books")
                         } else {
                             $('#totalNumber').text("[\"" + keyword + "\"] " + data.totalNumber + " Books")
                         }
-                        page = data.page ? data.rpage : page;
                         newTp = data.totalPage ? data.totalPage : totalPage;
                         updateSelector(page);
+                        hideError();
                     }
                     else{
                         showError('Inner server errors!');
@@ -138,9 +142,9 @@ block page-content
         }
 
         function addRow(book){
-            $('#book-list').append("<a class= \"list-group-item\" href=\"/admin/showBooks\?bookId="+book.bookId+"\">"+book.title+"\" >"
+            $('#book-list').append("<a class= \"list-group-item\" href=\"/admin/showBooks\?bookId="+book.bookId+"\">"+"["+book.bookId+"]"+book.title+"<br>"
                 + "<h4 class= \"list-group-item-heading\" > "+book.title+"</h4 >"
-                + "<p class= \"list-group-item-text\" > <i> By "+book.author+", "+book.publisher+", "+book.generatedId+"</i> <p>"
+                + "<p class= \"list-group-item-text\" > <i> By "+book.author+", "+book.publisher+", ["+book.generatedId+"]</i> <p>"
                 + "<Strong>"+book.status+"</Strong> </p> </p> </a> ");
         }
 
@@ -151,4 +155,13 @@ block page-content
 
         function findAllBooks(){
             search_update("");
+        }
+
+        function showError(msg) {
+            $('#msg').text(msg);
+            $('#msg-brand').show();
+        }
+        function hideError(msg) {
+            $('#msg').text(msg);
+            $('#msg-brand').hide();
         }

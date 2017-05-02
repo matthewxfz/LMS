@@ -139,12 +139,12 @@ block page-content
         }
 
         function addRow(order){
-            orderHead = "["+order.orderId+"] ,Check in on:"+order.checkInDate+", due on:"+order.dueDate
+            orderHead = "["+order.orderId+"] ,Check in Date: "+order.checkInDate+", Due on Date: "+order.dueDate
             bookInfo = "["+order.booGeneratedId+"], "+order.bookTitle+"by:"+order.bookAuthor+", pressed by:"+order.bookPublisher
-            studentInfo = "["+order.studentGeneratedId+"], "+order.studentFirstName+", "+order.studentLastName
-            $('#book-list').append("<a class= \"list-group-item\">"+orderHead+"\" >"
+            studentInfo = "["+order.studentGeneratedId+"], "+order.studentFirstName+", "+order.studentLastName + ", "+order.studentEmail
+            $('#book-list').append("<a class= \"list-group-item\">"+orderHead+"<br>"
                 + "<p class= \"list-group-item-heading\" > "+bookInfo+"</h4 >"
-                + "<p class= \"list-group-item-text\" > studentInfo <p>"
+                + "<p class= \"list-group-item-text\" >"+ studentInfo +"<p>"
                 + "<Strong>"+order.status+"</Strong> </p> </p> </a> ");
         }
 

@@ -1,0 +1,183 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1.page-header Add Book
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/admin/dashboard') Dashboard
+                li.active
+                    i.fa.fa-edit
+                    |  Add Book
+    .row
+        #msg-success-band.alert.alert-success
+            strong Lucky for you!
+            #msg-suc  Something have been done.
+        #msg-band.alert.alert-danger
+            strong Oops!
+            #msg  Something wrong!
+    .row
+        .col-lg-6.col-lg-offset-3
+            .form-group.input-group
+                input#search-input.form-control(type = 'text', placeholder='Enter Book ISBN-10')
+                span.input-group-btn
+                    button#search-btn.btn.btn-default(type='button')
+                        i.fa.fa-search
+            .form-group.input-group
+                input#generatedId-input.form-control(type = 'text', placeholder='Enter Book Generated ID')
+                span.input-group-btn
+                    button.btn.btn-default(type='button')
+                        i.fa.fa-qrcode
+
+
+    .row
+        .col-lg-6.col-lg-offset-3
+          .panel.panel-primary
+            .panel-heading
+              h1#title1.panel-title Book Title
+            .panel-body
+                .col-lg-6
+                    .container-fluid
+                        img#cover.img-thumbnail(src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcS8riFC9UgHLP5LitDJNxs8wN97vL80PWY5dzvpUvp08yYIpVhoOg',  style='transform: translate3d(0px, 0px, 0px);')
+                .col-lg-6
+                    //h1#title Steve Jobs
+                    p#author By
+                    p#pubisher Category
+                    p#publishDate Publishe date
+                    p#ISBN ISBN
+                    p#pageCount Page Count
+                    p#des Description
+
+    .row
+        .col-lg-6.col-lg-offset-3
+            button#save-btn.btn.btn-lg.btn-danger.btn-block(type='button') Save
+
+    script.
+        var gbook = {title:"", cover:"", author:"", publisher:"", publicationdate:"", page:"", generatedID:""};
+        hideError();
+        disableSave();
+        search_update("");//find all books
+
+        //searching mechanism
+            //        var timer; // external so it's value is held over all instances of the timer function
+            //
+            //
+            //        $('#search-input').on('keyup', function () {
+            //            if (timer) {
+            //                clearTimeout(timer);
+            //            }
+            //            timer = setTimeout(function () {
+            //                isbn = $('#search-input').val();
+            //                search_update(isbn);
+            //            }, 500);
+            //        });
+
+
+        //searching button
+        $('#search-btn').click(function () {
+            isbn = $('#search-input').val();
+            search_update(isbn);
+        });
+
+
+        //save_btn
+        $('#save-btn').click(function () {
+            isbn = $('#search-input').val();
+            generatedId = $('#generatedId-input').val();
+            if(generatedId.length == 0){
+                showError("generated ID can not be empty!");
+            }else{
+                //save in to the server
+                gbook.generatedID = generatedId;
+                $.post(document.location.origin + '/addBook', gbook, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    data = data.responseJSON
+                    if (data.status == 'true') {
+                        showSuc(data.content);
+                    } else {
+                        if(data.content != ""){
+                            showError(data.content);
+                        }else{
+                            showError("Inner Server Error!")
+                        }
+                    }
+                });
+            }
+        });
+
+        function search_update(keyword) {
+            disableSave();
+            if(keyword.length != 10 && keyword.length != 13){
+                showError("ISBN is not legal");
+            }else{
+                //ask google for book
+                var quest = "https://www.googleapis.com/books/v1/volumes?q=isbn:"+keyword;
+                $.get(quest, function (req, res, data) {
+                    data = data.responseJSON;
+                    if(data.totalItems < 1){
+                        showError("Cannot find the book");
+                    }else{
+                        updateBook(data.items);
+                        hideError();
+                        enableSave();
+                    }
+                })
+            }
+        }
+
+        function updateBook(books){
+            //only for fist book
+            book  = books[0];
+            gbook.title = book.volumeInfo.title;
+            gbook.author = book.volumeInfo.authors[0];
+            gbook.page = book.volumeInfo.pageCount;
+            gbook.cover = book.volumeInfo.imageLinks.thumbnail;
+            gbook.publisher = book.volumeInfo.publisher?book.volumeInfo.publisher:"";
+            for(i = 0; i<book.volumeInfo.industryIdentifiers.length;i++){
+                if(book.volumeInfo.industryIdentifiers[i].type == "ISBN_10"){
+                    gbook.isbn = book.volumeInfo.industryIdentifiers[i].identifier
+                }
+            }
+            gbook.publicationdate = book.volumeInfo.publishedDate;
+
+            $('#cover').attr('src',book.volumeInfo.imageLinks.thumbnail);
+            $('#title').text(book.volumeInfo.title);
+            $('#title1').text(book.volumeInfo.title);
+            $('#author').text("By"+book.volumeInfo.authors[0]);
+            $('#pubisher').text("In "+gbook.publisher);
+            $('#publishDate').text("Published in: "+book.volumeInfo.publishedDate);
+            $('#ISBN').text(book.volumeInfo.industryIdentifiers[0].type+", "+book.volumeInfo.industryIdentifiers[0].identifier);
+            $('#pageCount').text("Page: "+book.volumeInfo.pageCount);
+            $('#des').text(book.volumeInfo.description);
+        }
+
+
+        function disableSave(){
+            $('#save-btn').addClass('disabled');
+        }
+        function enableSave() {
+            $('#save-btn').removeClass('disabled');
+        }
+
+        function hideError() {
+            $('#msg-brand').hide();
+            $('#msg-success-band').hide();
+        }
+        function showError(content) {
+            $('#msg').text(content);
+
+            $('#msg-band').show();
+            $('#msg-success-band').hide();
+        }
+
+        function showSuc(content) {
+            $('#msg-suc').text(content);
+
+            $('#msg-band').hide();
+            $('#msg-success-band').show();
+        }
+
+

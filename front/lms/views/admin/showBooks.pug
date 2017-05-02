@@ -74,6 +74,7 @@ block page-content
 
         var m_bookId = '#{generatedId}';
         var cover = '#{cover}';
+        cover =covertImage(cover);
         var s_id =undefined;
         $('#cover-pic').attr('src',cover);
 
@@ -180,4 +181,13 @@ block page-content
             $('#msg-fail-band').hide();
             $('#msg-success-band').show();
             $('#msg-info-band').hide();
+        }
+
+        function covertImage(url){
+            var tmp = url.split("amp;");
+            var ret = "";
+            for(i = 0;i<tmp.length;i++){
+                ret += tmp[i];
+            }
+            return ret;
         }

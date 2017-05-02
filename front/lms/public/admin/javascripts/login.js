@@ -1,5 +1,5 @@
 /**
- * Created by matthewxfz on 4/19/17.
+ * Created by matthewxfz on 4/19/17. amdin login
  */
 $('#msg-brand').hide();
 
@@ -37,7 +37,7 @@ console.log("before connnection");
 //sent to server when click
 $(function () {
     $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
-        var data = {
+        var param = {
             /*creating a Js ojbect to be sent to the server*/
             account: $('#account').val()+"@iit.edu", /*getting the text input data      */
             pwd: $('#pwd').val()
@@ -47,15 +47,22 @@ $(function () {
         $('#msg-brand').hide();
         if(validateLoginForm()){
             toggleInput('off');
-            console.log('post');
-            $.post("http://localhost:8081/admin/login", {account: data.account, password: data.pwd}, function (req, res, data) {
-                console.log(data.responseJSON.title);
-                if (data.responseJSON.title == 'pass') {
-                    window.location.href = "/admin/dashboard";
+            console.log(document.location.origin);
+            $.post(document.location.origin + '/admin/search/Classes',
+                {account:param.account, password:param.pwd, time:"no right"},
+                function (req, res, data) {
+                if(data.responseJSON != undefined){
+                    if (data.responseJSON.title == 'pass') {
+                        window.location.href = "/dashboard";
+                    }else{
+                        $('#msg').text(data.responseJSON.content);
+                        $('#msg-brand').show();
+                    }
                 }else{
-                    $('#msg').text(data.responseJSON.content);
+                    $('#msg').text("Content Error!");
                     $('#msg-brand').show();
                 }
+
             });
         }else{
             return false;

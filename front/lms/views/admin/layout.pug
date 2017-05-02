@@ -3,7 +3,7 @@
 doctype html
 html(lang='en')
     head
-        title= 'Student-dashboard'
+        title= 'Admin-dashboard'
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
@@ -24,7 +24,7 @@ html(lang='en')
                         span.icon-bar
                         span.icon-bar
                     |
-                    a.navbar-brand(href='   /admin/dashboard') LMS Student
+                    a.navbar-brand(href='   /admin/dashboard') LMS Admin
                 ul.nav.navbar-right.top-nav
 
                     li.dropdown
@@ -72,6 +72,6 @@ html(lang='en')
             }
             function hideError(msg) {
                 $('#msg').text(msg);
-                $('#msg-brand').show();
+                $('#msg-brand').hide();
             }
 

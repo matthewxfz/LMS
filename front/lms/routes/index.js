@@ -4,6 +4,8 @@ var router = express.Router();
 var request = require('request');
 var validator = require('validator');
 var postLoginRequest = require('../modules/postLoginRequest');
+var postLoginAdminRequest = require('../modules/postLoginAdminRequest');
+
 var postRequest = require('../modules/postRequest');
 var getRequestRender = require('../modules/getRequestRender')
 var config = require("../config/config");
@@ -32,6 +34,17 @@ router.post('/login', function(req, res, next) {
     }
 });
 
+router.post('/adminLogin', function(req, res, next) {
+    sess=req.session;
+    if(sess.email)
+    {
+        res.render('admin/dashboard',{title:'LMS-Admin'})
+    }
+    else{
+        console.log('[Sending data to AA]')
+        postLoginRequest(req, res,'loginServer');
+    }
+});
 
 router.get('/dashboard',function (req,res,next){
     sess=req.session;
@@ -157,6 +170,18 @@ router.post('/getProfile',function (req, res, next) {
         res.render('admin/login', { title: 'LMS-login' });
     }
 
+});
+
+router.post('/*', function(req, res,next){
+    console.log(req.body);
+    sess=req.session;
+    if(sess.email)
+    {
+        postRequest(req, res, "");
+    }
+    else{
+        res.render('admin/login', { title: 'LMS-login' });
+    }
 });
 
 module.exports = router;
