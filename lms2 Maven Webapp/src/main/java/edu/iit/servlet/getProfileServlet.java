@@ -15,9 +15,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import edu.iit.bean.SearchBookMessage;
+import edu.iit.bean.StudentMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
+import edu.iit.dao.Students;
+import edu.iit.dao.StudentsDAO;
 import edu.iit.util.BooksAdapter;
+import edu.iit.util.StudentAdapter;
 
 @WebServlet(urlPatterns = "/getProfile")
 public class getProfileServlet extends HttpServlet {
@@ -25,28 +29,23 @@ public class getProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// read the input
-		String bookId = req.getParameter("bookId");
-		System.out.println("Book Id" + bookId);
+		String studentId = req.getParameter("studentId");
+		System.out.println("Student Id" + studentId);
 		// Search in hibernate
-		SearchBookMessage msg;
-		msg = new SearchBookMessage();
+		StudentMessage msg = new StudentMessage();
+		StudentsDAO sdao = new StudentsDAO();
 		try {
-			BooksDAO dao = new BooksDAO();
-			Books book = dao.findById(Integer.valueOf(bookId));
-			List<Books> li = new LinkedList<Books>();
-			li.add(book);
-
-			msg.setPage(Integer.valueOf(1));
-			msg.setTotalPage(100 / Integer.valueOf(12));
-			msg.setContent(li);
-			msg.setStatus("true");
+			msg.content = (Students)sdao.findById(Integer.valueOf(studentId));
+			msg.title = "Success";
+			msg.status = "true";
 		} catch (Exception e) {
-			msg.setStatus("false");
+			msg.title = "Error, InnerServer Error!";
+			msg.status = "true";
 		}
-
 		// send the data
-		Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Books.class, new BooksAdapter()).create();
-		System.out.println("[Rent book]Data we send: " + gson.toJson(msg));
+		Gson gson = new GsonBuilder().serializeNulls().registerTypeAdapter(Students.class, new StudentAdapter())
+				.create();
+		System.out.println("[Student Profile]Data we send: " + gson.toJson(msg));
 
 		// send the data
 		resp.getWriter().write(gson.toJson(msg));

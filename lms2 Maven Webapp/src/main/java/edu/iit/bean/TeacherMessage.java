@@ -6,6 +6,7 @@ import edu.iit.dao.Orders;
 import edu.iit.dao.Teachers;
 
 public class TeacherMessage {
+	
 	private String title;
 	private String status;
 	private String totapage;
@@ -42,4 +43,6 @@ public class TeacherMessage {
 		this.content = content;
 	}
 	
+	
+
 }

@@ -22,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import edu.iit.bean.SearchBookMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
+import edu.iit.dao.StudentsDAO;
 import edu.iit.util.BooksAdapter;
 
 
@@ -45,7 +46,7 @@ public class CheckDueBookServlet extends HttpServlet {
 		// //decomposite the input json
 		JsonElement jelement = new JsonParser().parse(jb.toString());
 		JsonObject jobject = jelement.getAsJsonObject();
-		String userEmail = decompositeJSON(jobject, "userId");
+		String userId = decompositeJSON(jobject, "userId");
 
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
@@ -53,8 +54,10 @@ public class CheckDueBookServlet extends HttpServlet {
 		SearchBookMessage msg;
 		msg = new SearchBookMessage();
 		try {
+			StudentsDAO sdao = new StudentsDAO();
 			BooksDAO dao = new BooksDAO();
-			List<Books> li = (List<Books>) dao.findDueBooks(1, 1, 20);
+			List<Books> li = (List<Books>) dao.findDueBooks(
+					sdao.findById(Integer.valueOf(userId)).getStudentId(), 1, 20);
 			msg.setPage(Integer.valueOf(1));
 			msg.setTotalPage(100 / Integer.valueOf(12));
 			msg.setContent(li);

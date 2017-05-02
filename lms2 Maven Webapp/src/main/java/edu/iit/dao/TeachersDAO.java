@@ -126,15 +126,12 @@ public class TeachersDAO extends BaseHibernateDAO {
 		return findByProperty(PAS, pas);
 	}
 
-	public List findAll(int pageNumber, int pageSize) {
+	public List findAll() {
 		log.debug("finding all Teachers instances");
 		try {
 			String queryString = "from Teachers";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List<Teachers> list = queryObject.list();
-			return list;
+			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
@@ -174,15 +171,15 @@ public class TeachersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-
-	public int findAllNum() {
-		// TODO Auto-generated method stub
+	
+	public List findAll(int pageNumber, int pageSize) {
 		log.debug("finding all Teachers instances");
 		try {
 			String queryString = "from Teachers";
 			Query queryObject = getSession().createQuery(queryString);
-			List<Teachers> list = queryObject.list();
-			return queryObject.list().size();
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;

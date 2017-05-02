@@ -22,7 +22,7 @@ import edu.iit.bean.LoginMessage;
 import edu.iit.dao.Admins;
 import edu.iit.dao.AdminsDAO;
 
-@WebServlet(urlPatterns = { "/admin/login"})
+@WebServlet(urlPatterns = { "/admin/login", "/adminLogin"})
 public class Autorization extends HttpServlet {
 	/**
 	 * 
@@ -58,12 +58,12 @@ public class Autorization extends HttpServlet {
 		List<Admins> ll = dao.findByEmail(account);
 		if(ll.size() == 1){
 			Admins adm = ll.get(0);
+			System.out.println("The right pas:"+adm.getPas());
 			if(adm.getPas().equals(password)){
 				msg.setTitle("");
 				msg.setStatus("true");
 				msg.setFirstName(adm.getFirstName());
 				msg.setUserId(adm.getUserId());
-				
 			}else{
 				msg.setTitle("");
 				msg.setStatus("false");

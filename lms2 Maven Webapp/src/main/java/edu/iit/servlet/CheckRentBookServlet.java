@@ -19,7 +19,7 @@ import com.google.gson.JsonParser;
 import edu.iit.bean.SearchBookMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
-import edu.iit.dao.OrdersDAO;
+import edu.iit.dao.OrdersDAO_backup;
 import edu.iit.util.BooksAdapter;
 
 
@@ -51,7 +51,7 @@ public class CheckRentBookServlet extends HttpServlet {
 		SearchBookMessage msg;
 		msg = new SearchBookMessage();
 		try {
-			OrdersDAO dao = new OrdersDAO();
+			OrdersDAO_backup dao = new OrdersDAO_backup();
 			List<Books> li = dao.findALLBooks_book_ByStudentId(1, 20, Integer.valueOf(userId));
 			
 			msg.setPage(Integer.valueOf(1));

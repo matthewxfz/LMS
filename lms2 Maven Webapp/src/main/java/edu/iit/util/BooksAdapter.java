@@ -17,7 +17,6 @@ public class BooksAdapter implements JsonSerializer<Books>{
         jsonObject.addProperty("status", books.getStatus());
         jsonObject.addProperty("generatedId", books.getGeneratedId());
         jsonObject.addProperty("cover", books.getCover());
-        
         return jsonObject;      
 	};
 }

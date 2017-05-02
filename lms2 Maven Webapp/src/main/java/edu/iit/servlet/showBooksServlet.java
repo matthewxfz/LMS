@@ -20,11 +20,11 @@ import com.google.gson.JsonParser;
 import edu.iit.bean.SearchBookMessage;
 import edu.iit.dao.Books;
 import edu.iit.dao.BooksDAO;
-import edu.iit.dao.OrdersDAO;
+import edu.iit.dao.OrdersDAO_backup;
 import edu.iit.util.BooksAdapter;
 
 //showBook
-@WebServlet(urlPatterns = { "/showBooks" })
+@WebServlet(urlPatterns = { "/showBooks","/admin/showBooks" })
 public class showBooksServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

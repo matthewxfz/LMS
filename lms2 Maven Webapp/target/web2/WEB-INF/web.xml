@@ -4,4 +4,13 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+    <filter>
+        <filter-name>logFileter</filter-name>
+        <filter-class>edu.iit.xfz.filter.LogFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>logFileter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
+

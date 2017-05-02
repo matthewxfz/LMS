@@ -1,6 +1,5 @@
 package edu.iit.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -93,19 +92,7 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	public int booktoborrow(Integer studentId){
-		try {
-			String queryString = "from RegisterTo where StudentID = ?";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, studentId);
-			//List<Integer> bb=new ArrayList<Integer>();
-			//bb=queryObject.list();
-			return queryObject.list().size();
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
+
 	public List findByMoblie(Object moblie) {
 		return findByProperty(MOBLIE, moblie);
 	}
@@ -195,106 +182,32 @@ public class StudentsDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-public List test(int pageNumber, int pageSize){
-	try {
-		String queryString = "from Students, Parents,Orders where Students.studentId = Parents.studentId ";
-		Query queryObject = getSession().createQuery(queryString);
-		queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-		queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-		List list = queryObject.list();
-		return list;
-	} catch (RuntimeException re) {
-		log.error("find all failed", re);
-		throw re;
-	}
-}
-	public List findAll_Overdue(int pageNumber, int pageSize) {
-		// TODO Auto-generated method stub
-		log.debug("finding all Students instances");
+	
+	public int booktoborrow(int studentId){
 		try {
-			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate < Date(now())";
+			String queryString = "from RegisterTo where StudentID = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List list = queryObject.list();
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find all failed", re);
-			throw re;
-		}
-	}
-
-	public List findAll_Indue(int pageNumber, int pageSize) {
-		// TODO Auto-generated method stub
-		log.debug("finding all Students instances");
-		try {
-			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate >= Date(now())";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List<Students> list = queryObject.list();
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find all failed", re);
-			throw re;
-		}
-	}
-
-	public int findAll_OverdueNum() {
-		// TODO Auto-generated method stub
-		log.debug("finding all Students instances");
-		try {
-			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate < Date(now())";
-			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, studentId);
+			//List<Integer> bb=new ArrayList<Integer>();
+			//bb=queryObject.list();
 			return queryObject.list().size();
 		} catch (RuntimeException re) {
-			log.error("find all failed", re);
+			log.error("find by property name failed", re);
 			throw re;
 		}
 	}
-
-	public int findAll_IndueNum() {
-		// TODO Auto-generated method stub
-		log.debug("finding all Students instances");
-		try {
-			String queryString = "from Students, Parents,Orders where Students.StudentID = Parents.StudentID and Students.StudentID=Orders.StudentID and Orders.DueDate >= Date(now())";
-			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list().size();
-		} catch (RuntimeException re) {
-			log.error("find all failed", re);
-			throw re;
-		}
-	}
-
 	public List findAll(int pageNumber, int pageSize) {
-		// TODO Auto-generated method stub
 		log.debug("finding all Students instances");
 		try {
 			String queryString = "from Students";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List list = queryObject.list();
-			return list;
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find all failed", re);
 			throw re;
 		}
 	}
-
-	public int findAllNum() {
-		// TODO Auto-generated method stub
-		log.debug("finding all Students instances");
-		try {
-			String queryString = "from Students";
-			Query queryObject = getSession().createQuery(queryString);
-			return queryObject.list().size();
-		} catch (RuntimeException re) {
-			log.error("find all failed", re); 
-			throw re;
-		}
-	}
-
-
-
+	
 }

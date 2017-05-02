@@ -102,6 +102,21 @@ public class ClassesDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
+	
+	public List findAll(int pageNumber, int pageSize) {
+		log.debug("finding all Classes instances");
+		try {
+			String queryString = "from Classes";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+	
 
 	public Classes merge(Classes detachedInstance) {
 		log.debug("merging Classes instance");

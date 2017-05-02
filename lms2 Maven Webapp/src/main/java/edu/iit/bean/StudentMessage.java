@@ -1,16 +1,12 @@
 package edu.iit.bean;
 
-import java.util.List;
-
-import edu.iit.dao.Orders;
 import edu.iit.dao.Students;
 
 public class StudentMessage {
-	private String title;
-	private String status;
-	private String totapage;
-	private String totalNumber;
-	private List<Students> content;
+	
+	public String title;
+	public String status;
+	public Students content;
 	public String getTitle() {
 		return title;
 	}
@@ -23,22 +19,10 @@ public class StudentMessage {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getTotapage() {
-		return totapage;
-	}
-	public void setTotapage(String totapage) {
-		this.totapage = totapage;
-	}
-	public String getTotalNumber() {
-		return totalNumber;
-	}
-	public void setTotalNumber(String totalNumber) {
-		this.totalNumber = totalNumber;
-	}
-	public List<Students> getContent() {
+	public Students getContent() {
 		return content;
 	}
-	public void setContent(List<Students> content) {
+	public void setContent(Students content) {
 		this.content = content;
 	}
 	

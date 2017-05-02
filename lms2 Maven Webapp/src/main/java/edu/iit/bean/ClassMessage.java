@@ -8,7 +8,10 @@ import edu.iit.dao.Orders;
 public class ClassMessage {
 	private String title;
 	private String status;
-	private String totalclass;
+	private String page;
+	private String totalPage;
+	private String totalNumber;
+	
 	private List<Classes> content;
 	public String getTitle() {
 		return title;
@@ -16,11 +19,24 @@ public class ClassMessage {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getTotalclass() {
-		return totalclass;
+	
+	public String getPage() {
+		return page;
 	}
-	public void setTotalclass(String totalclass) {
-		this.totalclass = totalclass;
+	public void setPage(String page) {
+		this.page = page;
+	}
+	public String getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(String totalPage) {
+		this.totalPage = totalPage;
+	}
+	public String getTotalNumber() {
+		return totalNumber;
+	}
+	public void setTotalNumber(String totalNumber) {
+		this.totalNumber = totalNumber;
 	}
 	public String getStatus() {
 		return status;

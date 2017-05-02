@@ -12,7 +12,9 @@
 		</property>
 		<property name="connection.password">CS425pas!</property>
 		<property name="connection.username">cs425</property>
-		<property name="connection.url">jdbc:mysql://35.163.144.63:3306/lms</property>
+		<property name="connection.url">
+			jdbc:mysql://35.163.144.63:3306/lms
+		</property>
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>

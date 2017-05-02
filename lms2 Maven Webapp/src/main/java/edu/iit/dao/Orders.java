@@ -11,14 +11,14 @@ public class Orders implements java.io.Serializable {
 	// Fields
 
 	private Integer orderId;
-	private Books books;
-	private Admins admins;
-	private Students students;
 	private Date checkinDate;
 	private Date checkoutDate;
 	private Date dueDate;
 	private String type;
 	private String statues;
+	private Integer studentId;
+	private Integer bookId;
+	private Integer adminId;
 
 	// Constructors
 
@@ -27,62 +27,38 @@ public class Orders implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Orders(Books books, Admins admins, Students students, Date checkinDate, Date dueDate, String type,
-			String statues) {
-		this.books = books;
-		this.admins = admins;
-		this.students = students;
+	public Orders(Date checkinDate, Date dueDate, String type, String statues, Integer studentId, Integer bookId,
+			Integer adminId) {
 		this.checkinDate = checkinDate;
 		this.dueDate = dueDate;
 		this.type = type;
 		this.statues = statues;
+		this.studentId = studentId;
+		this.bookId = bookId;
+		this.adminId = adminId;
 	}
 
 	/** full constructor */
-	public Orders(Books books, Admins admins, Students students, Date checkinDate, Date checkoutDate, Date dueDate,
-			String type, String statues) {
-		this.books = books;
-		this.admins = admins;
-		this.students = students;
+	public Orders(Date checkinDate, Date checkoutDate, Date dueDate, String type, String statues, Integer studentId,
+			Integer bookId, Integer adminId) {
 		this.checkinDate = checkinDate;
 		this.checkoutDate = checkoutDate;
 		this.dueDate = dueDate;
 		this.type = type;
 		this.statues = statues;
+		this.studentId = studentId;
+		this.bookId = bookId;
+		this.adminId = adminId;
 	}
 
 	// Property accessors
 
-	public Integer getOrderId() {
+	public Integer book() {
 		return this.orderId;
 	}
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
-	}
-
-	public Books getBooks() {
-		return this.books;
-	}
-
-	public void setBooks(Books books) {
-		this.books = books;
-	}
-
-	public Admins getAdmins() {
-		return this.admins;
-	}
-
-	public void setAdmins(Admins admins) {
-		this.admins = admins;
-	}
-
-	public Students getStudents() {
-		return this.students;
-	}
-
-	public void setStudents(Students students) {
-		this.students = students;
 	}
 
 	public Date getCheckinDate() {
@@ -123,6 +99,34 @@ public class Orders implements java.io.Serializable {
 
 	public void setStatues(String statues) {
 		this.statues = statues;
+	}
+
+	public Integer getStudentId() {
+		return this.studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
+	}
+
+	public Integer getBookId() {
+		return this.bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
+	public Integer getAdminId() {
+		return this.adminId;
+	}
+
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
 	}
 
 }

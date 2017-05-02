@@ -10,15 +10,6 @@
             <column name="OrderID" />
             <generator class="identity" />
         </id>
-        <many-to-one name="books" class="edu.iit.dao.Books" fetch="select">
-            <column name="BookID" not-null="true" />
-        </many-to-one>
-        <many-to-one name="admins" class="edu.iit.dao.Admins" fetch="select">
-            <column name="AdminID" not-null="true" />
-        </many-to-one>
-        <many-to-one name="students" class="edu.iit.dao.Students" fetch="select">
-            <column name="StudentID" not-null="true" />
-        </many-to-one>
         <property name="checkinDate" type="java.util.Date">
             <column name="CheckinDate" length="10" not-null="true" />
         </property>
@@ -33,6 +24,15 @@
         </property>
         <property name="statues" type="java.lang.String">
             <column name="Statues" length="6" not-null="true" />
+        </property>
+        <property name="studentId" type="java.lang.Integer">
+            <column name="StudentID" not-null="true" />
+        </property>
+        <property name="bookId" type="java.lang.Integer">
+            <column name="BookID" not-null="true" />
+        </property>
+        <property name="adminId" type="java.lang.Integer">
+            <column name="AdminID" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

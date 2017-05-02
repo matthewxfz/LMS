@@ -1,9 +1,8 @@
 package edu.iit.dao;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
@@ -28,30 +27,45 @@ public class OrdersDAO extends BaseHibernateDAO {
 	// property constants
 	public static final String TYPE = "type";
 	public static final String STATUES = "statues";
-	public static final String BookID = "bookid";
-	public void save(Orders transientInstance) throws Exception{
+	public static final String STUDENT_ID = "studentId";
+	public static final String BOOK_ID = "bookId";
+	public static final String ADMIN_ID = "adminId";
+
+	public void save(Orders transientInstance) {
 		log.debug("saving Orders instance");
 		try {
-			Students student =new Students();
-			student =transientInstance.getStudents();
-			RegisterToDAO rdao= new RegisterToDAO();
-			OrdersDAO odao= new OrdersDAO();
-			StudentsDAO sudao= new StudentsDAO();
-			int capacity= sudao.booktoborrow(student.getStudentId());
-			List bookrent = odao.findALLBooks_book_ByStudentId(1, 20, student.getStudentId());
-			if(capacity>bookrent.size()){
-				getSession().save(transientInstance);
-				log.debug("save successful");
-			}else{
-				throw new Exception("Out of Capacity");
-				//System.out.println("Out of Capacity");
-			}
+			getSession().save(transientInstance);
+			commit();
+			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
 		}
 	}
 
+	public void commit() {
+		log.debug("commit the save");
+		try {
+			Transaction tx = getSession().beginTransaction();
+			tx.commit();
+			getSession().close();
+			log.debug("commit successful");
+		} catch (Exception e) {
+			log.error("commite failed", e);
+			throw e;
+		}
+	}
+
+	public void delete(Orders persistentInstance) {
+		log.debug("deleting Orders instance");
+		try {
+			getSession().delete(persistentInstance);
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
 
 	public Orders findById(java.lang.Integer id) {
 		log.debug("getting Orders instance with id: " + id);
@@ -63,31 +77,7 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	
-	public void update_order(int bookid,int studentid){
-		//Orders or= this.fin
-		try {
-			String queryString = "from Orders where BookID =? and Statues = ? and StudentID = ?";
-			Query queryObject = getSession().createQuery(queryString);
-			Transaction tx = getSession().beginTransaction();
-			Object value = "Open";
-			queryObject.setParameter(0, bookid);
-			queryObject.setParameter(1, "Open");
-			queryObject.setParameter(2, studentid);
-			List<Orders> list = queryObject.list();
-			Orders temp_order = list.get(0);
-			ZoneId zonedId = ZoneId.of( "America/Chicago" );
-			LocalDate ltoday = LocalDate.now( zonedId );
-			java.util.Date today = java.sql.Date.valueOf(ltoday);
-			temp_order.setCheckoutDate(today);
-			temp_order.setStatues("Closed");
-			tx.commit();
-			getSession().close();
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}			
-	}
+
 	public List findByExample(Orders instance) {
 		log.debug("finding Orders instance by example");
 		try {
@@ -113,20 +103,6 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List countdue(String propertyName, Object value) {
-		// log.debug("finding Orders instance with property: " + propertyName +
-		// ", value: " + value);
-		try {
-			String queryString = "select StudentID,count(BookID), BookID from Orders where DueDate <CheckoutDate group by BookID, StudentID;";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, value);
-			return queryObject.list();
-		} catch (RuntimeException re) {
-			// log.error("find by property name failed", re);
-			throw re;
-		}
-	}
-
 	public List findByType(Object type) {
 		return findByProperty(TYPE, type);
 	}
@@ -134,39 +110,38 @@ public class OrdersDAO extends BaseHibernateDAO {
 	public List findByStatues(Object statues) {
 		return findByProperty(STATUES, statues);
 	}
-	public List findByBookID(int bookid,int pageNumber, int pageSize) {
+
+	public List findByStudentId(Object studentId) {
+		return findByProperty(STUDENT_ID, studentId);
+	}
+
+	public List findByBookId(Object bookId) {
+		return findByProperty(BOOK_ID, bookId);
+	}
+
+	public List findByAdminId(Object adminId) {
+		return findByProperty(ADMIN_ID, adminId);
+	}
+
+	public List findAll() {
+		log.debug("finding all Orders instances");
 		try {
-			String queryString = "from Orders where BookID =? ";
+			String queryString = "from Orders";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, bookid);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List<Orders> list = queryObject.list();
-			return list;
+			return queryObject.list();
 		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
+			log.error("find all failed", re);
 			throw re;
 		}
 	}
-	public int findTotalNum(int bookid) {
-		try {
-			String queryString = "from Orders where BookID =? ";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, bookid);
-			List<Orders> list = queryObject.list();
-			return list.size();
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
+
 	public List findAll(int pageNumber, int pageSize) {
 		log.debug("finding all Orders instances");
 		try {
 			String queryString = "from Orders";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 
-			queryObject.setMaxResults(pageSize);// 
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
 			List<Orders> list = queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
@@ -174,18 +149,7 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	public int findAllNum() {
-		log.debug("finding all Orders instances");
-		try {
-			String queryString = "from Orders";
-			Query queryObject = getSession().createQuery(queryString);
-			List<Orders> list = queryObject.list();
-			return list.size();
-		} catch (RuntimeException re) {
-			log.error("find all failed", re);
-			throw re;
-		}
-	}
+
 	public Orders merge(Orders detachedInstance) {
 		log.debug("merging Orders instance");
 		try {
@@ -220,158 +184,87 @@ public class OrdersDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public List findAllDueBooks(int pageNumber, int pageSize) {
-
+	public Orders findByBookId(int BookId) {
+		log.debug("finding all Orders instances");
 		try {
-			String queryString = "from Orders where Statues =? and Date(now()) > DueDate";
+			String queryString = "from Orders where BookID = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			Object value = "Open";
-			queryObject.setParameter(0, value);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List<Orders> list = queryObject.list();
-			return list;
+			queryObject.setParameter(0, BookId);
+			List<Orders> ls = (List<Orders>) queryObject.list();
+			if (ls.size() <= 0) {
+				return null;
+			} else {
+				return ls.get(0);
+			}
 		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
+			log.error("find all failed", re);
 			throw re;
 		}
-
 	}
 
-	public List findDueBooksByStudentId(int pageNumber, int pageSize, Students sd) {
+	public Orders findOpenOrdersByBookId(int bookId) {
 		try {
-			String queryString = "from Orders where Statues =? and Date(now()) > DueDate and StudentID = ?";
+			String queryString = "from Orders where BookID =? and Statues = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			Object value = "Open";
-			queryObject.setParameter(0, value);
-			queryObject.setParameter(1, sd.getStudentId());
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			queryObject.setParameter(0, bookId);
+			queryObject.setParameter(1, "open");
 			List<Orders> list = queryObject.list();
-			return list;
+			if (list.size() <= 0) {
+				return null;
+			} else {
+				return list.get(0);
+			}
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
 		}
 	}
 
-	public List findAllBooksByStudentId(int pageNumber, int pageSize, Integer studentId) {
+	public Orders findClosedOrderById(int bookId, int studentId) {
 		try {
-			String queryString = "from Orders where StudentID = ? and Statues = ?";
+			String queryString = "from Orders where BookID =? and StudentID = ? and Statues = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, studentId);
-			queryObject.setParameter(1, "Open");
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			queryObject.setParameter(0, bookId);
+			queryObject.setParameter(1, studentId);
+			queryObject.setParameter(2, "Closed");
 			List<Orders> list = queryObject.list();
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
-
-	public List findALLBooks_book_ByStudentId(int pageNumber, int pageSize, Integer studentId) {
-		try {
-			List<Orders> overdue_order = findAllBooksByStudentId(pageNumber, pageSize, studentId);
-			List<Books> overdue_book = new ArrayList<Books>();
-			for (int i = 0; i < overdue_order.size(); i++) {
-				overdue_book.add(overdue_order.get(i).getBooks());
+			if (list.size() <= 0) {
+				return null;
+			} else {
+				return list.get(0);
 			}
-			return overdue_book;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
 		}
 	}
 
-	public List findDueBooks_book_ByStudentId(int pageNumber, int pageSize, Students sd) {
+	public Orders findOpenOrderById(int bookId, int studentId) {
 		try {
-			List<Orders> overdue_order = findDueBooksByStudentId(pageNumber, pageSize, sd);
-			List<Books> overdue_book = new ArrayList<Books>();
-			for (int i = 0; i < overdue_order.size(); i++) {
-				overdue_book.add(overdue_order.get(i).getBooks());
-			}
-			return overdue_book;
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
-
-	public List findAllrentBooks(int pageNumber, int pageSize) {
-
-		try {
-			String queryString = "from Orders where Statues =?";
+			String queryString = "from Orders where BookID =? and StudentID = ? and Statues = ?";
 			Query queryObject = getSession().createQuery(queryString);
-			Object value = "Open";
-			queryObject.setParameter(0, value);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
+			queryObject.setParameter(0, bookId);
+			queryObject.setParameter(1, studentId);
+			queryObject.setParameter(2, "open");
 			List<Orders> list = queryObject.list();
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-
-	}
-
-	public List find_overdue_student(int pageNumber, int pageSize) {
-
-		try {
-
-			List<Orders> overdue_order = findAllDueBooks(pageNumber, pageSize);
-			List<Students> overdue_student = new ArrayList<Students>();
-			for (int i = 0; i < overdue_order.size(); i++) {
-				overdue_student.add(overdue_order.get(i).getStudents());
+			if (list.size() <= 0) {
+				return null;
+			} else {
+				return list.get(0);
 			}
-			return overdue_student;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
 		}
-
 	}
 
-	public List check_overdue_book(int pageNumber, int pageSize) {
-		try {
-			List<Orders> overdue_order = findAllDueBooks(pageNumber, pageSize);
-			List<Books> overdue_book = new ArrayList<Books>();
-			for (int i = 0; i < overdue_order.size(); i++) {
-				overdue_book.add(overdue_order.get(i).getBooks());
-			}
-			return overdue_book;
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-
-	}
-	public List<Orders> findByBookID_Open(Integer bookid, int pageNumber, int pageSize) {
+	public List<Orders> findClosedOrderByBookID(int bookid, int pageNumber, int pageSize) {
 		// TODO Auto-generated method stub
 		try {
 			String queryString = "from Orders where BookID =? and Statues =?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, bookid);
-			queryObject.setParameter(1,"Open");
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// 显示第几页，当前页
-			queryObject.setMaxResults(pageSize);// 每页做多显示的记录数
-			List<Orders> list = queryObject.list();
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find by property name failed", re);
-			throw re;
-		}
-	}
-
-	public List<Orders> findByBookID_Closed(Integer bookid, int pageNumber, int pageSize) {
-		// TODO Auto-generated method stub
-		try {
-			String queryString = "from Orders where BookID =? and Statues =?";
-			Query queryObject = getSession().createQuery(queryString);
-			queryObject.setParameter(0, bookid);
-			queryObject.setParameter(1,"Closed");
+			queryObject.setParameter(1, "Closed");
 			queryObject.setFirstResult((pageNumber - 1) * pageSize);
 			queryObject.setMaxResults(pageSize);
 			List<Orders> list = queryObject.list();
@@ -381,5 +274,159 @@ public class OrdersDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
- 
+
+	public List<Orders> findOpenOrderByBookID(int bookid, int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		try {
+			String queryString = "from Orders where BookID =? and Statues =?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			queryObject.setParameter(1, "Open");
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List findByBookIdForAll(Integer bookid, int pageNumber, int pageSize) {
+		log.debug("finding all Orders instances");
+		try {
+			String queryString = "from Orders where BookID =?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);//
+			queryObject.setMaxResults(pageSize);//
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public List findAllClosed(int pageNumber, int pageSize) {
+		log.debug("finding all Orders instances ");
+		try {
+			String queryString = "from Orders where Statues = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, "closed");
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public List findAllOpen(int pageNumber, int pageSize) {
+		log.debug("finding all Orders instances ");
+		try {
+			String queryString = "from Orders where Statues = ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, "open");
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);
+			queryObject.setMaxResults(pageSize);
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public int findNumOfOpendOrClosedByorNotByBookID(int bookID, String status) {
+		log.debug("finding all Orders instances ");
+		try {
+			String queryString;
+			Query queryObject;
+			if(status == "all"){//all
+				if(bookID == -1){
+					queryString = "from Orders";
+					queryObject = getSession().createQuery(queryString);
+				}else{
+					queryString = "from Orders where BookID = ?";
+					queryObject = getSession().createQuery(queryString);
+					queryObject.setParameter(0,bookID);
+				}
+			}else if(status == "open"){//open
+				if(bookID == -1){
+					queryString = "from Orders where Statues = ?";
+					queryObject = getSession().createQuery(queryString);
+					queryObject.setParameter(0,"open");
+				}else{
+					queryString = "from Orders where Statues = ? and BookID = ?";
+					queryObject = getSession().createQuery(queryString);
+					queryObject.setParameter(0,"open");
+					queryObject.setParameter(0,bookID);
+				}
+			}else{//closed
+				if(bookID == -1){
+					queryString = "from Orders where Statues = ?";
+					queryObject = getSession().createQuery(queryString);
+					queryObject.setParameter(0,"Closed");
+				}else{
+					queryString = "from Orders where Statues = ? and BookID = ?";
+					queryObject = getSession().createQuery(queryString);
+					queryObject.setParameter(0,"Closed");
+					queryObject.setParameter(0,bookID);
+				}
+			}
+			List<Orders> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public int findAllNum() {
+		log.debug("finding all Orders instances");
+		try {
+			String queryString = "from Orders";
+			Query queryObject = getSession().createQuery(queryString);
+			List<Orders> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find all failed", re);
+			throw re;
+		}
+	}
+
+	public int findTotalNum(int bookid) {
+		try {
+			String queryString = "from Orders where BookID =? ";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, bookid);
+			List<Orders> list = queryObject.list();
+			return list.size();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
+	public List<Orders> findDueOrdersByStudentId(int studentId) {
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+			String queryString = "from Orders where StudentID = ? and Statues = ? and DueDate < ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, studentId);
+			queryObject.setParameter(1, "Open");
+			queryObject.setParameter(2, today.toString());
+			List<Orders> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+	
 }

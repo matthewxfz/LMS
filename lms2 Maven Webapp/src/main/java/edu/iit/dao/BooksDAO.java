@@ -1,6 +1,9 @@
 package edu.iit.dao;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +11,8 @@ import org.hibernate.Criteria;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +116,8 @@ public class BooksDAO extends BaseHibernateDAO {
 	 * find by the keywords, page number, page size
 	 * 
 	 * @param keyword
-	 * @param pageNumber from 1 to infiy
+	 * @param pageNumber
+	 *            from 1 to infiy
 	 * @param pageSize
 	 * @return the request result
 	 */
@@ -120,31 +126,32 @@ public class BooksDAO extends BaseHibernateDAO {
 				+ pageSize);
 		try {
 			String queryString = "select B2.BookID, B2.ISBN, B2.Title, B2.Author, B2.Publisher, B2.NumberOfPages, B2.Cover, B2.PublicationDate, B2.Studio, B2.Manufactor, B2.Status, B2.GeneratedID  from"
-					+ "(select *, match(B1.Title, B1.Author, B1.Publisher, B1.ISBN, B1.GeneratedID) "
-					+ "against (\""+keyword+"\" WITH QUERY EXPANSION) as refference from Books as B1 order by refference desc"
-							+ " limit "+(pageNumber-1)*pageSize+", "+(pageNumber)*pageSize+") as B2";
+					+ "(select *, match(B1.Title, B1.Author, B1.Publisher, B1.ISBN, B1.GeneratedID) " + "against (\""
+					+ keyword + "\" WITH QUERY EXPANSION) as refference from Books as B1 order by refference desc"
+					+ " limit " + (pageNumber - 1) * pageSize + ", " + (pageNumber) * pageSize + ") as B2";
 			System.out.println(queryString);
 			Query queryObject = getSession().createQuery(queryString);
-			//queryObject.setParameter(0, keyword);
+			// queryObject.setParameter(0, keyword);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by keywords fail", re);
 			throw re;
 		}
 	}
-	
+
 	/**
 	 * Find the size of table
+	 * 
 	 * @return
 	 */
-	public int findTableSize(){
+	public int findTableSize() {
 		log.debug("find the size of table");
 		try {
 			String queryString = "select count(*) as size from Books";
 			Query queryObject = getSession().createQuery(queryString);
-	
+
 			return Integer.valueOf(queryObject.list().get(0).toString());
-			
+
 		} catch (RuntimeException re) {
 			log.error("find table size fail", re);
 			throw re;
@@ -236,25 +243,177 @@ public class BooksDAO extends BaseHibernateDAO {
 			throw re;
 		}
 	}
-	
-	public List findDueBooks(int studentId,int pageNumber,int pageSize){
+
+	public List findDueBooks(int studentId, int pageNumber, int pageSize) {
 		try {
-			String queryString = "from Books as b where BookID in (:bookids)";
-			String orderQuey = "from Orders where StudentID=? and Statues = ?";
-		
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.studentId = ? and o.statues = ? and o.dueDate < ?";
+
 			Query orderQueryO = getSession().createQuery(orderQuey);
 			orderQueryO.setParameter(0, studentId);
 			orderQueryO.setParameter(1, "Open");
-			List<String> bookids = orderQueryO.list();
-			
+			orderQueryO.setParameter(2, today);
+			List<String> bookids = (List<String>) orderQueryO.list();
+
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameterList("bookids", bookids);
-			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current page
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current
+																	// page
 			queryObject.setMaxResults(pageSize);// the size of page
-			List<Orders> list = queryObject.list();
+			List<Books> list = queryObject.list();
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List findAllDueBooks(int pageNumber, int pageSize) {
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.statues = ? and o.dueDate < ?";
+
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, "Open");
+			orderQueryO.setParameter(1, today);
+			List<String> bookids = (List<String>) orderQueryO.list();
+				
+			if(bookids.size() == 0){
+				return new LinkedList<Books>();
+			}
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			queryObject.setFirstResult((pageNumber - 1) * pageSize);// current
+																	// page
+			queryObject.setMaxResults(pageSize);// the size of page
+			List<Books> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public Long findDueBookNumber(int studentId) {
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+
+			String queryString = "select count(*) from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.studentId = ? and o.statues = ? and o.dueDate < ?";
+
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, studentId);
+			orderQueryO.setParameter(1, "Open");
+			orderQueryO.setParameter(2, today);
+			List<String> bookids = (List<String>) orderQueryO.list();
+
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			Long length = (Long) queryObject.uniqueResult();
+			return length;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List findDueBookByStudentId(int studentId) {
+		try {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.studentId = ? and o.statues = ? and o.dueDate < ?";
+
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, studentId);
+			orderQueryO.setParameter(1, "Open");
+			orderQueryO.setParameter(2, today);
+			List<String> bookids = (List<String>) orderQueryO.list();
+
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameterList("bookids", bookids);
+			List<Books> list = queryObject.list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List<Books> findBooksBykeyword(Object keyword, int pagenumber, int pagesize) {
+		log.debug("finding Books instance with Keyword: " + keyword);
+		try {
+			Criteria criteria = getSession().createCriteria(Books.class);
+			List<Books> list = criteria
+					.add(Restrictions.or(Restrictions.like(AUTHOR, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(TITLE, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(ISBN, (String) keyword, MatchMode.ANYWHERE)))
+					.setFirstResult((pagenumber - 1) * pagesize).setMaxResults(pagesize).list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by Keyword failed", re);
+			throw re;
+		}
+	}
+
+	public int getCount(String keyword, String opt) {
+		if (opt.equals("rent")) {
+			Criteria criteria = getSession().createCriteria(Books.class);
+			List<Books> list = criteria.add(Restrictions.and(Restrictions.eq(STATUS, "not available"),
+					Restrictions.or(Restrictions.like(AUTHOR, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(TITLE, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(ISBN, (String) keyword, MatchMode.ANYWHERE))))
+					.list();
+			return list.size();
+		} else if (opt.equals("due")) {
+			ZoneId zonedId = ZoneId.of("America/Chicago");
+			LocalDate ltoday = LocalDate.now(zonedId);
+			Date today = java.sql.Date.valueOf(ltoday);
+
+			String queryString = "from Books where BookID in (:bookids)";
+			String orderQuey = "select o.bookId from Orders as o where o.statues = ? and o.dueDate < ?";
+
+			Query orderQueryO = getSession().createQuery(orderQuey);
+			orderQueryO.setParameter(0, "Open");
+			orderQueryO.setParameter(1, today);
+			List<String> bookids = (List<String>) orderQueryO.list();
+			return orderQueryO.list().size();
+		} else {
+			Criteria criteria = getSession().createCriteria(Books.class);
+			List<Books> list = criteria
+					.add(Restrictions.or(Restrictions.like(AUTHOR, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(TITLE, (String) keyword, MatchMode.ANYWHERE),
+							Restrictions.like(ISBN, (String) keyword, MatchMode.ANYWHERE)))
+					.list();
+			return list.size();
+		}
+	}
+
+	public List<Books> findAllRentBook(Object keyword, int pagenumber, int pagesize) {
+		log.debug("finding Books instance with Keyword: " + keyword);
+		try {
+			Criteria criteria = getSession().createCriteria(Books.class);
+			List<Books> list = criteria
+					.add(Restrictions.and(Restrictions.eq(STATUS, "not available"),
+							Restrictions.or(Restrictions.like(AUTHOR, (String) keyword, MatchMode.ANYWHERE),
+									Restrictions.like(TITLE, (String) keyword, MatchMode.ANYWHERE),
+									Restrictions.like(ISBN, (String) keyword, MatchMode.ANYWHERE))))
+					.setFirstResult((pagenumber - 1) * pagesize).setMaxResults(pagesize).list();
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find by Keyword failed", re);
 			throw re;
 		}
 	}
