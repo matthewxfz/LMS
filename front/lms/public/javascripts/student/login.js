@@ -48,7 +48,7 @@ $(function () {
         if(validateLoginForm()){
             toggleInput('off');
             console.log('post');
-            $.post("http://localhost:8081/login", {account: data.account, password: data.pwd}, function (req, res, data) {
+            $.post("http://localhost:8080/login", {account: data.account, password: data.pwd}, function (req, res, data) {
                 console.log(data.responseJSON.title);
                 if (data.responseJSON.title == 'pass') {
                     window.location.href = "/dashboard";
