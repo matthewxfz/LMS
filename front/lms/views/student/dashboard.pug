@@ -103,6 +103,7 @@ block page-content
             if (keyword != "") {
                 $.post(document.location.origin + '/searchBooks', {
                     keyword: keyword,
+                    operation: "all",
                     pagenumber: page,
                     pagesize: pagesize
                 }, function (req, res, data) {

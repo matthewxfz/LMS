@@ -16,4 +16,5 @@ You need nodejs and express(5.1 or above), and all dependency in the package.jso
 You need java 1.8 or above and tomcat 8.5 or above to run the application server code, all other dependency in the pom.xml.
 You need mysql 5.1 or above to implement the databases;
 
+#You can find the project in the Github: https://github.com/matthewxfz/LMS
 
