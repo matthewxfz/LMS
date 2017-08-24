@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01378fc9-56e0-4dd1-adb1-e14f828cd4be" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/lms/.idea/workspace.xml" afterPath="$PROJECT_DIR$/front/lms/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/lms/config/config.js" afterPath="$PROJECT_DIR$/front/lms/config/config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/front/lms/public/javascripts/student/login.js" afterPath="$PROJECT_DIR$/front/lms/public/javascripts/student/login.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />

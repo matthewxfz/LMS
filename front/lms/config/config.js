@@ -22,7 +22,7 @@ if (app.get('env') == 'development') {
 		},
 		service:{
 			httpApi:{
-				url:"http://localhost:8081/web2" //port for application server
+				url:"http://localhost:8081/lms" //port for application server
 			},
 		},
 	};

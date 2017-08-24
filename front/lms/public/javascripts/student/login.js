@@ -48,13 +48,19 @@ $(function () {
         if(validateLoginForm()){
             toggleInput('off');
             console.log('post');
-            $.post("http://localhost:8080/login", {account: data.account, password: data.pwd}, function (req, res, data) {
-                console.log(data.responseJSON.title);
-                if (data.responseJSON.title == 'pass') {
-                    window.location.href = "/dashboard";
-                }else{
-                    $('#msg').text(data.responseJSON.content);
-                    $('#msg-brand').show();
+            $.ajax({
+                type: "POST",
+                url: document.location.origin+"/login",
+                data: {
+                    'account': data.account, 'password': data.pwd
+                },
+                success: function (req, res, data) {
+                    if (data.responseJSON.title == 'pass') {
+                        window.location.href = "/dashboard";
+                    }else{
+                        $('#msg').text(data.responseJSON.content);
+                        $('#msg-brand').show();
+                    }
                 }
             });
         }else{
