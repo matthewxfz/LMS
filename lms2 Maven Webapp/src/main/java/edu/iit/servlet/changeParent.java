@@ -42,10 +42,6 @@ public class changeParent extends HttpServlet {
 				String parentLastName = decompositeJSON(jobject, "parentLastName");
 				String parentFirstName = decompositeJSON(jobject, "parentFirstName");
 				String opt = decompositeJSON(jobject, "opt");
-				
-//				
-				System.out.println(keyWord+"," +pageSize+", "+pageNumber);
-				Parents
 	}
 	
 	private ParentsMessage Process(String studentID,String Lastpname,String Firstpname, String opt){
@@ -54,7 +50,7 @@ public class changeParent extends HttpServlet {
 			ParentsDAO pdao = new ParentsDAO();
 			
 			if(opt.equals("add")){// add a parent
-				pdao.save((new Parents(new ParentsId(Lastpname, Firstpname, Integer.valueOf(studentID), students, address, moblie, email, middleName, relationship, power)));
+				//pdao.save((new Parents(new ParentsId(Lastpname, Firstpname, Integer.valueOf(studentID), students, address, moblie, email, middleName, relationship, power)));
 			}else{//delete a parent
 				
 			}

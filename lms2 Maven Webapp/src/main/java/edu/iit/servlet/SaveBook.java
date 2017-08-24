@@ -89,7 +89,14 @@ public class SaveBook extends HttpServlet {
 			List<Books> books = dao.findByGeneratedId(GeneratedID);
 			System.out.println("[ID token]:"+ books.size());
 			if(books.size() < 1){
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String[] as = PublicationDate.split("-");
+				SimpleDateFormat sdf ;
+				if(as.length == 3)
+					sdf = new SimpleDateFormat("yyyy-MM-dd");
+				else if(as.length == 2)
+					sdf = new SimpleDateFormat("yyyy-MM");
+				else
+					sdf = new SimpleDateFormat("yyyy");
 				Date pdate = sdf.parse(PublicationDate);
 				Books book = new Books(ISBN, Title, Author, Publisher, Integer.valueOf(NumberOfPages), Cover, pdate, Studio,
 						Manufactor, "available", GeneratedID);

@@ -87,6 +87,7 @@ public class Autorization extends HttpServlet {
 
 		// send the data
 		resp.setContentType("application/json");
+		resp.setHeader("Access-Control-Allow-Origi", "*");
 		resp.setCharacterEncoding("UTF-8");
 		resp.getWriter().write(gson.toJson(msg));
 	}
