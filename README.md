@@ -18,7 +18,9 @@ You need mysql 5.1 or above to implement the databases;
 
 #Visit the sample web online:
 Admin: http://34.208.194.157:8080/admin/
+with admin/123456
 User:  http://34.208.194.157:8080/
+with user/123456
 
-with test/123456
+
 
