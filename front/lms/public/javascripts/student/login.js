@@ -39,58 +39,34 @@ $(function () {
     $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
         var data = {
             /*creating a Js ojbect to be sent to the server*/
-            account: $('#account').val()+"@hawk.iit.edu", /*getting the text input data      */
+            account: $('#account').val() + "@hawk.iit.edu", /*getting the text input data      */
             pwd: $('#pwd').val()
         }
 
         $('#msg').text('');
         $('#msg-brand').hide();
-        if(validateLoginForm()){
+        if (validateLoginForm()) {
             toggleInput('off');
             console.log('post');
             $.ajax({
                 type: "POST",
-                url: document.location.origin+"/login",
+                url: document.location.origin + "/login",
                 data: {
                     'account': data.account, 'password': data.pwd
                 },
                 success: function (req, res, data) {
                     if (data.responseJSON.title == 'pass') {
                         window.location.href = "/dashboard";
-                    }else{
+                    } else {
                         $('#msg').text(data.responseJSON.content);
                         $('#msg-brand').show();
                     }
                 }
             });
-        }else{
+        } else {
             return false;
         }
-        
-        //guest
-    $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
-        $('#msg').text('');
-        $('#msg-brand').hide();
-
-        toggleInput('off');
-        console.log('post');
-        $.ajax({
-            type: "POST",
-            url: document.location.origin+"/login",
-            data: {
-                'account': "guest@hawk.iit.edu", 'password': "123456"
-            },
-            success: function (req, res, data) {
-                if (data.responseJSON.title == 'pass') {
-                    window.location.href = "/dashboard";
-                }else{
-                    $('#msg').text(data.responseJSON.content);
-                    $('#msg-brand').show();
-                }
-            }
-        });
     });
-<<<<<<< HEAD
 
     //guest
     $('#submitBtn2').click(function () { /*listening to the button click using Jquery listener*/
@@ -101,20 +77,19 @@ $(function () {
         console.log('post');
         $.ajax({
             type: "POST",
-            url: document.location.origin+"/login",
+            url: document.location.origin + "/login",
             data: {
                 'account': "guest@hawk.iit.edu", 'password': "123456"
             },
             success: function (req, res, data) {
                 if (data.responseJSON.title == 'pass') {
                     window.location.href = "/dashboard";
-                }else{
+                } else {
                     $('#msg').text(data.responseJSON.content);
                     $('#msg-brand').show();
                 }
             }
         });
     });
-=======
->>>>>>> refs/remotes/origin/master
-});
+})
+
