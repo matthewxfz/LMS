@@ -69,7 +69,7 @@ $(function () {
     });
 
     //guest
-    $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
+    $('#submitBtn2').click(function () { /*listening to the button click using Jquery listener*/
         $('#msg').text('');
         $('#msg-brand').hide();
 
