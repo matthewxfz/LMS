@@ -66,7 +66,31 @@ $(function () {
         }else{
             return false;
         }
+        
+        //guest
+    $('#submitBtn').click(function () { /*listening to the button click using Jquery listener*/
+        $('#msg').text('');
+        $('#msg-brand').hide();
+
+        toggleInput('off');
+        console.log('post');
+        $.ajax({
+            type: "POST",
+            url: document.location.origin+"/login",
+            data: {
+                'account': "guest@hawk.iit.edu", 'password': "123456"
+            },
+            success: function (req, res, data) {
+                if (data.responseJSON.title == 'pass') {
+                    window.location.href = "/dashboard";
+                }else{
+                    $('#msg').text(data.responseJSON.content);
+                    $('#msg-brand').show();
+                }
+            }
+        });
     });
+<<<<<<< HEAD
 
     //guest
     $('#submitBtn2').click(function () { /*listening to the button click using Jquery listener*/
@@ -91,4 +115,6 @@ $(function () {
             }
         });
     });
+=======
+>>>>>>> refs/remotes/origin/master
 });
