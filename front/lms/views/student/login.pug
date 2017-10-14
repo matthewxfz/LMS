@@ -1,0 +1,56 @@
+//
+   Created by matthewxfz on 4/14/17.
+doctype html
+html(lang='en')
+    head
+        title LMS-Student
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+        //script(type='text/javascript',src='javascripts/lib/socket.io.js')
+        //link(rel='text/javascript', href='javascript/lib/socket.io.js')
+        link(rel='stylesheet', href='stylesheets/login_style.css')
+
+
+
+    body#myPage(data-spy='scroll', data-target='.navbar', data-offset='60')
+        #title-box.jumbotron.text-center
+             h1#library Hawk Library
+             //h3#quote Knowledge is power - Matthew Xiong
+        #login-box.container-fluid
+            .row
+                .col-sm-12
+                    h2 Student Login
+                    //(style='display:none')
+                    #msg-brand.alert.alert-danger
+                        strong oops
+                        #msg
+                    form#login-form
+                        .form-group
+                            label(for='email') Email:
+                            .input-group
+                                input#account.form-control(type='email', placeholder='Enter email',required)
+                                span.input-group-addon @hawk.iit.edu
+                        .form-group
+                            label(for='pwd') Password:
+                            |
+                            input#pwd.form-control(type='password', placeholder='Enter password',required)
+                        .checkbox
+                            label
+                                input(type='checkbox')
+                                |  Remember me
+                        |
+                        button#submitBtn.btn.btn-default(type='button') Submit
+                        .fa-space-shuttle
+                        button#submitBtn2.btn.btn-default(type='button') Login As Guest
+            script(type='text/javascript', src='javascripts/student/login.js')
+
+
+
+
+        include include/footer
+
+

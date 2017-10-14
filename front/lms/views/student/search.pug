@@ -1,0 +1,18 @@
+extends ../com/layout
+
+block side-bar
+    include include/sidebar.pug
+
+block page-content
+    .row
+        .col-lg-12
+            h1.page-header  Search Books
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='index.html') Dashboard
+                li.active
+                    i.fa.fa-edit
+                    |  Search Books
+    .row

@@ -1,0 +1,152 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1.page-header Search Students
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/admin/dashboard') Dashboard
+                li.active
+                    i.fa.fa-edit
+                    |  Search Students
+    .row
+        .col-lg-6.col-lg-offset-3
+            .form-group.input-group
+                input#search-input.form-control(type = 'text', placeholder='Enter student user id')
+                span.input-group-btn
+                    button#search-btn.btn.btn-default(type='button')
+                        i.fa.fa-search
+    .row
+        #msg-brand.alert.alert-danger
+            strong oops
+            #msg
+    .row
+        h5#totalNumber Total Result:
+        #book-list.list-group
+            a.list-group-item(href='#')
+                h4.list-group-item-heading Get your Search Result
+                p.list-group-item-text
+                    i Simply input your result
+                    p
+                        Strong
+
+    .row
+        nav(aria-label='Page navigation example')
+            ul.pagination
+                li.page-item
+                    a#pre-page.page-link(href='#') Previous
+                li.page-item
+                    a#current-page.page-link(href='#') 1
+                li.page-item
+                    a#next-page.page-link(href='#') Next
+
+
+    script.
+        var page = 1;
+        var keyword = "";
+        var pagesize = 10;
+        var totalPage = 1;
+        $('#msg-brand').hide();
+        search_update("");//find all books
+
+        //searching mechanism
+        var timer; // external so it's value is held over all instances of the timer function
+
+
+        $('#search-input').on('keyup', function () {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                keyword = $('#search-input').val();
+                search_update(keyword);
+            }, 500);
+        });
+
+        //searching button
+        $('#search-btn').click(function () {
+            keyword = $('#search-input').val();
+            search_update(keyword);
+        });
+
+        //last button
+        $('#pre-page').click(function () {
+            if(page >= 2 ){
+                page  = page-1;
+                search_update(keyword, page, pagesize)
+            }
+        });
+        //next button
+        $('#next-page').click(function () {
+            page  = page+1;
+            search_update(keyword, page, pagesize)
+
+        });
+        //select the page
+
+        function search_update(keyword) {
+            var books = "";
+            keyword = keyword == ""?" ":keyword;
+            $.post(document.location.origin + '/admin/search/students', {
+                keyword: keyword,
+                pagenumber: page,
+                pagesize: pagesize
+            }, function (req, res, data) {
+                //console.log(data.responseJSON);
+                data = data.responseJSON
+                if (data.status == 'true') {
+                    books = data.content ? data.content : "";
+                    updateList(books);
+                    if (keyword == " ") {
+                        $('#totalNumber').text("[All Students] " + data.totalNumber + " Students")
+                    } else {
+                        $('#totalNumber').text("[\"" + keyword + "\"] " + data.totalNumber + " Students")
+                    }
+                    page = data.page ? data.rpage : page;
+                    newTp = data.totalPage ? data.totalPage : totalPage;
+                    updateSelector(page);
+
+                }else {
+                    if(data.title == "")
+                        showError('Inner server errors!');
+                    else
+                        showError(data.title);
+                }
+            });
+        }
+
+        function updateList(books) {
+            $('#book-list').empty();
+            for (i = 0; i < books.length; i++) {
+                book = books[i];
+                addRow(book);
+            }
+        }
+
+        function addRow(student){
+            Head = student.firstName+", "+student.lastName
+            Detail = "["+student.generatedId+"], "+student.email
+            Parent = "[Parent]: "+student.pFirstName+", "+student.pLastName+", "+student.pEmail+", "+student.pMobile
+            Due = "Power: ["+student.power+"]"+ " Due Book: "+student.dueNum+", Total Due Hour: "+student.dueHour
+            $('#book-list').append("<a class= \"list-group-item\">"+Head+"<br>"
+                + "<p class= \"list-group-item-heading\" > "+Detail+"</h4>"
+                + "<p class= \"list-group-item-text\" > "+Parent+" <p>"
+                + "<Strong>"+Due+"</Strong> </p> </p> </a> ");
+        }
+
+        function updateSelector(page) {
+            // $('#search-selector').empty();
+            $('#current-page').text(page);
+        }
+
+        function showError(msg) {
+                        $('#msg').text(msg);
+                        $('#msg-brand').show();
+                    }
+        function hideError(msg) {
+            $('#msg').text(msg);
+            $('#msg-brand').hide();
+        }

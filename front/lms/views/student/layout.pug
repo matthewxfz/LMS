@@ -1,0 +1,147 @@
+-var username='matthewxfz'
+
+doctype html
+html(lang='en')
+    head
+        title= 'Student-dashboard'
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        //custom css
+        link(rel='stylesheet', href='stylesheets/css/sb-admin.css')
+        //custom fonts
+        link(rel='stylesheet', type='text/css', href='stylesheets/font-awesome/css/font-awesome.min.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        //script(type='text/javascript',src='javascripts/lib/socket.io.js')
+    body
+        #wrapper
+            nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+                .navbar-header
+                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-ex1-collapse')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    |
+                    a.navbar-brand(href='   /dashboard') LMS Student
+                ul.nav.navbar-right.top-nav
+                    //li.dropdown
+                    //    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                    //        i.fa.fa-envelope
+                    //        b.caret
+                    //    ul.dropdown-menu.message-dropdown
+                    //        li.message-preview
+                    //            a(href='#')
+                    //                .media
+                    //                    span.pull-left
+                    //                        img.media-object(src='http://placehold.it/50x50', alt='')
+                    //                    .media-body
+                    //                        h5.media-heading
+                    //                            strong John Smith
+                    //                        p.small.text-muted
+                    //                            i.fa.fa-clock-o
+                    //                            |  Yesterday at 4:32 PM
+                    //                        p Lorem ipsum dolor sit amet, consectetur...
+                    //        li.message-preview
+                    //            a(href='#')
+                    //                .media
+                    //                    span.pull-left
+                    //                        img.media-object(src='http://placehold.it/50x50', alt='')
+                    //                    .media-body
+                    //                        h5.media-heading
+                    //                            strong John Smith
+                    //                        p.small.text-muted
+                    //                            i.fa.fa-clock-o
+                    //                            |  Yesterday at 4:32 PM
+                    //                        p Lorem ipsum dolor sit amet, consectetur...
+                    //        li.message-preview
+                    //            a(href='#')
+                    //                .media
+                    //                    span.pull-left
+                    //                        img.media-object(src='http://placehold.it/50x50', alt='')
+                    //                    .media-body
+                    //                        h5.media-heading
+                    //                            strong John Smith
+                    //                        p.small.text-muted
+                    //                            i.fa.fa-clock-o
+                    //                            |  Yesterday at 4:32 PM
+                    //                        p Lorem ipsum dolor sit amet, consectetur...
+                    //        li.message-footer
+                    //            a(href='#') Read All New Messages
+                    //li.dropdown
+                    //    a.dropdown-toggle(href='#', data-toggle='dropdown')
+                    //        i.fa.fa-bell
+                    //        b.caret
+                    //    ul.dropdown-menu.alert-dropdown
+                    //        li
+                    //            a(href='#')
+                    //                | Alert Name
+                    //                span.label.label-default Alert Badge
+                    //        li
+                    //            a(href='#')
+                    //                | Alert Name
+                    //                span.label.label-primary Alert Badge
+                    //        li
+                    //            a(href='#')
+                    //                | Alert Name
+                    //                span.label.label-success Alert Badge
+                    //        li
+                    //            a(href='#')
+                    //                | Alert Name
+                    //                span.label.label-info Alert Badge
+                    //        li
+                    //            a(href='#')
+                    //                | Alert Name
+                    //                span.label.label-warning Alert Badge
+                    //        li
+                    //            a(href='/dashboard')
+                    //                | Alert Name
+                    //                span.label.label-danger Alert Badge
+                    //        li.divider
+                    //        li
+                    //            a(href='#') View All
+                    li.dropdown
+                        a#username.dropdown-toggle(href='#', data-toggle='dropdown')
+                            i.fa.fa-user
+                            | Unknow User
+                            b.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='/profile')
+                                    i.fa.fa-fw.fa-user
+                                    |  Profile
+                            //li
+                            //    a(href='#')
+                            //        i.fa.fa-fw.fa-envelope
+                            //        |  Inbox
+                            li
+                                a(href='/profile')
+                                    i.fa.fa-fw.fa-gear
+                                    |  Settings
+                            li.divider
+                            li.logOut
+                                a(href='#')
+                                    i.fa.fa-fw.fa-power-off
+                                    |  Log Out
+                include ../student/include/sidebar
+            #page-wrapper
+                .container-fluid
+                    block page-content
+
+        script.
+            $(".logOut").click(function () {
+                window.location.href = "/logout";
+            });
+            //update username
+            $.get(document.location.origin + '/getUserName', function (req, res, data) {
+                if (username = " ") {
+                    username = data.responseJSON.username;
+                    console.log('user name:' + username);
+                    $('#username').text(username);
+                } else {
+                    $('#username').text('Unknown User!');
+                }
+            });
+
+

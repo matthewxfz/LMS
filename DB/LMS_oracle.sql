@@ -22,6 +22,16 @@ CREATE TABLE Admin
   PAS VARCHAR(40) DEFAULT '123456'
 );
 
+<<<<<<< Updated upstream
+CREATE SEQUENCE seq_AdminID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
+=======
+>>>>>>> Stashed changes
+
 CREATE TABLE Student
 (
   StudentID INT NOT NULL PRIMARY KEY,
@@ -37,6 +47,16 @@ CREATE TABLE Student
   UserID VARCHAR(20) NOT NULL,
   PAS VARCHAR(40) DEFAULT '123456'
 );
+
+<<<<<<< Updated upstream
+CREATE SEQUENCE seq_StudentID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
+=======
+>>>>>>> Stashed changes
 
 CREATE TABLE Parents
 (
@@ -69,12 +89,29 @@ CREATE TABLE Teacher
   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
  );
 
+<<<<<<< Updated upstream
+CREATE SEQUENCE seq_TeacherID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
+=======
+>>>>>>> Stashed changes
+
  CREATE TABLE Class
 (
   ClassID INT NOT NULL PRIMARY KEY,
   Section INT NOT NULL,
   Title VARCHAR(30) NOT NULL
 );
+
+CREATE SEQUENCE seq_ClassID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
 
 CREATE TABLE TeachBy
 (
@@ -99,6 +136,17 @@ CREATE TABLE Book
   Status VARCHAR(50)  NOT NULL check (Status='available' or Status='not available'),
   GeneratedID VARCHAR(30) NOT NULL
   );
+<<<<<<< Updated upstream
+  
+CREATE SEQUENCE seq_BookID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
+=======
+
+>>>>>>> Stashed changes
 
 CREATE TABLE Recommend
 (
@@ -123,5 +171,14 @@ CREATE TABLE Orders
   FOREIGN KEY (BookID) REFERENCES Book(BookID),
   FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
  );
+<<<<<<< Updated upstream
+ 
+ CREATE SEQUENCE seq_OrderID
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1
+CACHE 10
+;
+=======
 
-
+>>>>>>> Stashed changes

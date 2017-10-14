@@ -1,0 +1,41 @@
+//
+   Created by matthewxfz on 4/14/17.
+-var duebook = 'Na';
+-var rentbook = 'Na';
+-var capacity ='Na';
+-var book1 = {title:'Na', href:''}
+-var book2 = {title:'Na', href:''}
+
+ul.nav.navbar-nav.side-nav
+    li#book-btn
+        a(href='/admin/dashboard')
+            i.fa.fa-dashboard.fa-fw
+            |  Search Books
+    li#add_btn
+        a(href='/admin/addBook')
+            i.fa.fa-plus.fa-fw
+            b  Add Book
+    li#order-btn
+        a(href='/admin/searchOrdersPage')
+            i.fa.fa-ticket.fa-fw
+            b  Search Orders
+    li#student-btn
+        a(href='/admin/searchStudents')
+            i.fa.fa-graduation-cap.fa-fw
+            b  Search Students
+    li#teacher-btn
+        a(href='/admin/searchTeachers')
+            i.fa.fa-briefcase.fa-fw
+            b  Search Teachers
+    li#class-btn
+        a(href='/admin/searchClasses')
+            i.fa.fa-users.fa-fw
+            b  Search Classes
+
+
+script.
+    var manu = ["#book-btn","#add_btn","#order-btn","#student-btn","#teacher-btn","#class-btn"];
+    var cur = "#book-btn";
+
+    $(cur).addClass("active");
+

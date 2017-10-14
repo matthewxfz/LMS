@@ -1,0 +1,193 @@
+extends layout
+
+block page-content
+    .row
+        .col-lg-12
+            h1#title.page-header  #{title}
+            ol.breadcrumb
+                li
+                    i.fa.fa-dashboard
+                    |
+                    a(href='/dashboard.pug') Dashboard
+                li.active
+                    i.fa.fa-bookmark-o
+                    b#title2  #{title}
+    .row
+        .col-sm-6
+            img#cover-pic(src="http://placehold.it/400x400", style="width:240px;height:300px;")
+
+        .col-sm-6
+            ul.list-group
+                li.list-group-item.active
+                    b Information
+                li.list-group-item
+                    b ID
+                    |   #{generatedId}
+                li.list-group-item
+                    b By
+                    |   #{author}
+                li.list-group-item
+                    b Publisher
+                    |   #{publisher}
+                li.list-group-item
+                    b ISBN-10
+                    |   #{isbn10}
+                li.list-group-item
+                    b Availability
+                    |   #{status}
+                li.list-group-item
+                    b Location
+                    |   HK Library
+    #msg-success-band.alert.alert-success
+        strong#msg-suc-head  Lucky for you!
+        #msg-suc  Something have been done.
+    #msg-fail-band.alert.alert-danger
+        strong#msg-fail-head Oops!
+        #msg-fail  Something wrong!
+    #msg-info-band.alert.alert-info
+        strong#msg-info-head Oops!
+        #msg-info  Something wrong!
+    .row
+        .col-sm-12
+            form
+                .form-group.row.has-success
+                    label.col-sm-2.col-form-label(for='inputHorizontalSuccess') Student User Id
+                    .col-sm-10
+                        input#id_input.form-control.form-control-success(type='text', placeholder='A*****')
+                        |
+                        small.form-text.text-muted Input the Student Id
+    .row
+        .col-sm-3
+            //button#showbook-update-btn.btn.btn-success(type='button') Update This book
+        .col-sm-9
+            .col-sm-3
+                button#showbook-check-btn.btn.btn-secondary(type='button') Check Avalibility
+
+            .col-sm-3
+                button#showbook-rent-btn.btn.btn-primary(type='button') Rent This Book
+
+            .col-sm-3
+                button#showbook-return-btn.btn.btn-danger(type='button') Return This Book
+
+    script.
+        hideBand();
+
+        var m_bookId = '#{generatedId}';
+        var cover = '#{cover}';
+        cover =covertImage(cover);
+        var s_id =undefined;
+        $('#cover-pic').attr('src',cover);
+
+        $('#showbook-rent-btn').click(function(){
+            s_id=$('#id_input').val();
+            if (s_id == "") {
+                showFail("The Student id is empty");
+            } else {
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    generatedId: m_bookId,
+                    studentId: s_id,
+                    adminId: "1",
+                    operation: "rent",
+                    commit:"true"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON)
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showSuc(msg.title, msg.content);
+                    } else {
+                        showFail(msg.title, msg.content);
+                    }
+                });
+            }
+        });
+
+        $('#showbook-return-btn').click(function () {
+            s_id = $('#id_input').val();
+            if(s_id == "") {
+                showFail("The Student id is empty");
+            }else{
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    generatedId: m_bookId,
+                    studentId: s_id,
+                    adminId: "1",
+                    operation: "return",
+                    commit: "true"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showSuc(msg.title, msg.content);
+                    } else {
+                        showFail(msg.title, msg.content);
+                    }
+                });
+            }
+        });
+
+        $('#showbook-check-btn').click(function () {
+            s_id = $('#id_input').val();
+            if (s_id == "") {
+                showFail("The Student id is empty");
+            } else {
+                $.post(document.location.origin + '/admin/tradeBook', {
+                    generatedId: m_bookId,
+                    studentId: s_id,
+                    adminId: "1",
+                    operation: "rent",
+                    commit: "false"
+                }, function (req, res, data) {
+                    //console.log(data.responseJSON);
+                    msg = data.responseJSON;
+                    //console.log(msg.status)
+                    if (msg.status == "true") {
+                        showRentInfo(msg.title, msg.content);
+                    } else {
+                        showFail(msg.title, msg.content);
+                    }
+                });
+            }
+        });
+
+
+        function showFail(title, content){
+            $('#msg-fail').text(content);
+            $('#msg-fail-head').text(title);
+
+            $('#msg-fail-band').show();
+            $('#msg-info-band').hide();
+            $('#msg-success-band').hide();
+        }
+
+        function showRentInfo(title,content){
+            $('#msg-info').text(content);
+            $('#msg-info-head').text(title);
+
+            $('#msg-info-band').show();
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').hide();
+        }
+        function hideBand(){
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').hide();
+            $('#msg-info-band').hide();
+        }
+
+        function showSuc(title,content){
+            $('#msg-suc').text(content);
+            $('#msg-suc-head').text(title);
+
+            $('#msg-fail-band').hide();
+            $('#msg-success-band').show();
+            $('#msg-info-band').hide();
+        }
+
+        function covertImage(url){
+            var tmp = url.split("amp;");
+            var ret = "";
+            for(i = 0;i<tmp.length;i++){
+                ret += tmp[i];
+            }
+            return ret;
+        }

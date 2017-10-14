@@ -1,0 +1,17 @@
+#MyEclipse Hibernate Properties
+#Thu Apr 27 14:21:13 CDT 2017
+genVersionTag=false
+sessionFactoryName=edu.iit.dao.HibernateSessionFactory
+genAnnotations=false
+configFile=/lms2 Maven Webapp/src/main/resources/hibernate.cfg.xml
+reStrategyClass=
+sessionFactoryId=
+profile=
+detectM2M=false
+genBasicCompId=false
+keyGenerator=
+createConfigFile=true
+basePersistenceClass=
+detectO2O=false
+useJavaTypes=true
+reSettingsFile=

@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('lms:server');
+var http = require('http');
+var config = require("../config/config");
+var validator = require('validator');
+var session = require("express-session")({
+    secret: "the secret should not be here!@#@",
+    resave: true,
+    saveUninitialized: true
+});
+var sharedsession = require("express-socket.io-session");
+
+var cookieParser = require("cookie-parser");
+
+// Use express-session middleware for express
+var sess = {
+    secret: 'the secret should not be here!@#@',
+    cookie: {}
+}
+
+app.use(session);
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || config.node.port);
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Create socket.io base on the server
+ */
+
+
+var io = require('socket.io')(server);
+io.use(sharedsession(session));
+
+//end of initialization
+
+var msg = {
+    'title':'',
+    'content':''
+}
+io.on('connection',function (socket) {
+    console.log('connected!');
+});
+io.of('/socket').on('connection',function (socket) {
+    console.log('login connected!');
+    socket.on('message',function (data) {
+        console.log('[test]:we got a message');
+    });
+    socket.on('login_1_event',function (data) {
+        console.log('we got a login_1_event');
+        var submitMsg = JSON.parse(data);
+        //validate
+        if(!validator.isEmail(submitMsg.account) || validator.isEmpty(submitMsg.pwd)){
+            msg.title = 'error';
+            msg.content = 'the input is illegal!'
+            console.log('[ERROR]'+JSON.stringify(msg));
+            socket.emit('login_1_event', JSON.stringify(msg));
+        }else{// ask authorization for server
+            postRequest(data,socket,'loginServer');
+        }
+    });
+});
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  console.log("lisening in "+port+"\n");
+  debug('Listening on ' + bind);
+}
